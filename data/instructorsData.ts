@@ -1,0 +1,79 @@
+import aliceJPic from '@/images/alice-johnson.jpg';
+import michaelSPic from '@/images/michael-smith.jpg';
+import sofiaMPic from '@/images/sofia-martinez.jpg';
+import davidLPic from '@/images/david-lee.jpg';
+import emmaWPic from '@/images/emma-wilson.jpg';
+
+export const instructors = [
+    {
+        id: 'contemporary',
+        name: 'Alice Johnson',
+        image: aliceJPic,
+        instagram: 'https://www.instagram.com',
+        youTube: 'https://www.youtube.com',
+        bioLines : [
+            'Contemporary Dance Coach',
+            'Alice has over 10 years of experience in contemporary dance, bringing a unique blend of technique and emotion to her classes.',
+            'Finalist at the National Dance Awards 2022.',
+            'Certified in 92NY Dance Education Laboratory in 2010.',
+            'Experienced in choreography for stage and film.'
+        ]
+    },
+    {
+        id: 'hip-hop',
+        name: 'Michael Smith',
+        image: michaelSPic,
+        instagram: 'https://www.instagram.com',
+        youTube: 'https://www.youtube.com',
+        bioLines : [
+            'Hip-Hop Dance Instructor',
+            'Michael is a dynamic hip-hop dancer with a background in street dance and commercial choreography.',
+            'Winner of the Urban Dance Competition 2021.',
+            'Trained at the Millennium Dance Complex in Los Angeles.',
+            'Has worked with top artists in the music industry.'
+        ],
+    },
+    {
+        id: 'ballet',
+        name: 'Sofia Martinez',
+        image: sofiaMPic,
+        instagram: 'https://www.instagram.com',
+        youTube: 'https://www.youtube.com',
+        bioLines : [
+            'Ballet Master',
+            'Sofia has been a principal dancer with the National Ballet for over 15 years.',
+            'Recipient of the prestigious Benois de la Danse award in 2019.',
+            'Expert in classical and contemporary ballet techniques.',
+            'Passionate about teaching and mentoring young dancers.'
+        ],
+    },
+    {
+        id: 'commercial',
+        name: 'David Lee',
+        image: davidLPic,
+        instagram: 'https://www.instagram.com',
+        youTube: 'https://www.youtube.com',
+        bioLines : [
+            'Commercial Dance Guru',
+            'David specializes in commercial dance styles, bringing energy and precision to his choreography.',
+            'Choreographed for major music videos and live tours.',
+            'Graduated from the Broadway Dance Center in New York City.',
+            'Known for his innovative approach to dance and performance.'
+        ],
+
+    },
+    {
+        id: 'modern-dance',
+        name: 'Emma Wilson',
+        image: emmaWPic,
+        instagram: 'https://www.instagram.com',
+        youTube: 'https://www.youtube.com',
+        bioLines : [
+            'Modern Dance Artist',
+            'Emma is a contemporary modern dance artist with a focus on expressive movement and storytelling.',
+            'Performed internationally with renowned modern dance companies.',
+            'Holds a degree in Dance from the Juilliard School.',
+            'Dedicated to exploring new forms of dance and movement.'
+        ],
+    }
+]

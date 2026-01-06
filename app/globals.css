@@ -2,26 +2,106 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@layer base {
+  /* Chrome/Safari */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  textarea:-webkit-autofill,
+  select:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px rgba(255, 255, 255, 0.09) inset;
+    box-shadow: 0 0 0 1000px rgba(255, 255, 255, 0.071) inset;
+    -webkit-text-fill-color: #ffffff;
+    caret-color: #ffffff;
+    transition: background-color 9999s ease-out;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  /* Firefox autofill */
+  input:-moz-autofill,
+  textarea:-moz-autofill,
+  select:-moz-autofill {
+    box-shadow: 0 0 0 1000px rgba(255, 255, 255, 0.15) inset;
+    -moz-text-fill-color: #ffffff;
+    caret-color: #ffffff;
+  }
+
+  .page-container {
+    max-width: 1920px;
+    margin: 0 auto;
+    padding-inline: 32px;
+  }
+
+  .hero-line {
+    animation: heroLineUp var(--line-duration, 1000ms) ease-out both;
+    will-change: transform, opacity;
+    transform: translateZ(0); /* transform-gpu equivalent */
+  }
+
+  .hero-overlay {
+    opacity: 0;
+    animation: heroOverlayIn 500ms ease-in forwards;
+    animation-delay: var(--overlay-delay, 1200ms);
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@keyframes modal-drop-bounce {
+  0% {
+    transform: translateY(-40vh) scale(0.5);
+    opacity: 0;
+  }
+  60% {
+    transform: translateY(0);
+    opacity: 0.5;
+  }
+  75% {
+    transform: translateY(-8px);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-line {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+@keyframes heroOverlayIn {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 0.3;
+  }
+}
+@keyframes spin-quarter {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(180deg);
+  }
+}
+/* homepage animation:  */
+
+@keyframes heroLineUp {
+  0% {
+    transform: translate3d(0, 100vh, 0);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.1;
+  }
+  100% {
+    transform: translate3d(0, 20vh, 0);
+    opacity: 1;
   }
 }

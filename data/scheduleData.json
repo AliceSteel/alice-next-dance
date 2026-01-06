@@ -1,0 +1,245 @@
+{
+  "weeks": [
+    {
+      "id": "2025-W48",
+      "label": "Week of Nov 24",
+      "startDate": "24-11-2025",
+      "days": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+      "entries": [
+        {
+          "id": "w1-mon-11-ballet-2",
+          "day": "Mon",
+          "timeSlot": "11:00-12:30",
+          "classId": "ballet",
+          "label": "Ballet 2",
+          "teacher": "Sofia M."
+        },
+        {
+          "id": "w1-mon-13-contemporary-1",
+          "day": "Mon",
+          "timeSlot": "13:00-14:30",
+          "classId": "contemporary",
+          "label": "Contemp 1",
+          "teacher": "Alice J."
+        },
+        {
+          "id": "w1-mon-17-ballet-1",
+          "day": "Mon",
+          "timeSlot": "17:00-18:30",
+          "classId": "ballet",
+          "label": "Ballet 1",
+          "teacher": "Sofia M."
+        },
+        {
+          "id": "w1-tue-09-modern-1",
+          "day": "Tue",
+          "timeSlot": "09-10:30",
+          "classId": "modern-dance",
+          "label": "Modern 1",
+          "teacher": "Emma W."
+        },
+        {
+          "id": "w1-wed-15-hiphop",
+          "day": "Wed",
+          "timeSlot": "15:00-16:30",
+          "classId": "hip-hop",
+          "label": "Hip-hop",
+          "teacher": "Michael S."
+        },
+        {
+          "id": "w1-thu-17-commercial",
+          "day": "Thu",
+          "timeSlot": "17:00-18:30",
+          "classId": "commercial",
+          "label": "Commercial",
+          "teacher": "Lavid L."
+        },
+        {
+          "id": "w1-fri-11-ballet-1",
+          "day": "Fri",
+          "timeSlot": "11:00-12:30",
+          "classId": "ballet",
+          "label": "Ballet 1",
+          "teacher": "Sofia M."
+        },
+        {
+          "id": "w1-sat-13-contemporary-2",
+          "day": "Sat",
+          "timeSlot": "13:00-14:30",
+          "classId": "contemporary",
+          "label": "Contemp 2",
+          "teacher": "Alice J."
+        },
+        {
+          "id": "w1-sun-15-modern-2",
+          "day": "Sun",
+          "timeSlot": "15:00-16:30",
+          "classId": "modern-dance",
+          "label": "Modern 2",
+          "teacher": "Emma W."
+        },
+        {
+          "id": "w1-sun-17-hiphop",
+          "day": "Sun",
+          "timeSlot": "17:00-18:30",
+          "classId": "hip-hop",
+          "label": "Hip-hop",
+          "teacher": "Michael S."
+        }
+      ]
+    },
+    {
+      "id": "2025-W49",
+      "label": "Week of Dec 1",
+      "startDate": "01-12-2025",
+      "days": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+      "entries": [
+        {
+          "id": "w2-mon-09-ballet-1",
+          "day": "Mon",
+          "timeSlot": "09-10:30",
+          "classId": "ballet",
+          "label": "Ballet 1",
+          "teacher": "Sofia M."
+        },
+        {
+          "id": "w2-mon-11-ballet-2",
+          "day": "Mon",
+          "timeSlot": "11:00-12:30",
+          "classId": "ballet",
+          "label": "Ballet 2",
+          "teacher": "Sofia M."
+        },
+        {
+          "id": "w2-mon-13-contemporary-1",
+          "day": "Mon",
+          "timeSlot": "13:00-14:30",
+          "classId": "contemporary",
+          "label": "Contemp 1",
+          "teacher": "Alice J."
+        },
+        {
+          "id": "w2-tue-09-modern-1",
+          "day": "Tue",
+          "timeSlot": "09-10:30",
+          "classId": "modern-dance",
+          "label": "Modern 1",
+          "teacher": "Emma W."
+        },
+        {
+          "id": "w2-wed-15-hiphop",
+          "day": "Wed",
+          "timeSlot": "15:00-16:30",
+          "classId": "hip-hop",
+          "label": "Hip-hop",
+          "teacher": "Michael S."
+        },
+        {
+          "id": "w2-thu-17-commercial",
+          "day": "Thu",
+          "timeSlot": "17:00-18:30",
+          "classId": "commercial",
+          "label": "Commercial",
+          "teacher": "Lavid L."
+        },
+        {
+          "id": "w2-fri-11-ballet-1",
+          "day": "Fri",
+          "timeSlot": "11:00-12:30",
+          "classId": "ballet",
+          "label": "Ballet 1",
+          "teacher": "Sofia M."
+        },
+        {
+          "id": "w2-sat-13-contemporary-2",
+          "day": "Sat",
+          "timeSlot": "13:00-14:30",
+          "classId": "contemporary",
+          "label": "Contemp 2",
+          "teacher": "Alice J."
+        },
+        {
+          "id": "w2-sun-15-modern-2",
+          "day": "Sun",
+          "timeSlot": "15:00-16:30",
+          "classId": "modern-dance",
+          "label": "Modern 2",
+          "teacher": "Emma W."
+        },
+        {
+          "id": "w2-sun-17-hiphop",
+          "day": "Sun",
+          "timeSlot": "17:00-18:30",
+          "classId": "hip-hop",
+          "label": "Hip-hop",
+          "teacher": "Michael S."
+        }
+      ]
+    },
+    {
+      "id": "2025-W50",
+      "label": "Week of Dec 8",
+      "startDate": "08-12-2025",
+      "days": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+      "entries": [
+        {
+          "id": "w3-mon-09-ballet-1",
+          "day": "Mon",
+          "timeSlot": "09-10:30",
+          "classId": "ballet",
+          "label": "Ballet 1",
+          "teacher": "Sofia M."
+        },
+
+        {
+          "id": "w3-mon-13-contemporary-1",
+          "day": "Mon",
+          "timeSlot": "13:00-14:30",
+          "classId": "contemporary",
+          "label": "Contemp 1",
+          "teacher": "Alice J."
+        },
+        {
+          "id": "w3-mon-17-ballet-2",
+          "day": "Mon",
+          "timeSlot": "17:00-18:30",
+          "classId": "ballet",
+          "label": "Ballet 2",
+          "teacher": "Sofia M."
+        },
+        {
+          "id": "w3-tue-11-modern-1",
+          "day": "Tue",
+          "timeSlot": "11:00-12:30",
+          "classId": "modern-dance",
+          "label": "Modern 1",
+          "teacher": "Emma W."
+        },
+
+        {
+          "id": "w3-thu-15-commercial",
+          "day": "Thu",
+          "timeSlot": "15:00-16:30",
+          "classId": "commercial",
+          "label": "Commercial",
+          "teacher": "Lavid L."
+        },
+        {
+          "id": "w3-wed-17-hiphop",
+          "day": "Wed",
+          "timeSlot": "17:00-18:30",
+          "classId": "hip-hop",
+          "label": "Hip-hop",
+          "teacher": "Michael S."
+        }
+      ]
+    },
+    {
+      "id": "2025-W51",
+      "label": "Week of Dec 15",
+      "startDate": "15-12-2025",
+      "days": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+      "entries": []
+    }
+  ]
+}
