@@ -51,9 +51,10 @@ export default function ContactForm() {
       {result?.error && <p className="text-red-500">{result.error}</p>}
       {result?.ok && <p className="text-blue-600">Message successfully sent</p>}
       <Button
-        label={isSubmitting ? "Sending..." : "Send"}
-        disabled={isSubmitting || !!result?.ok}
+        label="Send"
+        disabled={!!result?.ok}
         hidden={!!result?.ok}
+        loading={isSubmitting}
         type="submit"
       />
     </form>

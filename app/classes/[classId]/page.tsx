@@ -7,8 +7,8 @@ import renderHighlighted from "@/helpers/renderHighlightedText";
 import { useRef } from "react";
 import { usePinnedText } from "@/helpers/usePinnedText";
 import Button from "@/components/formElements/Btn";
-//import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-//import { faInstagram, faYoutube } from "@fortawesome/free-brands-svg-icons";
+import { Lineicons } from "@lineiconshq/react-lineicons";
+import { InstagramOutlined, YoutubeOutlined } from "@lineiconshq/free-icons";
 
 export default function Class({ params }: { params: { classId: string } }) {
   const { classId } = params;
@@ -61,12 +61,18 @@ export default function Class({ params }: { params: { classId: string } }) {
                 <li className="uppercase text-sky-400 text-3xl mb-2 flex justify-end gap-1">
                   <span className="mr-auto">{name}</span>
                   <a href={instagram} target="_blank" rel="noopener noreferrer">
-                    {/*  <FontAwesomeIcon icon={faInstagram} /> */}
-                    instagram
+                    <Lineicons
+                      icon={InstagramOutlined}
+                      size={40}
+                      className="text-white/50"
+                    />
                   </a>
                   <a href={youTube} target="_blank" rel="noopener noreferrer">
-                    {/* <FontAwesomeIcon icon={faYoutube} /> */}
-                    youtube
+                    <Lineicons
+                      icon={YoutubeOutlined}
+                      size={40}
+                      className="text-white/50"
+                    />
                   </a>
                 </li>
                 {bioLines &&

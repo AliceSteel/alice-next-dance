@@ -11,14 +11,14 @@ import Modal from "@/components/Modal";
 import LoginForm from "@/components/loginForm/LoginForm";
 import Sidemenu from "@/components/sidemenu/Sidemenu";
 import BasketDrawer from "@/components/basketDrawer/BasketDrawer";
-//import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-//import { faBarsStaggered } from "@fortawesome/free-solid-svg-icons";
+import { Lineicons } from "@lineiconshq/react-lineicons";
+import { MenuHamburger1Outlined } from "@lineiconshq/free-icons";
+
 import MembershipDialog from "@/components/dialogs/MembershipDialog";
 import { openBasketDrawer } from "@/store/slices/cart/cartSlice";
 
 function NavBar({ title, menuItemsLeft, menuItemsRight }: NavbarProps) {
   const dispatch = useDispatch();
-  //const { pathname } = location;
   const pathname = usePathname();
   const navRef = useRef<HTMLElement | null>(null);
   const userName = useSelector((state: RootState) => state.auth.user?.name);
@@ -122,7 +122,7 @@ function NavBar({ title, menuItemsLeft, menuItemsRight }: NavbarProps) {
           setIsDesktopOpen(true);
         }}
         ref={navRef}
-        className="group fixed z-20 top-0 w-screen md:px-6 py-4 flex justify-between items-start gap-1"
+        className="group fixed z-20 top-0 w-full md:px-6 py-4 flex justify-between items-start gap-1"
       >
         {" "}
         <div className="hidden md:block">
@@ -179,7 +179,14 @@ function NavBar({ title, menuItemsLeft, menuItemsRight }: NavbarProps) {
         </Link>
         {/* MOBILE RIGHT MENU */}
         <div className="flex flex-col items-end md:hidden pr-3 max-w-1/2">
-          {!isMobileMenuOpen && <span>☰</span> /* Hamburger icon */}
+          {!isMobileMenuOpen && (
+            <Lineicons
+              icon={MenuHamburger1Outlined}
+              size={30}
+              className="text-white/80 hover:text-white/100 transition-opacity duration-300 cursor-pointer"
+              onClick={openMobileMenu}
+            />
+          )}
           {isMobileMenuMounted && (
             <Sidemenu
               position="right"

@@ -1,6 +1,6 @@
 import type { ScheduleGridProps } from "./ScheduleGridProps.js";
-/* import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons"; */
+import { Lineicons } from "@lineiconshq/react-lineicons";
+import { ChevronLeftOutlined } from "@lineiconshq/free-icons";
 
 export default function ScheduleGrid({
   days,
@@ -15,7 +15,7 @@ export default function ScheduleGrid({
   alreadyBookedEntries,
 }: ScheduleGridProps) {
   return (
-    <div className="relative grid grid-cols-8 grid-rows-6 text-center">
+    <div className="relative grid grid-cols-8 grid-rows-6 text-center w-full">
       {/* header row: day names */}
       <div></div>
       {days.map((day) => (
@@ -103,13 +103,11 @@ export default function ScheduleGrid({
             )
           }
         >
-          {/* <FontAwesomeIcon
-            icon={faAngleLeft}
+          <Lineicons
+            icon={ChevronLeftOutlined}
+            size={40}
             className="text-white/60 hover:text-white/100 transition-opacity duration-300 cursor-pointer"
-            size="2x"
-            
-          /> */}
-          <span>Prev</span>
+          />
         </button>
       )}
       {weekIndex < weeks.length - 1 && (
@@ -124,13 +122,11 @@ export default function ScheduleGrid({
             )
           }
         >
-          {/* <FontAwesomeIcon
-            icon={faAngleRight}
-            className="text-white/60 hover:text-white/100 transition-opacity duration-300 cursor-pointer"
-            size="2x"
-           
-          /> */}
-          <span>Next</span>
+          <Lineicons
+            icon={ChevronLeftOutlined}
+            size={40}
+            className="rotate-180 text-white/60 hover:text-white/100 transition-opacity duration-300 cursor-pointer"
+          />
         </button>
       )}
     </div>

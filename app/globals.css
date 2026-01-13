@@ -3,6 +3,12 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    scrollbar-gutter: stable;
+  }
+}
+
+@layer base {
   /* Chrome/Safari */
   input:-webkit-autofill,
   input:-webkit-autofill:hover,

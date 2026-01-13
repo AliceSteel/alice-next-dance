@@ -1,36 +1,22 @@
 'use client";';
-//import { clearCart, closeBasketDrawer } from "@/store/slices/cart/cartSlice";
-//import type { RootState } from "@/store/store";
-//import { useDispatch, useSelector } from "react-redux";
+import { clearCart, closeBasketDrawer } from "@/store/slices/cart/cartSlice";
+import type { RootState } from "@/store/store";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-//import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-//import { faXmark } from "@fortawesome/free-solid-svg-icons";
-//import type { BasketItem } from "@/store/slices/cart/basketItemTypes";
+import { Lineicons } from "@lineiconshq/react-lineicons";
+import type { BasketItem } from "@/store/slices/cart/basketItemTypes";
 import Btn from "@/components/formElements/Btn";
+import { XmarkOutlined } from "@lineiconshq/free-icons";
 
 export default function BasketDrawer() {
-  /*  const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const isBasketOpen = useSelector((s: RootState) => s.cart.isBasketOpen);
   const cartItems = useSelector((state: RootState) => state.cart.items);
   const totalQtyItems = useSelector(
     (state: RootState) => state.cart.totalQtyItems
   );
   const cartTotal = useSelector((state: RootState) => state.cart.cartTotal);
- */
-  type BasketItem = {
-    id: string;
-    name: string;
-    price: string;
-    quantity?: number;
-    terms?: string[];
-  }; // REMOVE THIS LINE WHEN USING REDUX
-  let isBasketOpen = false; // REMOVE THIS LINE WHEN USING REDUX
-  const cartItems = [
-    { id: "1", name: "Dance Class A", price: "$20.00", quantity: 2 },
-    { id: "2", name: "Dance Class B", price: "$15.00", quantity: 1 },
-  ]; // REMOVE THIS LINE WHEN USING REDUX
-  const totalQtyItems = 3; // REMOVE THIS LINE WHEN USING REDUX
-  const cartTotal = 55.0; // REMOVE THIS LINE WHEN USING REDUX
+
   useEffect(() => {
     if (isBasketOpen) {
       document.body.style.overflow = "hidden";
@@ -40,8 +26,7 @@ export default function BasketDrawer() {
   }, [isBasketOpen]);
 
   const onClose = () => {
-    //dispatch(closeBasketDrawer());
-    isBasketOpen = false; // REMOVE THIS LINE WHEN USING REDUX
+    dispatch(closeBasketDrawer());
   };
   const redirectToCheckout = () => {
     // Implement checkout redirection logic here
@@ -77,12 +62,11 @@ export default function BasketDrawer() {
             className="hover:opacity-80 transition-opacity"
             aria-label="Close basket"
           >
-            {/*  <FontAwesomeIcon
-              icon={faXmark}
-              size="lg"
-              className="text-white/70"
-            /> */}
-            X
+            <Lineicons
+              icon={XmarkOutlined}
+              size={20}
+              className="text-white/50"
+            />
           </button>
         </div>
         <ul className="p-4 space-y-3 overflow-y-auto">

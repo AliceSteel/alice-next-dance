@@ -1,15 +1,15 @@
 import { closeModal } from "@/store/slices/modal/modalSlice";
 import type { RootState } from "@/store/store";
-//import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-//import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { Lineicons } from "@lineiconshq/react-lineicons";
+import { XmarkOutlined } from "@lineiconshq/free-icons";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Modal({ children }: { children?: React.ReactNode }) {
-   const isModalOpen = useSelector(
+  const isModalOpen = useSelector(
     (state: RootState) => state.modal.isModalOpen
   );
   const dispatch = useDispatch();
-  
+
   if (!isModalOpen) return null;
   document.body.style.overflow = "hidden";
 
@@ -28,12 +28,7 @@ export default function Modal({ children }: { children?: React.ReactNode }) {
         onClick={(e) => e.stopPropagation()}
       >
         <button onClick={onClose} className="float-right hover:cursor-pointer">
-          {/*  <FontAwesomeIcon
-            icon={faXmark}
-            size="lg"
-            className="text-white/50 h-4"
-          /> */}
-          X
+          <Lineicons icon={XmarkOutlined} size={20} className="text-white/50" />
         </button>
         {children}
       </div>

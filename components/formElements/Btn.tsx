@@ -1,7 +1,7 @@
-/* import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleNotch } from "@fortawesome/free-solid-svg-icons"; */
 import Link from "next/link";
 import type { MouseEventHandler } from "react";
+import { Lineicons } from "@lineiconshq/react-lineicons";
+import { Spinner3Duotone } from "@lineiconshq/free-icons";
 
 type ButtonProps = {
   type?: "submit" | "button" | "reset";
@@ -12,6 +12,7 @@ type ButtonProps = {
   variant?: "primary" | "secondary";
   to?: string;
   onClick?: MouseEventHandler;
+  loading?: boolean;
 };
 
 export default function Button({
@@ -23,9 +24,10 @@ export default function Button({
   variant,
   to,
   onClick,
+  loading = false,
 }: ButtonProps) {
   //const navigation = useNavigation();
-  const internalDisabled = disabled; /* || navigation.state === "submitting"; */
+  const internalDisabled = disabled || loading;
 
   const baseClass =
     `${size === "small" ? "p-2 text-sm" : " py-2 px-4 "} ` +
@@ -55,12 +57,15 @@ export default function Button({
       className={baseClass}
       onClick={onClick}
     >
-      {/*  {navigation.state === "submitting" && type === "submit" ? (
-        <span>Submitting...</span>
+      {loading && type === "submit" ? (
+        <Lineicons
+          icon={Spinner3Duotone}
+          size={16}
+          className="animate-spin mr-2"
+        />
       ) : (
         label
-      )} */}
-      {label}
+      )}
     </button>
   );
 }
