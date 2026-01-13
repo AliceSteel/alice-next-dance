@@ -1,24 +1,24 @@
 "use client";
 
 import ClassFilters from "@/components/classFilters/ClassFilters";
-//import { useSelector, useDispatch } from "react-redux";
-//import { selectCategories } from "@/store/slices/classes/classesSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { selectCategories } from "@/store/slices/classes/classesSlice";
 import Button from "@/components/formElements/Btn";
 import { useState, useEffect, useMemo } from "react";
 import type { ScheduleEntry, ScheduleWeek } from "@/types/ScheduleItem";
 import type { ClassCategory } from "@/components/classFilters/ClassFilters";
 import ScheduleGrid from "../scheduleGrid/ScheduleGrid";
-/* import { openModal } from "@/store/slices/modal/modalSlice";
+import { openModal } from "@/store/slices/modal/modalSlice";
 import { useLocation } from "react-router-dom";
 import {
   selectAvailableCredits,
   consumeBookingCredit,
   selectIsLoggedIn,
   collectBookingsForUser,
-} from "@/store/slices/user/userSlice"; */
+} from "@/store/slices/user/userSlice";
 import PriceList from "../priceList/PriceList";
 import type { ScheduleClientProps } from "./ScheduleClientTypes";
-//import { toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 function ScheduleClient({
   weeks,
@@ -28,17 +28,17 @@ function ScheduleClient({
   classCategories,
   classItems,
 }: ScheduleClientProps) {
-  /*  const categories = useSelector(selectCategories);
+  const categories = useSelector(selectCategories);
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const availableCredits = useSelector(selectAvailableCredits);
-  const alreadyBookedEntries = useSelector(collectBookingsForUser); */
-  const isLoggedIn = true; // REMOVE THIS LINE WHEN USING REDUX
+  const alreadyBookedEntries = useSelector(collectBookingsForUser);
+  /* const isLoggedIn = true; // REMOVE THIS LINE WHEN USING REDUX
   const availableCredits = [{ id: "credit1" }]; // REMOVE THIS LINE WHEN USING REDUX
-  const alreadyBookedEntries: ScheduleEntry[] = []; // REMOVE THIS LINE WHEN USING REDUX
+  const alreadyBookedEntries: ScheduleEntry[] = []; // REMOVE THIS LINE WHEN USING REDUX */
 
-  /*  const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const location = useLocation();
- */
+
   function getFilteredCategory(search: string): string {
     const params = new URLSearchParams(search);
     const filtered = params.get("filtered");
@@ -123,11 +123,11 @@ function ScheduleClient({
 
     // 2. check credits / availability
     if (availableCredits && availableCredits.length < 1) {
-      /*   toast.info("Please purchase a membership package to book classes");
-      dispatch(openModal("membership")); */
+      toast.info("Please purchase a membership package to book classes");
+      dispatch(openModal("membership"));
       return;
     }
-    //dispatch(consumeBookingCredit({ entry }));
+    dispatch(consumeBookingCredit({ entry }));
     // 3. dispatch booking to store and BE
     // dispatch(bookClass({ entryId: entry.id, weekId: week.id }));
   };

@@ -1,6 +1,7 @@
+'use client";';
 import backgroundImage from "@/assets/images/ballet-blurred.jpg";
-import { aboutUsContent } from "@/assets/data/aboutUsData";
-import { useMemo, useEffect, useRef, useState } from "react";
+import { aboutUsContent } from "@/data/aboutUsData";
+import { useMemo, useEffect, useRef, useState, use } from "react";
 import SectionTitle from "@/components/sectionTitle/SectionTitle";
 import ClassesList from "@/components/classesList/ClassesList";
 import renderHighlighted from "@/helpers/renderHighlitedText";
@@ -39,6 +40,7 @@ export default function About() {
     };
     requestAnimationFrame(step);
   }, [animateRings]);
+
   useEffect(() => {
     const el = statsRef.current;
     if (!el) return;
