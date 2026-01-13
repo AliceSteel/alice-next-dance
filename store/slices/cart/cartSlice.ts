@@ -11,8 +11,17 @@ const initialState = {
 };
 
 const getCartItemsFromStorage = () => {
-  const storedCart = localStorage.getItem("cartState");
-  return storedCart ? JSON.parse(storedCart) : initialState;
+  if (typeof window === "undefined") {
+    // SSR: no access to localStorage
+    return initialState;
+  }
+  // Client-side: try to get from localStorage
+  try {
+    const storedCart = window.localStorage.getItem("cartState");
+    return storedCart ? JSON.parse(storedCart) : initialState;
+  } catch {
+    return initialState;
+  }
 }
 
 const cartSlice = createSlice({

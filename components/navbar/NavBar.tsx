@@ -2,10 +2,9 @@
 import { useEffect, useRef, useState, useMemo } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-//import { NavLink, useLocation } from "react-router-dom";
-//import { useSelector, useDispatch } from "react-redux";
-//import { openModal } from "@/store/slices/modal/modalSlice";
-//import type { RootState } from "@/store/store";
+import { useSelector, useDispatch } from "react-redux";
+import { openModal } from "@/store/slices/modal/modalSlice";
+import type { RootState } from "@/store/store";
 
 import type { NavbarProps } from "./NavBarTypes";
 import Modal from "@/components/Modal";
@@ -14,23 +13,20 @@ import Sidemenu from "@/components/sidemenu/Sidemenu";
 import BasketDrawer from "@/components/basketDrawer/BasketDrawer";
 //import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 //import { faBarsStaggered } from "@fortawesome/free-solid-svg-icons";
-//import MembershipDialog from "@/components/dialogs/MembershipDialog";
-//import { openBasketDrawer } from "@/store/slices/cart/cartSlice";
+import MembershipDialog from "@/components/dialogs/MembershipDialog";
+import { openBasketDrawer } from "@/store/slices/cart/cartSlice";
 
 function NavBar({ title, menuItemsLeft, menuItemsRight }: NavbarProps) {
-  //const dispatch = useDispatch();
-  //const location = useLocation();
+  const dispatch = useDispatch();
   //const { pathname } = location;
   const pathname = usePathname();
   const navRef = useRef<HTMLElement | null>(null);
-  /* const userName = useSelector((state: RootState) => state.auth.user?.name);
+  const userName = useSelector((state: RootState) => state.auth.user?.name);
   const { type } = useSelector((state: RootState) => state.modal);
   const totalQtyItems = useSelector(
     (state: RootState) => state.cart.totalQtyItems
   );
- */
-  const userName = "Alice"; // REMOVE THIS LINE WHEN USING REDUX
-  const totalQtyItems = 3; // REMOVE THIS LINE WHEN USING REDUX
+
   const alreadyMounted = useRef(false);
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -68,7 +64,7 @@ function NavBar({ title, menuItemsLeft, menuItemsRight }: NavbarProps) {
       : {
           id: "auth",
           title: "Login",
-          //onClick: () => dispatch(openModal("login")),
+          onClick: () => dispatch(openModal("login")),
         };
 
     const rightWithBasket = menuItemsRight.map((item) =>
@@ -76,7 +72,7 @@ function NavBar({ title, menuItemsLeft, menuItemsRight }: NavbarProps) {
         ? {
             ...item,
             title: totalQtyItems ? `Basket (${totalQtyItems})` : "Basket",
-            // onClick: () => dispatch(openBasketDrawer()),
+            onClick: () => dispatch(openBasketDrawer()),
           }
         : item
     );
@@ -202,10 +198,10 @@ function NavBar({ title, menuItemsLeft, menuItemsRight }: NavbarProps) {
           />
         </div>
       </nav>
-      {/*  <Modal>
+      <Modal>
         {type === "login" && <LoginForm />}
         {type === "membership" && <MembershipDialog />}
-      </Modal> */}
+      </Modal>
       <BasketDrawer />
     </>
   );

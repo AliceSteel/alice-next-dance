@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import NavBar from "../components/navbar/NavBar";
 import { Onest, BioRhyme } from "next/font/google";
 import menuData from "@/data/menuData.json";
+import { Providers } from "./Providers";
 
 const onest = Onest({
   subsets: ["latin"],
@@ -11,7 +12,7 @@ const onest = Onest({
 });
 const bioRhyme = BioRhyme({
   subsets: ["latin"],
-  weight: ["700"],
+  weight: ["300"],
   variable: "--font-biorhyme",
 });
 
@@ -32,8 +33,13 @@ export default function RootLayout({
       <body
         className={`${onest.variable} ${bioRhyme.variable} font-general relative overflow-x-hidden bg-[#181818] text-[#b6b6b6]`}
       >
-        <NavBar menuItemsLeft={menuItemsLeft} menuItemsRight={menuItemsRight} />
-        <main className="min-h-screen">{children}</main>
+        <Providers>
+          <NavBar
+            menuItemsLeft={menuItemsLeft}
+            menuItemsRight={menuItemsRight}
+          />
+          <main className="min-h-screen">{children}</main>
+        </Providers>
       </body>
     </html>
   );

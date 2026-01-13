@@ -13,11 +13,8 @@ export function usePinnedText<T extends HTMLElement>(
     const handleScroll = () => {
       const rect = el.getBoundingClientRect();
       if (rect.top <= offsetPx) {
-        console.log("not pinned, rect.top is vs offsetPx:", rect.top, offsetPx);
         setIsPinned(false);
       } else {
-        console.log("pinned, rect.top is vs offsetPx:", rect.top, offsetPx);
-
         setIsPinned(true);
       }
     };

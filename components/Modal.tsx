@@ -1,21 +1,20 @@
-//import { closeModal } from "@/store/slices/modal/modalSlice";
-//import type { RootState } from "@/store/store";
+import { closeModal } from "@/store/slices/modal/modalSlice";
+import type { RootState } from "@/store/store";
 //import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 //import { faXmark } from "@fortawesome/free-solid-svg-icons";
-//import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Modal({ children }: { children?: React.ReactNode }) {
-  /*  const isModalOpen = useSelector(
+   const isModalOpen = useSelector(
     (state: RootState) => state.modal.isModalOpen
   );
   const dispatch = useDispatch();
-   */
-  let isModalOpen = true; // REMOVE THIS LINE WHEN USING REDUX
+  
   if (!isModalOpen) return null;
   document.body.style.overflow = "hidden";
 
   const onClose = () => {
-    //dispatch(closeModal());
+    dispatch(closeModal());
     document.body.style.overflow = "auto";
   };
 

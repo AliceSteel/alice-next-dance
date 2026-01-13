@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
-import { type ClassesListProps } from "./ClassesListProps";
-import { Link } from "react-router-dom";
+import type { ClassesListProps, ClassCard } from "./ClassesListProps";
+import Link from "next/link";
 
 export default function ClassesList(props: ClassesListProps) {
   const { classes } = props;
@@ -54,15 +54,19 @@ export default function ClassesList(props: ClassesListProps) {
             width: `${(classes.length / VISIBLE_COUNT) * 100}%`,
           }}
         >
-          {classes.map((classItem) => (
+          {classes.map((classItem: ClassCard) => (
             <Link
-              to={`/classes/${classItem.id}`}
+              href={`/classes/${classItem.id}`}
               key={classItem.id}
               className="relative rounded-lg shadow-lg overflow-hidden"
               style={{ width: `${100 / classes.length}%` }}
             >
               <img
-                src={classItem.imageUrl}
+                src={
+                  typeof classItem.imageUrl === "string"
+                    ? classItem.imageUrl
+                    : classItem.imageUrl?.src || ""
+                }
                 alt={classItem.title}
                 className="w-full aspect-square object-cover"
               />

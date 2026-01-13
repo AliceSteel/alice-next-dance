@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { classes } from "@/assets/data/classesData";
-import { instructors } from "@/assets/data/instructorsData";
+import { classes } from "@/data/classesData";
+import { instructors } from "@/data/instructorsData";
 import type { ClassesState, Category } from "./classesTypes";
 
 const categoriesFromClasses: Category[] = classes.map((c) => ({

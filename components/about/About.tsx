@@ -1,10 +1,10 @@
-'use client";';
-import backgroundImage from "@/assets/images/ballet-blurred.jpg";
+"use client";
+import backgroundImage from "@/images/ballet-blurred.jpg";
 import { aboutUsContent } from "@/data/aboutUsData";
-import { useMemo, useEffect, useRef, useState, use } from "react";
+import { useMemo, useEffect, useRef, useState } from "react";
 import SectionTitle from "@/components/sectionTitle/SectionTitle";
 import ClassesList from "@/components/classesList/ClassesList";
-import renderHighlighted from "@/helpers/renderHighlitedText";
+import renderHighlighted from "@/helpers/renderHighlightedText";
 import { useSelector } from "react-redux";
 import { selectClasses } from "@/store/slices/classes/classesSlice";
 
@@ -64,7 +64,7 @@ export default function About() {
         <div className="flex flex-col md:flex-row md:gap-8">
           <h4>About</h4>
           <img
-            src={backgroundImage}
+            src={backgroundImage.src}
             alt="Dancing girl"
             className="w-full max-h-[50vh] h-auto object-cover object-left-top md:overflow-hidden"
           />

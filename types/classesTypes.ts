@@ -12,7 +12,7 @@ export type ClassesState = {
 export type Instructor = {
     id: string;
     name: string;
-    image: string |StaticImageData;
+    image: StaticImageData;
     instagram: string;
     youTube: string;
     bioLines: string[];

@@ -3,7 +3,7 @@ import { StaticImageData } from "next/image";
 export type Class = {
   id: string;
   title: string;
-  imageUrl?: string | StaticImageData;
+  imageUrl?: StaticImageData;
   description: string;
   text1?:string;
   text2?:string;

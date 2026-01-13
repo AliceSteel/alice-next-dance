@@ -1,4 +1,4 @@
-import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, type PayloadAction, createSelector } from "@reduxjs/toolkit";
 import type { AuthState, BookingPackage, RootState } from "@/types/User";
 import { toast } from "react-toastify";
 import type { ScheduleEntry } from "@/types/ScheduleItem";
@@ -108,6 +108,9 @@ export const selectAvailableCredits = (state: RootState) => {
 export const selectIsLoggedIn = (state: RootState) =>
   state.auth.status === "authenticated";
 
-export const collectBookingsForUser = (state: RootState) => {
-  return state.auth.bookingPackages.flatMap(pkg => pkg.usedAt.map(e => e.id));
-}
+export const collectBookingsForUser = createSelector(
+  (state: RootState) => state.auth.bookingPackages,
+  (bookingPackages) => {
+    return bookingPackages.flatMap(pkg => pkg.usedAt.map(e => e.id));
+  }
+);

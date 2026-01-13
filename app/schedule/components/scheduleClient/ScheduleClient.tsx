@@ -9,7 +9,6 @@ import type { ScheduleEntry, ScheduleWeek } from "@/types/ScheduleItem";
 import type { ClassCategory } from "@/components/classFilters/ClassFilters";
 import ScheduleGrid from "../scheduleGrid/ScheduleGrid";
 import { openModal } from "@/store/slices/modal/modalSlice";
-import { useLocation } from "react-router-dom";
 import {
   selectAvailableCredits,
   consumeBookingCredit,
@@ -32,12 +31,8 @@ function ScheduleClient({
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const availableCredits = useSelector(selectAvailableCredits);
   const alreadyBookedEntries = useSelector(collectBookingsForUser);
-  /* const isLoggedIn = true; // REMOVE THIS LINE WHEN USING REDUX
-  const availableCredits = [{ id: "credit1" }]; // REMOVE THIS LINE WHEN USING REDUX
-  const alreadyBookedEntries: ScheduleEntry[] = []; // REMOVE THIS LINE WHEN USING REDUX */
 
   const dispatch = useDispatch();
-  const location = useLocation();
 
   function getFilteredCategory(search: string): string {
     const params = new URLSearchParams(search);
@@ -45,9 +40,7 @@ function ScheduleClient({
     return filtered && filtered.trim().length > 0 ? filtered : "all";
   }
 
-  const [selectedCategoryId, setSelectedCategoryId] = useState<string>(() =>
-    getFilteredCategory(window.location.search)
-  );
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string>("all");
 
   useEffect(() => {
     const initial = getFilteredCategory(window.location.search);

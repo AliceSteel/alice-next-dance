@@ -57,17 +57,16 @@ export const Sidemenu = ({
             </li>
           );
         }
-
-        const isHash = item.link.includes("#");
-        const basePath = (item.link.split("#")[0] || "/").trim() || "/";
+        if (!item.link) return null;
+        const isHash = item?.link?.includes("#");
+        const basePath = (item.link?.split("#")[0] || "/").trim() || "/";
         const isActive = pathname === basePath;
         return (
           <li key={item.id}>
             {isHash ? (
               <Link
-                href={item.link.startsWith("/") ? item.link : `/${item.link}`}
+                href={item.link?.startsWith("/") ? item.link : `/${item.link}`}
                 className="transition-colors text-gray-300 hover:text-white"
-                scroll={false}
               >
                 {item.title}
               </Link>
