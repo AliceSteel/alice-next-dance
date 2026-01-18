@@ -1,30 +1,30 @@
 "use client";
+import Image from "next/image";
 import backgroundImage from "@/images/ballet-blurred.jpg";
 import { aboutUsContent } from "@/data/aboutUsData";
-import { useMemo, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import SectionTitle from "@/components/sectionTitle/SectionTitle";
 import ClassesList from "@/components/classesList/ClassesList";
 import renderHighlighted from "@/helpers/renderHighlightedText";
 import { useSelector } from "react-redux";
 import { selectClasses } from "@/store/slices/classes/classesSlice";
 
+const START_ANGLES = aboutUsContent.numbers.stats.map(
+  (_, index) => (index * 137) % 360,
+);
+
 export default function About() {
   const classes = useSelector(selectClasses);
-  const startAngles = useMemo(
-    () =>
-      aboutUsContent.numbers.stats.map(() => Math.floor(Math.random() * 360)),
-    []
-  );
   const statsRef = useRef<HTMLUListElement | null>(null);
   const [animateRings, setAnimateRings] = useState(false);
   const [counts, setCounts] = useState<number[]>(() =>
-    aboutUsContent.numbers.stats.map(() => 1)
+    aboutUsContent.numbers.stats.map(() => 1),
   );
 
   useEffect(() => {
     if (!animateRings) return;
     const targets = aboutUsContent.numbers.stats.map((s) =>
-      typeof s.value === "number" ? s.value : parseInt(String(s.value), 10)
+      typeof s.value === "number" ? s.value : parseInt(String(s.value), 10),
     );
     const duration = 1600; // match ring animation
     const start = performance.now();
@@ -34,7 +34,7 @@ export default function About() {
         targets.map((v) => {
           const val = Math.floor(v * progress);
           return progress < 1 ? Math.max(1, val) : v;
-        })
+        }),
       );
       if (progress < 1) requestAnimationFrame(step);
     };
@@ -51,7 +51,7 @@ export default function About() {
           io.disconnect();
         }
       },
-      { threshold: 0.25 } // adjust sensitivity if needed
+      { threshold: 0.25 }, // adjust sensitivity if needed
     );
     io.observe(el);
     return () => io.disconnect();
@@ -63,8 +63,10 @@ export default function About() {
         {/* TEXT SECTION */}
         <div className="flex flex-col md:flex-row md:gap-8">
           <h4>About</h4>
-          <img
-            src={backgroundImage.src}
+          <Image
+            src={backgroundImage}
+            loading="lazy"
+            width={500}
             alt="Dancing girl"
             className="w-full max-h-[50vh] h-auto object-cover object-left-top md:overflow-hidden"
           />
@@ -103,7 +105,7 @@ export default function About() {
                 <div className="absolute inset-0 rounded-full border-[0.5px] border-sky-400" />
                 <div
                   className="absolute inset-0"
-                  style={{ transform: `rotate(${startAngles[index]}deg)` }}
+                  style={{ transform: `rotate(${START_ANGLES[index]}deg)` }}
                 >
                   <div
                     className={[

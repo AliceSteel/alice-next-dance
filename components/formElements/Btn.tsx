@@ -26,11 +26,10 @@ export default function Button({
   onClick,
   loading = false,
 }: ButtonProps) {
-  //const navigation = useNavigation();
   const internalDisabled = disabled || loading;
 
   const baseClass =
-    `${size === "small" ? "p-2 text-sm" : " py-2 px-4 "} ` +
+    `${size === "small" ? "p-2 text-sm " : " py-2 px-4 "} min-h-10 ` +
     `${
       variant === "secondary"
         ? "bg-black/80 border-white/80 border"

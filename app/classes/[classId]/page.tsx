@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import PageTitle from "@/components/pageTitle/PageTitle";
 import { type Class } from "@/types/ClassDescription";
 import { useSelector } from "react-redux";
@@ -21,12 +22,22 @@ export default function Class({ params }: { params: { classId: string } }) {
 
   const instructor = classItem.instructor;
   const { name, image, bioLines, instagram, youTube } = instructor || {};
+
+  const socialLinks = [
+    { href: instagram, icon: InstagramOutlined, key: "instagram" },
+    { href: youTube, icon: YoutubeOutlined, key: "youtube" },
+  ].filter((s) => s.href);
+
   return (
     <>
-      <section
-        className="relative w-full h-screen bg-center bg-cover bg-no-repeat"
-        style={{ backgroundImage: `url(${classItem.imageUrl?.src})` }}
-      >
+      <section className="relative w-full h-screen">
+        <Image
+          src={classItem.imageUrl}
+          alt={classItem.title}
+          fill
+          style={{ objectFit: "cover" }}
+          priority
+        />
         <div className="pt-40 page-container pb-6 h-full flex flex-col">
           <div
             className={
@@ -60,31 +71,34 @@ export default function Class({ params }: { params: { classId: string } }) {
               <ul className="list-none flex flex-col gap-0 leading-[105%]">
                 <li className="uppercase text-sky-400 text-3xl mb-2 flex justify-end gap-1">
                   <span className="mr-auto">{name}</span>
-                  <a href={instagram} target="_blank" rel="noopener noreferrer">
-                    <Lineicons
-                      icon={InstagramOutlined}
-                      size={40}
-                      className="text-white/50"
-                    />
-                  </a>
-                  <a href={youTube} target="_blank" rel="noopener noreferrer">
-                    <Lineicons
-                      icon={YoutubeOutlined}
-                      size={40}
-                      className="text-white/50"
-                    />
-                  </a>
+                  {socialLinks.map(({ href, icon, key }) => (
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:scale-110"
+                      key={key}
+                    >
+                      <Lineicons
+                        icon={icon}
+                        size={40}
+                        className="text-white/50"
+                      />
+                    </a>
+                  ))}
                 </li>
                 {bioLines &&
                   bioLines.map((line: string, index: number) => (
-                    <li key={index}>{line}</li>
+                    <li key={index} className="mb-2">
+                      {line}
+                    </li>
                   ))}
               </ul>
               <Button label="Join class" to={`/schedule?filtered=${classId}`} />
             </div>
             <div className="flex-1 mt-auto">
               {" "}
-              <img src={image?.src} alt={name} />
+              <Image src={image} alt={name} width={900} loading="lazy" />
             </div>
           </div>
         </section>

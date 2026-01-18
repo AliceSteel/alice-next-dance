@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import type { ClassesListProps, ClassCard } from "./ClassesListProps";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function ClassesList(props: ClassesListProps) {
   const { classes } = props;
@@ -61,12 +62,15 @@ export default function ClassesList(props: ClassesListProps) {
               className="relative rounded-lg shadow-lg overflow-hidden"
               style={{ width: `${100 / classes.length}%` }}
             >
-              <img
+              <Image
                 src={
                   typeof classItem.imageUrl === "string"
                     ? classItem.imageUrl
                     : classItem.imageUrl?.src || ""
                 }
+                loading="lazy"
+                width={600}
+                height={600}
                 alt={classItem.title}
                 className="w-full aspect-square object-cover"
               />

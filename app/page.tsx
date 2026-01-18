@@ -1,6 +1,7 @@
 import backgroundImage from "@/images/blurred-black.jpg";
 import About from "@/components/about/About";
 import { toast } from "react-toastify";
+import Image from "next/image";
 import heroLines from "@/data/heroLinesData";
 
 const Home = () => {
@@ -12,10 +13,15 @@ const Home = () => {
 
   return (
     <>
-      <section
-        className="w-full relative h-screen bg-center bg-cover bg-no-repeat pt-40 overflow-hidden"
-        style={{ backgroundImage: `url(${backgroundImage.src})` }}
-      >
+      <section className="w-full relative h-screen pt-40 overflow-hidden">
+        {/* Background image */}
+        <Image
+          src={backgroundImage}
+          alt="background image"
+          fill
+          priority
+          className="object-cover"
+        />
         {/* Dark overlay: fades in AFTER text finishes */}
         <div
           className="absolute inset-0 pointer-events-none hero-overlay"
