@@ -98,7 +98,14 @@ export default function Class({ params }: { params: { classId: string } }) {
             </div>
             <div className="flex-1 mt-auto">
               {" "}
-              <Image src={image} alt={name} width={900} loading="lazy" />
+              {image && (
+                <Image
+                  src={image}
+                  alt={name ?? "Instructor image"}
+                  width={900}
+                  loading="lazy"
+                />
+              )}
             </div>
           </div>
         </section>

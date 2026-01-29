@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useRef, useState, useMemo } from "react";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
 import { openModal } from "@/store/slices/modal/modalSlice";
@@ -16,6 +15,7 @@ import { MenuHamburger1Outlined } from "@lineiconshq/free-icons";
 
 import MembershipDialog from "@/components/dialogs/MembershipDialog";
 import { openBasketDrawer } from "@/store/slices/cart/cartSlice";
+import Logo from "@/components/logo/Logo";
 
 function NavBar({ title, menuItemsLeft, menuItemsRight }: NavbarProps) {
   const dispatch = useDispatch();
@@ -24,10 +24,16 @@ function NavBar({ title, menuItemsLeft, menuItemsRight }: NavbarProps) {
   const userName = useSelector((state: RootState) => state.auth.user?.name);
   const { type } = useSelector((state: RootState) => state.modal);
   const totalQtyItems = useSelector(
-    (state: RootState) => state.cart.totalQtyItems
+    (state: RootState) => state.cart.totalQtyItems,
   );
 
   const alreadyMounted = useRef(false);
+
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobileMenuMounted, setIsMobileMenuMounted] = useState(false);
@@ -59,29 +65,39 @@ function NavBar({ title, menuItemsLeft, menuItemsRight }: NavbarProps) {
   const { rightDesktop, mergedMobileRight } = useMemo(() => {
     const first = (n?: string) => (n ? n.split(/\s+/)[0] : undefined);
 
-    const authItem = userName
-      ? { id: "auth", title: `Hi, ${first(userName)}`, link: "/account" }
-      : {
-          id: "auth",
-          title: "Login",
-          onClick: () => dispatch(openModal("login")),
-        };
+    const authItem =
+      isHydrated && userName
+        ? { id: "auth", title: `Hi, ${first(userName)}`, link: "/account" }
+        : {
+            id: "auth",
+            title: "Login",
+            onClick: () => dispatch(openModal("login")),
+          };
 
-    const rightWithBasket = menuItemsRight.map((item) =>
-      item.link === "/basket"
-        ? {
-            ...item,
-            title: totalQtyItems ? `Basket (${totalQtyItems})` : "Basket",
-            onClick: () => dispatch(openBasketDrawer()),
-          }
-        : item
-    );
+    const rightWithBasket = isHydrated
+      ? menuItemsRight.map((item) =>
+          item.link === "/basket"
+            ? {
+                ...item,
+                title: totalQtyItems ? `Basket (${totalQtyItems})` : "Basket",
+                onClick: () => dispatch(openBasketDrawer()),
+              }
+            : item,
+        )
+      : menuItemsRight;
 
     return {
       rightDesktop: [...rightWithBasket, authItem],
       mergedMobileRight: [...menuItemsLeft, ...rightWithBasket, authItem],
     };
-  }, [userName, totalQtyItems /* dispatch */]);
+  }, [
+    userName,
+    totalQtyItems,
+    menuItemsLeft,
+    menuItemsRight,
+    isHydrated,
+    dispatch,
+  ]);
 
   useEffect(() => {
     let ticking = false;
@@ -110,11 +126,6 @@ function NavBar({ title, menuItemsLeft, menuItemsRight }: NavbarProps) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const titleText = (title ?? "Alice Studio").trim();
-  const [firstWord, ...restWords] = titleText.split(/\s+/);
-  const firstLetter = firstWord.charAt(0);
-  const tail = restWords.join(" ");
-
   return (
     <>
       <nav
@@ -132,51 +143,7 @@ function NavBar({ title, menuItemsLeft, menuItemsRight }: NavbarProps) {
             isOpen={isDesktopOpen}
           />
         </div>
-        {/* LOGO */}
-        <Link
-          href="/"
-          className="text-xl uppercase h-full font-semibold flex justify-center items-center rounded-lg overflow-hidden transition-all duration-500 ease-in-out backdrop-blur-sm pl-6 md:pl-0"
-          title="Home"
-        >
-          {/* Mobile/tablet: static FirstLetter.Tail (no animation) */}
-          <span className="md:hidden">
-            <span className="inline-block">{firstLetter}</span>
-            <span aria-hidden="true" className="inline-block">
-              .
-            </span>
-            <span className="inline-block">{tail}</span>
-          </span>
-
-          {/* Desktop (md+): animated brand */}
-          <span className="hidden md:flex items-center">
-            <span
-              className="
-        inline-block overflow-hidden whitespace-nowrap
-        md:transition-[width] md:duration-500 md:ease-in
-        md:w-[4.25rem]
-        md:group-[.scrolled]:w-[0.875rem]
-        md:group-[.scrolled]:font-bold
-        md:group-[.scrolled]:opacity-50
-      "
-            >
-              {firstWord}
-            </span>
-            <span
-              aria-hidden="true"
-              className="
-        inline-block
-        md:transition-opacity md:duration-300 md:ease-in-out
-        md:opacity-0 md:delay-0
-        md:group-[.scrolled]:opacity-50 md:group-[.scrolled]:delay-150
-      "
-            >
-              .
-            </span>
-            <span className="inline-block md:group-[.scrolled]:opacity-50">
-              {tail}
-            </span>
-          </span>
-        </Link>
+        <Logo title={title} />
         {/* MOBILE RIGHT MENU */}
         <div className="flex flex-col items-end md:hidden pr-3 max-w-1/2">
           {!isMobileMenuOpen && (
