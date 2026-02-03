@@ -29,7 +29,7 @@ export default function RootLayout({
   const { menuItemsLeft, menuItemsRight } = menuData;
 
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className="scroll-smooth" suppressHydrationWarning={true}>
       <body
         className={`${onest.variable} ${bioRhyme.variable} font-general relative overflow-x-hidden bg-[#181818] text-[#b6b6b6]`}
       >
