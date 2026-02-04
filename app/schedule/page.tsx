@@ -1,11 +1,11 @@
 import type { ScheduleResponse } from "@/types/ScheduleItem";
 import scheduleData from "@/data/scheduleData.json";
-import { passes, passesTitle, purchaseButtonTitle } from "@/data/passesData";
 import ScheduleClient from "./components/scheduleClient/ScheduleClient";
 import { classes } from "@/data/classesData";
 import { instructors } from "@/data/instructorsData";
 import type { ClassesState, Category, Instructor } from "@/types/classesTypes";
 import type { Class } from "@/types/ClassDescription";
+import PriceList from "./components/priceList/PriceList";
 
 export default async function SchedulePage() {
   // when BE is connected, replace with fetch:
@@ -16,6 +16,7 @@ export default async function SchedulePage() {
     throw new Response("Failed to load schedule", { status: res.status });
   }
   const data: ScheduleResponse = await res.json(); */
+
   const weeks = scheduleData.weeks as ScheduleResponse["weeks"];
   const categoriesFromClasses: Category[] = classes.map((c: Category) => ({
     id: c.id,
@@ -24,7 +25,7 @@ export default async function SchedulePage() {
 
   const classesWithInstructors = classes.map((classItem: Class) => {
     const instructorForClass = instructors.find(
-      (i: Instructor) => i.id === classItem.id
+      (i: Instructor) => i.id === classItem.id,
     );
     return {
       ...classItem,
@@ -41,5 +42,6 @@ export default async function SchedulePage() {
       classCategories={categoriesFromClasses}
       classItems={classesWithInstructors}
     />
+    <PriceList prices={{ passes: scheduleData.passes }} />
   );
 }

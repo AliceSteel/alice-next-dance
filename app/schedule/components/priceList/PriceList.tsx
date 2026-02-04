@@ -2,18 +2,18 @@
 import Btn from "@/components/formElements/Btn";
 import type { Pass } from "@/types/Pass";
 import { useState, useRef, useEffect, memo } from "react";
-/* import { addToCart, openBasketDrawer } from "@/store/slices/cart/cartSlice";
+import { addToCart, openBasketDrawer } from "@/store/slices/cart/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { selectIsLoggedIn } from "@/store/slices/user/userSlice";
 import { openModal } from "@/store/slices/modal/modalSlice";
-import type { RootState } from "@/store/store"; */
+import type { RootState } from "@/store/store";
 
 const PriceList = ({
   prices,
 }: {
   prices: { passes: Pass[]; purchaseButtonTitle: string };
 }) => {
-  /* const isLoggedIn = useSelector(selectIsLoggedIn);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
   const cartItems = useSelector((state: RootState) => state.cart.items);
 
   const { passes, purchaseButtonTitle } = prices;
@@ -120,7 +120,7 @@ const PriceList = ({
                     )}
                   </div>
                 </div>
-          
+
                 <span
                   aria-hidden="true"
                   className={
@@ -133,7 +133,6 @@ const PriceList = ({
           );
         })}
     </ul>
-  ); */
-  return <div>Price List Component</div>;
+  );
 };
 export default memo(PriceList);

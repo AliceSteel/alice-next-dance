@@ -11,9 +11,18 @@ generator client {
 
 datasource db {
   provider = "postgresql" 
+  //url      = env("DATABASE_URL")
 }
 
-model TestProfile {
-  id     String @id @default(uuid())
+model Product {
+  id     Int @id @default(autoincrement())
   name   String
+  price String
+  terms  String[] @default([])
+}
+model PassesTitle {
+  title String @unique
+}
+model PurchaseButtonTitle {
+  title String @unique
 }
