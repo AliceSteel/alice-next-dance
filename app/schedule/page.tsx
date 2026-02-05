@@ -6,6 +6,12 @@ import { instructors } from "@/data/instructorsData";
 import type { ClassesState, Category, Instructor } from "@/types/classesTypes";
 import type { Class } from "@/types/ClassDescription";
 import PriceList from "./components/priceList/PriceList";
+import {
+  fetchProducts,
+  fetchPassesTitleRecord,
+  fetchBtnTitleRecord,
+} from "@/helpers/actions";
+import { Suspense } from "react";
 
 export default async function SchedulePage() {
   // when BE is connected, replace with fetch:
@@ -16,6 +22,10 @@ export default async function SchedulePage() {
     throw new Response("Failed to load schedule", { status: res.status });
   }
   const data: ScheduleResponse = await res.json(); */
+
+  const products = await fetchProducts();
+  const passesTitle = await fetchPassesTitleRecord();
+  const btnTitle = await fetchBtnTitleRecord();
 
   const weeks = scheduleData.weeks as ScheduleResponse["weeks"];
   const categoriesFromClasses: Category[] = classes.map((c: Category) => ({
@@ -34,14 +44,19 @@ export default async function SchedulePage() {
   });
 
   return (
-    <ScheduleClient
-      weeks={weeks}
-      passes={passes}
-      passesTitle={passesTitle}
-      purchaseButtonTitle={purchaseButtonTitle}
-      classCategories={categoriesFromClasses}
-      classItems={classesWithInstructors}
-    />
-    <PriceList prices={{ passes: scheduleData.passes }} />
+    <>
+      <ScheduleClient
+        weeks={weeks}
+        classCategories={categoriesFromClasses}
+        classItems={classesWithInstructors}
+      />
+      {/* CHECK if it scrolls down after modal closed here */}
+      <section id="membership-options" className="page-container py-20">
+        <h2 className="text-2xl uppercase mb-5">{passesTitle}</h2>
+      </section>
+      <Suspense fallback={<div>Loading prices...</div>}>
+        <PriceList prices={products} purchaseButtonTitle={btnTitle} />
+      </Suspense>
+    </>
   );
 }

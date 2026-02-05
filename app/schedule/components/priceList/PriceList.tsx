@@ -10,13 +10,13 @@ import type { RootState } from "@/store/store";
 
 const PriceList = ({
   prices,
+  purchaseButtonTitle,
 }: {
-  prices: { passes: Pass[]; purchaseButtonTitle: string };
+  prices: Pass[];
+  purchaseButtonTitle: string;
 }) => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const cartItems = useSelector((state: RootState) => state.cart.items);
-
-  const { passes, purchaseButtonTitle } = prices;
 
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
@@ -24,7 +24,7 @@ const PriceList = ({
 
   const detailsRefs = useRef<Record<number, HTMLDivElement | null>>({});
   useEffect(() => {
-    passes.forEach((_, index) => {
+    prices.forEach((_, index) => {
       const el = detailsRefs.current[index];
       if (!el) return;
       if (openIndex === index) {
@@ -33,7 +33,7 @@ const PriceList = ({
         el.style.maxHeight = "0px";
       }
     });
-  }, [openIndex, passes]);
+  }, [openIndex, prices]);
 
   const toggleIndex = (index: number) => {
     setOpenIndex((prev) => (prev === index ? null : index));
@@ -50,8 +50,8 @@ const PriceList = ({
     };
   return (
     <ul className="flex flex-col">
-      {passes &&
-        passes.map((pass: Pass, index: number) => {
+      {prices &&
+        prices.map((pass: Pass, index: number) => {
           const isInCart = cartItems.some((item: Pass) => item.id === pass.id);
           const label = isInCart ? "Added" : purchaseButtonTitle;
           const isOpen = openIndex === index;
@@ -120,12 +120,12 @@ const PriceList = ({
                     )}
                   </div>
                 </div>
-
+                {/* Arrow */}
                 <span
                   aria-hidden="true"
                   className={
                     "absolute right-0 top-4 w-3 h-3 border-r-2 border-b-2 border-white transform transition-transform duration-300 " +
-                    (isOpen ? "-rotate-135" : "rotate-45")
+                    (isOpen ? "-rotate-[135deg]" : "rotate-45")
                   }
                 />
               </div>

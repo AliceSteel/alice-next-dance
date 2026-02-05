@@ -15,18 +15,10 @@ import {
   selectIsLoggedIn,
   collectBookingsForUser,
 } from "@/store/slices/user/userSlice";
-import PriceList from "../priceList/PriceList";
 import type { ScheduleClientProps } from "./ScheduleClientTypes";
 import { toast } from "react-toastify";
 
-function ScheduleClient({
-  weeks,
-  passes,
-  passesTitle,
-  purchaseButtonTitle,
-  classCategories,
-  classItems,
-}: ScheduleClientProps) {
+function ScheduleClient({ weeks, classCategories }: ScheduleClientProps) {
   const categories = useSelector(selectCategories);
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const availableCredits = useSelector(selectAvailableCredits);
@@ -91,7 +83,7 @@ function ScheduleClient({
   ];
   const days = useMemo(
     () => ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-    []
+    [],
   );
   const timeSlots = useMemo(
     () => [
@@ -101,7 +93,7 @@ function ScheduleClient({
       "15:00-16:30",
       "17:00-18:30",
     ],
-    []
+    [],
   );
   const getEntryFor = (day: string, slot: string) =>
     currentWeek.entries.find((e) => e.day === day && e.timeSlot === slot);
@@ -110,7 +102,7 @@ function ScheduleClient({
     // 1. not logged in → go login, then membership
     console.log("Entry clicked in Schedule page:", entry);
     if (!isLoggedIn) {
-      // dispatch(openModal("login"));
+      dispatch(openModal("login"));
       return;
     }
 
@@ -122,7 +114,7 @@ function ScheduleClient({
     }
     dispatch(consumeBookingCredit({ entry }));
     // 3. dispatch booking to store and BE
-    // dispatch(bookClass({ entryId: entry.id, weekId: week.id }));
+    //dispatch(bookClass({ entryId: entry.id, weekId: week.id }));
   };
 
   return (
@@ -159,11 +151,6 @@ function ScheduleClient({
           {" "}
           <Button label="Have Questions?" to="/contact" />
         </div>
-      </section>
-      {/* CHECK if it scrolls down after modal closed here */}
-      <section id="membership-options" className="page-container py-20">
-        <h2 className="text-2xl uppercase mb-5">{passesTitle}</h2>
-        <PriceList prices={{ passes, purchaseButtonTitle }} />
       </section>
     </>
   );
