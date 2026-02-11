@@ -1,7 +1,7 @@
 import type { Class } from "@/types/ClassDescription";
 
 export type Category = {
-    id: string;
+    id: string | number;
     title: string;
 }
 export type ClassesState = {

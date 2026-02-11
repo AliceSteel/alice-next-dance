@@ -26,3 +26,23 @@ model PassesTitle {
 model PurchaseButtonTitle {
   title String @unique
 }
+
+model Class {
+  id          Int    @id @default(autoincrement())
+  slug        String @unique
+  title  String
+  imageUrl String
+  description String
+  text1 String
+  text2 String
+}
+
+model Instructor {
+  id          Int    @id @default(autoincrement())
+  slug        String @unique
+  name        String
+  image String
+  instagram String
+  youTube String
+  bioLines String[]
+}

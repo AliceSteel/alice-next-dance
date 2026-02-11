@@ -1,10 +1,17 @@
-import { configureStore} from '@reduxjs/toolkit';
+import { configureStore, combineReducers} from '@reduxjs/toolkit';
 import userReducer from './slices/user/userSlice';
 import modalReducer from './slices/modal/modalSlice';
 import cartReducer from './slices/cart/cartSlice';
 import classesReducer from './slices/classes/classesSlice';
 
-const preloadedAuth = (() => {
+const rootReducer = combineReducers({
+  auth: userReducer,
+  modal: modalReducer,
+  cart: cartReducer,
+  classes: classesReducer,
+});
+
+function getPreloadedAuth() {
   try {
     const raw = localStorage.getItem("user");
     if (!raw) return undefined;
@@ -19,18 +26,20 @@ const preloadedAuth = (() => {
   } catch {
     return undefined;
   }
-})();
+}
 
-export const store = configureStore({
-  reducer: {
-    auth: userReducer,
-    modal: modalReducer,
-    cart: cartReducer,
-    classes: classesReducer
-  },
-  preloadedState: preloadedAuth ? { auth: preloadedAuth } : undefined,
-});
+export function makeStore(preloadedState?: any) {
+  const preloadedAuth = getPreloadedAuth();
+  const authState = preloadedAuth ? { auth: preloadedAuth } : {};
 
+  return configureStore({
+    reducer: rootReducer,
+    preloadedState: {
+      ...authState,
+      ...(preloadedState ?? {}),
+    },
+  });
+}
 
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+export type RootState = ReturnType<ReturnType<typeof makeStore>["getState"]>;
+export type AppDispatch = ReturnType<typeof makeStore>["dispatch"];

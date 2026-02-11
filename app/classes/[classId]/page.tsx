@@ -103,6 +103,7 @@ export default function Class({ params }: { params: { classId: string } }) {
                   src={image}
                   alt={name ?? "Instructor image"}
                   width={900}
+                  height={900}
                   loading="lazy"
                 />
               )}

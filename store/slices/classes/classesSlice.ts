@@ -1,26 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { classes } from "@/data/classesData";
-import { instructors } from "@/data/instructorsData";
 import type { ClassesState, Category } from "./classesTypes";
 
-const categoriesFromClasses: Category[] = classes.map((c) => ({
-  id: c.id,
-  title: c.title,
-}));
-
-const classesWithInstructors = classes.map((classItem) => {
-  const instructorForClass = instructors.find(
-    (instructor) => instructor.id === classItem.id
-  );
-  return {
-    ...classItem,
-    instructor: instructorForClass || undefined,
-  };
-});
 
 const initialState: ClassesState = {
-  items: classesWithInstructors,
-  categories: categoriesFromClasses
+  items: [],
+  categories: []
 };
 
 const classesSlice = createSlice({
@@ -36,8 +20,8 @@ export const selectCategories = (state: { classes: ClassesState }) =>
   state.classes.categories;
 
 export const selectClassById =
-  (id: string) =>
+  (id: string | number) =>
   (state: { classes: ClassesState }) =>
-    state.classes.items.find((c) => c.id === id);
+    state.classes.items.find((c) => c.id == id);
 
 export default classesSlice.reducer;
