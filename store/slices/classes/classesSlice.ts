@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import type { ClassesState, Category } from "./classesTypes";
+import type { ClassesState } from "./classesTypes";
 
 
 const initialState: ClassesState = {
@@ -13,11 +13,9 @@ const classesSlice = createSlice({
   reducers: {  },
 });
 
-export const selectClasses = (state: { classes: ClassesState }) =>
-  state.classes.items;
+export const selectClasses = (state: { classes: ClassesState }) => state.classes.items;
 
-export const selectCategories = (state: { classes: ClassesState }) =>
-  state.classes.categories;
+export const selectCategories = (state: { classes: ClassesState }) => state.classes.categories;
 
 export const selectClassById =
   (id: string | number) =>

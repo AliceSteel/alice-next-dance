@@ -2,7 +2,10 @@
 
 import ClassFilters from "@/components/classFilters/ClassFilters";
 import { useSelector, useDispatch } from "react-redux";
-import { selectCategories } from "@/store/slices/classes/classesSlice";
+import {
+  selectCategories,
+  selectClasses,
+} from "@/store/slices/classes/classesSlice";
 import Button from "@/components/formElements/Btn";
 import { useState, useEffect, useMemo } from "react";
 import type { ScheduleEntry, ScheduleWeek } from "@/types/ScheduleItem";
@@ -17,10 +20,13 @@ import {
 } from "@/store/slices/user/userSlice";
 import type { ScheduleClientProps } from "./ScheduleClientTypes";
 import { toast } from "react-toastify";
+import type { Category } from "@/store/slices/classes/classesTypes";
 
-function ScheduleClient({ weeks, classCategories }: ScheduleClientProps) {
-  const categories = useSelector(selectCategories);
+function ScheduleClient({ weeks }: ScheduleClientProps) {
   const isLoggedIn = useSelector(selectIsLoggedIn);
+  const classCategories: Category[] = useSelector(selectCategories);
+  const classesWithInstructors = useSelector(selectClasses);
+
   const availableCredits = useSelector(selectAvailableCredits);
   const alreadyBookedEntries = useSelector(collectBookingsForUser);
 

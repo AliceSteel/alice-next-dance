@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import backgroundImage from "@/images/ballet-blurred.jpg";
+import backgroundImage from "@/public/images/ballet-blurred.jpg";
 import { aboutUsContent } from "@/data/aboutUsData";
 import { useEffect, useRef, useState } from "react";
 import SectionTitle from "@/components/sectionTitle/SectionTitle";

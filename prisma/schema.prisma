@@ -46,3 +46,24 @@ model Instructor {
   youTube String
   bioLines String[]
 }
+
+model Week {
+  id        String   @id // e.g., "2025-W48"
+  label     String   // e.g., "Week of Nov 24"
+  startDate String   // e.g., "24-11-2025"
+  days      String[] @default(["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"])
+  entries   ScheduleEntry[]
+}
+
+model ScheduleEntry {
+  id          Int    @id @default(autoincrement())
+  entryId     String @unique // e.g., "w1-mon-11-ballet-2"
+  weekId      String
+  day         String // e.g., "Mon"
+  timeSlot    String // e.g., "11:00-12:30"
+  classId     String // e.g., "ballet"
+  label       String // e.g., "Ballet 2"
+  teacher     String // e.g., "Sofia M."
+  
+  week        Week   @relation(fields: [weekId], references: [id], onDelete: Cascade)
+}

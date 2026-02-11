@@ -1,5 +1,6 @@
 import db from "@/helpers/db";
 import { redirect } from "next/navigation";
+import type { ScheduleResponse } from "@/types/ScheduleItem";
 
 export const fetchProducts = () => {
   return db.product.findMany({orderBy: { price: "asc" }});
@@ -30,3 +31,27 @@ export const fetchSingleClass = async (slug: string) => {
 export const fetchAllInstructors = () => {
   return db.instructor.findMany();
 }
+
+
+export const fetchSchedule = async (): Promise<ScheduleResponse["weeks"]> => {
+  const weeks = await db.week.findMany({
+    orderBy: { id: "asc" },
+    include: { entries: true },
+  });
+
+  return weeks.map((week) => ({
+    id: week.id,
+    label: week.label,
+    startDate: week.startDate,
+    days: week.days,
+    entries: week.entries.map((entry) => ({
+      id: entry.entryId,           
+      day: entry.day,
+      timeSlot: entry.timeSlot as any, 
+      classId: entry.classId,
+      label: entry.label ?? undefined,
+      teacher: entry.teacher ?? undefined,
+    })),
+  }));
+};
+  
