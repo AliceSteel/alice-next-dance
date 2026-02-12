@@ -1,9 +1,9 @@
 import { StaticImageData } from "next/image";
 
 export type ClassCard = {
-    id: string;
+    id: string | number;
     title: string;
-    imageUrl?: StaticImageData;
+    imageUrl?: StaticImageData | string;
     description?:string
 }
 export type ClassesListProps = {
