@@ -22,6 +22,8 @@ export const metadata: Metadata = {
   description: "A dance studio website built with Next.js and Tailwind CSS",
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function RootLayout({
   children,
 }: Readonly<{
