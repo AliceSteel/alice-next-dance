@@ -8,7 +8,6 @@ import { useDispatch } from "react-redux";
 import { setUser } from "@/store/slices/user/userSlice";
 import { closeModal } from "@/store/slices/modal/modalSlice";
 import type { User } from "@/types/User";
-import { SubmitBtn } from "@/components/formElements/SubmitBtn";
 
 export default function LoginForm() {
   const [error, setError] = useState<string | null>(null);
@@ -21,7 +20,6 @@ export default function LoginForm() {
     setError(null);
     setIsSubmitting(true);
     const formData = new FormData(e.currentTarget);
-    console.log("Logging in...");
 
     // call the server action
     const result = await createUser(formData);
@@ -57,6 +55,9 @@ export default function LoginForm() {
           onSubmit={handleLogin}
         >
           <h2 className="text-4xl uppercase text-center">Login</h2>
+
+          {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
+
           <FormInput name="email" type="email" placeholder="Email" required />
           <FormInput
             name="password"
@@ -67,7 +68,7 @@ export default function LoginForm() {
           <Button label="Login" type="submit" loading={isSubmitting} />
           <Button type="button" label="Login as a guest" variant="secondary" />
           <p>
-            Don't have an account?{" "}
+            Don&apos;t have an account?{" "}
             <button
               className="cursor-pointer underline-offset-1 underline"
               onClick={() => setFormType("register")}

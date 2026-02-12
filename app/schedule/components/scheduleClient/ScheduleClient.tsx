@@ -25,7 +25,6 @@ import type { Category } from "@/store/slices/classes/classesTypes";
 function ScheduleClient({ weeks }: ScheduleClientProps) {
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const classCategories: Category[] = useSelector(selectCategories);
-  const classesWithInstructors = useSelector(selectClasses);
 
   const availableCredits = useSelector(selectAvailableCredits);
   const alreadyBookedEntries = useSelector(collectBookingsForUser);

@@ -1,6 +1,6 @@
 import backgroundImage from "@/public/images/blurred-black.jpg";
 import About from "@/components/about/About";
-import { toast } from "react-toastify";
+//import { toast } from "react-toastify";
 import Image from "next/image";
 import heroLines from "@/data/heroLinesData";
 

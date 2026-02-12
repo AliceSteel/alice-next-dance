@@ -1,5 +1,3 @@
-import db from "@/helpers/db";
-
 async function ClassesPage() {
   /*  const profile = await db.testProfile.create({
     data: {
