@@ -5,6 +5,8 @@ import { Onest, BioRhyme } from "next/font/google";
 import menuData from "@/data/menuData.json";
 import { Providers } from "./Providers";
 import { fetchClasses, fetchAllInstructors } from "@/helpers/actions";
+import type { Class } from "@/types/ClassDescription";
+import type { Category } from "@/store/slices/classes/classesTypes";
 
 const onest = Onest({
   subsets: ["latin"],
@@ -31,8 +33,8 @@ export default async function RootLayout({
 }>) {
   const { menuItemsLeft, menuItemsRight } = menuData;
 
-  let items: any[] = [];
-  let categories: any[] = [];
+  let items: Class[] = [];
+  let categories: Category[] = [];
 
   try {
     const [dbClasses, dbInstructors] = await Promise.all([
