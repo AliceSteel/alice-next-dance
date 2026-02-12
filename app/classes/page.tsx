@@ -6,7 +6,7 @@ async function ClassesPage() {
   });
   const users = await db.testProfile.findMany(); */
 
-  return <div>ClassesPage</div>;
+  return <div className="page-container pt-9">ClassesPage</div>;
 }
 
 export default ClassesPage;
