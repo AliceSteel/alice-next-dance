@@ -42,7 +42,7 @@ export default async function RootLayout({
 
     const instructorsBySlug = new Map(dbInstructors.map((i) => [i.slug, i]));
 
-    const items = dbClasses.map((c) => {
+    items = dbClasses.map((c) => {
       const i = instructorsBySlug.get(c.slug);
       return {
         id: c.slug,
