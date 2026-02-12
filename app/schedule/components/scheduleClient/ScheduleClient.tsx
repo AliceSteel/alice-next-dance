@@ -2,10 +2,7 @@
 
 import ClassFilters from "@/components/classFilters/ClassFilters";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  selectCategories,
-  selectClasses,
-} from "@/store/slices/classes/classesSlice";
+import { selectCategories } from "@/store/slices/classes/classesSlice";
 import Button from "@/components/formElements/Btn";
 import { useState, useEffect, useMemo } from "react";
 import type { ScheduleEntry, ScheduleWeek } from "@/types/ScheduleItem";
@@ -118,7 +115,8 @@ function ScheduleClient({ weeks }: ScheduleClientProps) {
       return;
     }
     dispatch(consumeBookingCredit({ entry }));
-    // 3. dispatch booking to store and BE
+    toast.success(`Successfully booked ${entry.label} with ${entry.teacher}`);
+    // toDO3. dispatch booking to store and BE
     //dispatch(bookClass({ entryId: entry.id, weekId: week.id }));
   };
 
