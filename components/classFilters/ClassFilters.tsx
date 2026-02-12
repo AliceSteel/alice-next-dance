@@ -1,20 +1,17 @@
-export type ClassCategory = {
-  id: string;
-  title: string;
-};
+import type { Category } from "@/types/classesTypes";
 
 export default function ClassFilters({
   categories,
   filterItems,
   selectedId,
 }: {
-  categories: ClassCategory[] | undefined;
-  filterItems: (categoryId: string) => void;
-  selectedId?: string | null;
+  categories: Category[] | undefined;
+  filterItems: (categoryId: string | number) => void;
+  selectedId?: string | number | null;
 }) {
   return (
     <>
-      {categories?.map((category: ClassCategory) => {
+      {categories?.map((category: Category) => {
         const isSelected = category.id === selectedId;
         return (
           <li key={category.id}>

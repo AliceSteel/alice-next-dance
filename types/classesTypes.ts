@@ -2,7 +2,7 @@ import type { Class } from "@/types/ClassDescription";
 import { StaticImageData } from "next/image";
 
 export type Category = {
-    id: string;
+    id: string | number;
     title: string;
 }
 export type ClassesState = {
@@ -10,9 +10,9 @@ export type ClassesState = {
   categories: Category[]
 };
 export type Instructor = {
-    id: string;
+    id: string ;
     name: string;
-    image: string |StaticImageData;
+    image: string | StaticImageData;
     instagram: string;
     youTube: string;
     bioLines: string[];

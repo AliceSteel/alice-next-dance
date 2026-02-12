@@ -5,7 +5,7 @@ export type ScheduleGridProps = {
     days: string[];
     timeSlots: string[];
     currentWeek: ScheduleWeek;
-    selectedCategoryId: string | null;
+    selectedCategoryId: string | number | null;
     getEntryFor: (day: string, slot: string) => ScheduleEntry | undefined;
     weekIndex: number;
     weeks: ScheduleWeek[];

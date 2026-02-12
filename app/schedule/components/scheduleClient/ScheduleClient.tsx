@@ -6,7 +6,7 @@ import { selectCategories } from "@/store/slices/classes/classesSlice";
 import Button from "@/components/formElements/Btn";
 import { useState, useEffect, useMemo } from "react";
 import type { ScheduleEntry, ScheduleWeek } from "@/types/ScheduleItem";
-import type { ClassCategory } from "@/components/classFilters/ClassFilters";
+import type { Category } from "@/store/slices/classes/classesTypes";
 import ScheduleGrid from "../scheduleGrid/ScheduleGrid";
 import { openModal } from "@/store/slices/modal/modalSlice";
 import {
@@ -17,7 +17,6 @@ import {
 } from "@/store/slices/user/userSlice";
 import type { ScheduleClientProps } from "./ScheduleClientTypes";
 import { toast } from "react-toastify";
-import type { Category } from "@/store/slices/classes/classesTypes";
 
 function ScheduleClient({ weeks }: ScheduleClientProps) {
   const isLoggedIn = useSelector(selectIsLoggedIn);
@@ -28,13 +27,15 @@ function ScheduleClient({ weeks }: ScheduleClientProps) {
 
   const dispatch = useDispatch();
 
-  function getFilteredCategory(search: string): string {
+  function getFilteredCategory(search: string): string | number {
     const params = new URLSearchParams(search);
     const filtered = params.get("filtered");
     return filtered && filtered.trim().length > 0 ? filtered : "all";
   }
 
-  const [selectedCategoryId, setSelectedCategoryId] = useState<string>("all");
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string | number>(
+    "all",
+  );
 
   useEffect(() => {
     const initial = getFilteredCategory(window.location.search);
@@ -59,12 +60,13 @@ function ScheduleClient({ weeks }: ScheduleClientProps) {
     // run when categories initially arrive/update
   }, [classCategories]);
 
-  const handleFilterItems = (categoryId: string) => {
+  const handleFilterItems = (categoryId: string | number) => {
     setSelectedCategoryId(categoryId);
     const params = new URLSearchParams(window.location.search);
     if (categoryId === "all") {
       params.delete("filtered");
     } else {
+      categoryId = String(categoryId);
       params.set("filtered", categoryId);
     }
 
@@ -79,7 +81,7 @@ function ScheduleClient({ weeks }: ScheduleClientProps) {
 
   const currentWeek: ScheduleWeek = weeks[weekIndex];
 
-  const allCategories: ClassCategory[] = [
+  const allCategories: Category[] = [
     { id: "all", title: "All" },
     ...(classCategories ?? []),
   ];
