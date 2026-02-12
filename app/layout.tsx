@@ -31,34 +31,45 @@ export default async function RootLayout({
 }>) {
   const { menuItemsLeft, menuItemsRight } = menuData;
 
-  const [dbClasses, dbInstructors] = await Promise.all([
-    fetchClasses(),
-    fetchAllInstructors(),
-  ]);
-  const instructorsBySlug = new Map(dbInstructors.map((i) => [i.slug, i]));
-  const items = dbClasses.map((c) => {
-    const i = instructorsBySlug.get(c.slug);
-    return {
-      id: c.slug,
-      title: c.title,
-      imageUrl: `/images/${c.imageUrl}`, // filenames you seeded
-      description: c.description,
-      text1: c.text1 ?? undefined,
-      text2: c.text2 ?? undefined,
-      instructor: i
-        ? {
-            id: i.slug,
-            name: i.name,
-            image: `/images/${i.image}`, // filenames from instructorsData.json
-            instagram: i.instagram,
-            youTube: i.youTube,
-            bioLines: i.bioLines,
-          }
-        : undefined,
-    };
-  });
+  let items: any[] = [];
+  let categories: any[] = [];
 
-  const categories = items.map((c) => ({ id: c.id, title: c.title }));
+  try {
+    const [dbClasses, dbInstructors] = await Promise.all([
+      fetchClasses(),
+      fetchAllInstructors(),
+    ]);
+
+    const instructorsBySlug = new Map(dbInstructors.map((i) => [i.slug, i]));
+
+    const items = dbClasses.map((c) => {
+      const i = instructorsBySlug.get(c.slug);
+      return {
+        id: c.slug,
+        title: c.title,
+        imageUrl: `/images/${c.imageUrl}`, // filenames you seeded
+        description: c.description,
+        text1: c.text1 ?? undefined,
+        text2: c.text2 ?? undefined,
+        instructor: i
+          ? {
+              id: i.slug,
+              name: i.name,
+              image: `/images/${i.image}`, // filenames from instructorsData.json
+              instagram: i.instagram,
+              youTube: i.youTube,
+              bioLines: i.bioLines,
+            }
+          : undefined,
+      };
+    });
+
+    categories = items.map((c) => ({ id: c.id, title: c.title }));
+  } catch (err) {
+    console.error("Failed to load classes/instructors from DB", err);
+    // items/categories stay empty; app still renders
+  }
+
   const preloadedState = {
     classes: {
       items,
