@@ -1,9 +1,10 @@
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 export default function PurchaseDialog() {
   return (
     <div>
-      you added 1 item to Basket, go to <Link to="/basket">Basket</Link>
+      {" "}
+      you added 1 item to Basket, go to <Link href="/basket">Basket</Link>{" "}
     </div>
   );
 }
