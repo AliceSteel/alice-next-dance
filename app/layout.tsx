@@ -7,6 +7,8 @@ import { Providers } from "./Providers";
 import { fetchClasses, fetchAllInstructors } from "@/helpers/actions";
 import type { Class } from "@/types/ClassDescription";
 import type { Category } from "@/store/slices/classes/classesTypes";
+import { ClerkProvider } from "@clerk/nextjs";
+import ClerkAuthSync from "@/components/ClerkAuthSync";
 
 const onest = Onest({
   subsets: ["latin"],
@@ -72,6 +74,54 @@ export default async function RootLayout({
     // items/categories stay empty; app still renders
   }
 
+  const clerkAppearance = {
+    variables: {
+      colorPrimary: "#2563eb", // blue-600 (your primary button)
+      colorBorder: "#2563eb",
+      colorForeground: "#ffffff", // text color on clerk component
+      fontWeight: {
+        normal: 400,
+        medium: 500,
+        semibold: 500,
+        bold: 500,
+      },
+      colorInput: "#181818",
+      colorMuted: "transparent",
+      /*  colorPrimaryForeground: "#ffffff",
+      colorBackground: "#272727", // modal card bg
+      colorForeground: "#b6b6b6", // page text
+      colorMuted: "#181818", // page background
+      colorMutedForeground: "#9ca3af",
+      colorNeutral: "#4b5563",
+      colorInput: "#181818",
+      colorInputForeground: "#ffffff",
+      colorDanger: "#ef4444",
+      colorSuccess: "#22c55e",
+      colorWarning: "#eab308",
+      colorShimmer: "#374151",
+      colorRing: "#60a5fa",
+      colorShadow: "rgba(37, 99, 235, 0.5)",
+
+      
+      colorModalBackdrop: "rgba(0, 0, 0, 0.4)",
+
+      fontFamily: "var(--font-onest), system-ui, sans-serif",
+      fontFamilyButtons: "var(--font-biorhyme), system-ui, sans-serif",
+
+      fontSize: {
+        xs: "0.75rem",
+        sm: "0.875rem",
+        md: "0.9375rem",
+        lg: "1rem",
+        xl: "1.125rem",
+      },
+
+      
+ */
+      spacing: "1rem",
+    },
+  };
+
   const preloadedState = {
     classes: {
       items,
@@ -79,18 +129,21 @@ export default async function RootLayout({
     },
   };
   return (
-    <html lang="en" className="scroll-smooth" suppressHydrationWarning={true}>
-      <body
-        className={`${onest.variable} ${bioRhyme.variable} font-general relative overflow-x-hidden bg-[#181818] text-[#b6b6b6]`}
-      >
-        <Providers preloadedState={preloadedState}>
-          <NavBar
-            menuItemsLeft={menuItemsLeft}
-            menuItemsRight={menuItemsRight}
-          />
-          <main className="min-h-screen">{children}</main>
-        </Providers>
-      </body>
-    </html>
+    <ClerkProvider appearance={clerkAppearance}>
+      <html lang="en" className="scroll-smooth" suppressHydrationWarning={true}>
+        <body
+          className={`${onest.variable} ${bioRhyme.variable} font-general relative overflow-x-hidden bg-[#181818] text-[#b6b6b6]`}
+        >
+          <Providers preloadedState={preloadedState}>
+            <ClerkAuthSync />
+            <NavBar
+              menuItemsLeft={menuItemsLeft}
+              menuItemsRight={menuItemsRight}
+            />
+            <main className="min-h-screen">{children}</main>
+          </Providers>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

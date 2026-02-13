@@ -104,7 +104,6 @@ function ScheduleClient({ weeks }: ScheduleClientProps) {
 
   const handleEntryClick = (entry: ScheduleEntry) => {
     // 1. not logged in → go login, then membership
-    console.log("Entry clicked in Schedule page:", entry);
     if (!isLoggedIn) {
       dispatch(openModal("login"));
       return;
@@ -117,7 +116,6 @@ function ScheduleClient({ weeks }: ScheduleClientProps) {
       return;
     }
     dispatch(consumeBookingCredit({ entry }));
-    toast.success(`Successfully booked ${entry.label} with ${entry.teacher}`);
     // toDO3. dispatch booking to store and BE
     //dispatch(bookClass({ entryId: entry.id, weekId: week.id }));
   };

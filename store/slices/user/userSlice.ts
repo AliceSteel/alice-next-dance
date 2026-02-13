@@ -82,7 +82,7 @@ const userSlice = createSlice({
           (p) => p.id !== creditPkg.id
         );
       }
-      toast.success("Class booked using a credit");
+      toast.success(`Successfully booked ${scheduleEntry.label} with ${scheduleEntry.teacher}`);
     },
   },
 });
