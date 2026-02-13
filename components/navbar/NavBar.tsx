@@ -16,12 +16,18 @@ import { MenuHamburger1Outlined } from "@lineiconshq/free-icons";
 import MembershipDialog from "@/components/dialogs/MembershipDialog";
 import { openBasketDrawer } from "@/store/slices/cart/cartSlice";
 import Logo from "@/components/logo/Logo";
+import { clearUser } from "@/store/slices/user/userSlice";
+import { useClerk } from "@clerk/nextjs";
 
 function NavBar({ title, menuItemsLeft, menuItemsRight }: NavbarProps) {
+  const { signOut } = useClerk();
   const dispatch = useDispatch();
   const pathname = usePathname();
   const navRef = useRef<HTMLElement | null>(null);
   const userName = useSelector((state: RootState) => state.auth.user?.name);
+  const isLoggedIn = useSelector(
+    (state: RootState) => state.auth.status === "authenticated",
+  );
   const { type } = useSelector((state: RootState) => state.modal);
   const totalQtyItems = useSelector(
     (state: RootState) => state.cart.totalQtyItems,
@@ -65,30 +71,43 @@ function NavBar({ title, menuItemsLeft, menuItemsRight }: NavbarProps) {
   const { rightDesktop, mergedMobileRight } = useMemo(() => {
     const first = (n?: string) => (n ? n.split(/\s+/)[0] : undefined);
 
-    const authItem =
-      isHydrated && userName
-        ? { id: "auth", title: `Hi, ${first(userName)}`, link: "/account" }
-        : {
-            id: "auth",
-            title: "Login",
-            onClick: () => dispatch(openModal("login")),
-          };
+    const authItems =
+      isHydrated && isLoggedIn
+        ? [
+            { id: "auth", title: `Hi, ${first(userName)}`, link: "/account" },
+            {
+              id: "signout",
+              title: "Sign out",
+              onClick: () => {
+                void signOut();
+                dispatch(clearUser());
+              },
+            },
+          ]
+        : [
+            {
+              id: "auth",
+              title: "Login",
+              onClick: () => dispatch(openModal("login")),
+            },
+          ];
 
-    const rightWithBasket = isHydrated
-      ? menuItemsRight.map((item) =>
-          item.link === "/basket"
-            ? {
-                ...item,
-                title: totalQtyItems ? `Basket (${totalQtyItems})` : "Basket",
-                onClick: () => dispatch(openBasketDrawer()),
-              }
-            : item,
-        )
-      : menuItemsRight;
+    const rightWithBasket =
+      isHydrated && isLoggedIn
+        ? menuItemsRight.map((item) =>
+            item.link === "/basket"
+              ? {
+                  ...item,
+                  title: totalQtyItems ? `Basket (${totalQtyItems})` : "Basket",
+                  onClick: () => dispatch(openBasketDrawer()),
+                }
+              : item,
+          )
+        : menuItemsRight.filter((item) => item.link !== "/basket");
 
     return {
-      rightDesktop: [...rightWithBasket, authItem],
-      mergedMobileRight: [...menuItemsLeft, ...rightWithBasket, authItem],
+      rightDesktop: [...rightWithBasket, ...authItems],
+      mergedMobileRight: [...menuItemsLeft, ...rightWithBasket, ...authItems],
     };
   }, [
     userName,
@@ -97,6 +116,7 @@ function NavBar({ title, menuItemsLeft, menuItemsRight }: NavbarProps) {
     menuItemsRight,
     isHydrated,
     dispatch,
+    signOut,
   ]);
 
   useEffect(() => {
