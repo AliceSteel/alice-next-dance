@@ -3,7 +3,7 @@
 import { useUser } from "@clerk/nextjs";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { setUser, clearUser } from "@/store/slices/user/userSlice";
+import { setUser } from "@/store/slices/user/userSlice";
 
 export default function ClerkAuthSync() {
   const { isLoaded, isSignedIn, user } = useUser();
