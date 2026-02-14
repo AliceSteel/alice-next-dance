@@ -16,7 +16,7 @@ export default function Class({ params }: { params: { classId: string } }) {
   const classItem = useSelector(selectClassById(classId ?? ""));
 
   const descriptionRef = useRef<HTMLParagraphElement>(null);
-  const isPinned = usePinnedText(descriptionRef, 268);
+  const isPinned = usePinnedText(descriptionRef, 200);
 
   if (!classItem) return <p>Class not found</p>;
 
@@ -41,7 +41,9 @@ export default function Class({ params }: { params: { classId: string } }) {
         <div className="pt-40 page-container pb-6 h-full flex flex-col">
           <div
             className={
-              isPinned ? "fixed top-20 z-10" : "absolute bottom-20 z-10"
+              isPinned
+                ? "fixed top-20 z-10"
+                : "absolute bottom-40 sm:bottom-20 z-10"
             }
           >
             <PageTitle title={classItem.title} />

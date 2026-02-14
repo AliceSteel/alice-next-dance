@@ -20,8 +20,6 @@ export default function ClerkAuthSync() {
           name: user.fullName ?? undefined,
         }),
       );
-    } else {
-      dispatch(clearUser());
     }
   }, [isLoaded, isSignedIn, user, dispatch]);
 

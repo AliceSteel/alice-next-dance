@@ -15,7 +15,7 @@ export default function ScheduleGrid({
   alreadyBookedEntries,
 }: ScheduleGridProps) {
   return (
-    <div className="relative grid grid-cols-8 grid-rows-6 text-center w-full">
+    <div className="relative grid grid-cols-8 grid-rows-6 text-center w-full min-w-[600px] overflow-x-scroll">
       {/* header row: day names */}
       <div></div>
       {days.map((day) => (
@@ -99,7 +99,7 @@ export default function ScheduleGrid({
           title="Previous Week"
           onClick={() =>
             setWeekIndex((prevIndex: number) =>
-              prevIndex > 0 ? prevIndex - 1 : prevIndex
+              prevIndex > 0 ? prevIndex - 1 : prevIndex,
             )
           }
         >
@@ -118,7 +118,7 @@ export default function ScheduleGrid({
           onClick={() =>
             setWeekIndex(
               (prevIndex) =>
-                prevIndex < weeks.length - 1 ? prevIndex + 1 : prevIndex // <-- increment
+                prevIndex < weeks.length - 1 ? prevIndex + 1 : prevIndex, // <-- increment
             )
           }
         >
