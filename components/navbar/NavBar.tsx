@@ -10,14 +10,13 @@ import Modal from "@/components/Modal";
 import LoginForm from "@/components/loginForm/LoginForm";
 import Sidemenu from "@/components/sidemenu/Sidemenu";
 import BasketDrawer from "@/components/basketDrawer/BasketDrawer";
-import { Lineicons } from "@lineiconshq/react-lineicons";
-import { MenuHamburger1Outlined } from "@lineiconshq/free-icons";
 
 import MembershipDialog from "@/components/dialogs/MembershipDialog";
 import { openBasketDrawer } from "@/store/slices/cart/cartSlice";
 import Logo from "@/components/logo/Logo";
 import { clearUser } from "@/store/slices/user/userSlice";
 import { useClerk } from "@clerk/nextjs";
+import MobileNavbar from "./components/MobileNavbar";
 
 function NavBar({ title, menuItemsLeft, menuItemsRight }: NavbarProps) {
   const { signOut } = useClerk();
@@ -164,25 +163,13 @@ function NavBar({ title, menuItemsLeft, menuItemsRight }: NavbarProps) {
           />
         </div>
         <Logo title={title} />
-        {/* MOBILE RIGHT MENU */}
-        <div className="flex flex-col items-end md:hidden pr-3 max-w-1/2">
-          {!isMobileMenuOpen && (
-            <Lineicons
-              icon={MenuHamburger1Outlined}
-              size={30}
-              className="text-white/80 hover:text-white/100 transition-opacity duration-300 cursor-pointer"
-              onClick={openMobileMenu}
-            />
-          )}
-          {isMobileMenuMounted && (
-            <Sidemenu
-              position="right"
-              menuItems={mergedMobileRight}
-              isOpen={isMobileMenuOpen}
-              onClose={() => setIsMobileMenuMounted(false)}
-            />
-          )}
-        </div>
+        <MobileNavbar
+          menuItems={mergedMobileRight}
+          isOpen={isMobileMenuOpen}
+          onOpen={openMobileMenu}
+          onClose={() => setIsMobileMenuMounted(false)}
+          isMounted={isMobileMenuMounted}
+        />
         {/* DESKTOP RIGHT MENU */}
         <div className="hidden md:block ">
           <Sidemenu
