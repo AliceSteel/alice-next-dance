@@ -11,6 +11,7 @@ export default function ClassesList(props: ClassesListProps) {
   const VISIBLE_COUNT_MOBILE = 1.5;
 
   const [isMobile, setIsMobile] = useState(false);
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -25,7 +26,7 @@ export default function ClassesList(props: ClassesListProps) {
     if (!classes || classes.length === 0) return 0;
 
     return Math.ceil(classes.length / VISIBLE_COUNT);
-  }, [classes]);
+  }, [classes, VISIBLE_COUNT]);
 
   const canGoPrev = pageIndex > 0;
   const canGoNext = pageIndex < totalPages - 1;
@@ -42,7 +43,6 @@ export default function ClassesList(props: ClassesListProps) {
     return null;
   }
   // Touch handling for mobile swipe
-  const [touchStartX, setTouchStartX] = useState<number | null>(null);
 
   const onTouchStart = (e: React.TouchEvent) => {
     setTouchStartX(e.touches[0].clientX);

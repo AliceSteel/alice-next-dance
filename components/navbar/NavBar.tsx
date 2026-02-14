@@ -110,6 +110,7 @@ function NavBar({ title, menuItemsLeft, menuItemsRight }: NavbarProps) {
     };
   }, [
     userName,
+    isLoggedIn,
     totalQtyItems,
     menuItemsLeft,
     menuItemsRight,
