@@ -2,7 +2,6 @@ import "./globals.css";
 import type { Metadata } from "next";
 import NavBar from "../components/navbar/NavBar";
 import { Onest, BioRhyme } from "next/font/google";
-import menuData from "@/data/menuData.json";
 import { Providers } from "./Providers";
 import { fetchClasses, fetchAllInstructors } from "@/helpers/actions";
 import type { Class } from "@/types/ClassDescription";
@@ -33,8 +32,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { menuItemsLeft, menuItemsRight } = menuData;
-
   let items: Class[] = [];
   let categories: Category[] = [];
 
@@ -136,10 +133,7 @@ export default async function RootLayout({
         >
           <Providers preloadedState={preloadedState}>
             <ClerkAuthSync />
-            <NavBar
-              menuItemsLeft={menuItemsLeft}
-              menuItemsRight={menuItemsRight}
-            />
+            <NavBar title="Alice Studio" />
             <main className="min-h-screen">{children}</main>
           </Providers>
         </body>

@@ -17,16 +17,17 @@ import Logo from "@/components/logo/Logo";
 import { clearUser } from "@/store/slices/user/userSlice";
 import { useClerk } from "@clerk/nextjs";
 import MobileNavbar from "./components/MobileNavbar";
+import { navlinksLeft, navlinksRight, adminLinks } from "./navlinksData";
+import { selectIsLoggedIn, isUserAdmin } from "@/store/slices/user/userSlice";
 
-function NavBar({ title, menuItemsLeft, menuItemsRight }: NavbarProps) {
+function NavBar({ title }: NavbarProps) {
   const { signOut } = useClerk();
   const dispatch = useDispatch();
   const pathname = usePathname();
   const navRef = useRef<HTMLElement | null>(null);
   const userName = useSelector((state: RootState) => state.auth.user?.name);
-  const isLoggedIn = useSelector(
-    (state: RootState) => state.auth.status === "authenticated",
-  );
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const isAdmin = useSelector(isUserAdmin);
   const { type } = useSelector((state: RootState) => state.modal);
   const totalQtyItems = useSelector(
     (state: RootState) => state.cart.totalQtyItems,
@@ -93,7 +94,7 @@ function NavBar({ title, menuItemsLeft, menuItemsRight }: NavbarProps) {
 
     const rightWithBasket =
       isHydrated && isLoggedIn
-        ? menuItemsRight.map((item) =>
+        ? navlinksRight.map((item) =>
             item.link === "/basket"
               ? {
                   ...item,
@@ -102,18 +103,25 @@ function NavBar({ title, menuItemsLeft, menuItemsRight }: NavbarProps) {
                 }
               : item,
           )
-        : menuItemsRight.filter((item) => item.link !== "/basket");
+        : navlinksRight.filter((item) => item.link !== "/basket");
+
+    const adminItems = isAdmin ? adminLinks : [];
 
     return {
-      rightDesktop: [...rightWithBasket, ...authItems],
-      mergedMobileRight: [...menuItemsLeft, ...rightWithBasket, ...authItems],
+      rightDesktop: [...rightWithBasket, ...authItems, ...adminItems],
+      mergedMobileRight: [
+        ...navlinksLeft,
+        ...rightWithBasket,
+        ...authItems,
+        ...adminItems,
+      ],
     };
   }, [
     userName,
     isLoggedIn,
     totalQtyItems,
-    menuItemsLeft,
-    menuItemsRight,
+    navlinksLeft,
+    navlinksRight,
     isHydrated,
     dispatch,
     signOut,
@@ -159,7 +167,7 @@ function NavBar({ title, menuItemsLeft, menuItemsRight }: NavbarProps) {
         <div className="hidden md:block">
           <Sidemenu
             position="left"
-            menuItems={menuItemsLeft}
+            menuItems={navlinksLeft}
             isOpen={isDesktopOpen}
           />
         </div>

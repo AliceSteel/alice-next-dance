@@ -18,6 +18,7 @@ export default function ClerkAuthSync() {
           id: user.id,
           email: user.primaryEmailAddress?.emailAddress ?? "",
           name: user.fullName ?? undefined,
+          isAdmin: user.publicMetadata?.isAdmin === true, // we set this in Clerk dashboard or via API
         }),
       );
     }

@@ -113,3 +113,5 @@ export const collectBookingsForUser = createSelector(
     return bookingPackages.flatMap(pkg => pkg.usedAt.map(e => e.id));
   }
 );
+
+export const isUserAdmin = (state: RootState) => state.auth.user?.isAdmin === true;

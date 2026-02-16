@@ -4,6 +4,7 @@ export type User = {
     id: string; 
     email: string; 
     name?: string 
+    isAdmin?:boolean
 };
 export type AuthState = {
   user: User | null;
