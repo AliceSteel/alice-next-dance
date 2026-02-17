@@ -2,6 +2,8 @@
 import db from "@/helpers/db";
 import { redirect } from "next/navigation";
 import type { ScheduleResponse } from "@/types/ScheduleItem";
+import { zodProductSchema, zodInstructorSchema, zodImageSchema, validateWithZod } from "@/helpers/zodSchema";
+import { uploadImageToSupabase } from "@/helpers/supabase";
 
 export const fetchProducts = () => {
   return db.product.findMany({orderBy: { price: "asc" }});
@@ -57,28 +59,56 @@ export const fetchSchedule = async (): Promise<ScheduleResponse["weeks"]> => {
 };
 
 
-export const createCMSAction = async (prevState: any, formData: FormData):Promise<{message:string}> => {
+export const createProduct = async (prevState: any, formData: FormData):Promise<{errorMessage?: string; successMessage?: string}> => {
  try {
-  const name = formData.get("name") as string;
-  const terms1 = formData.get("terms1") as string;
-  const terms2 = formData.get("terms2") as string;
-  const terms3 = formData.get("terms3") as string;
-  const terms = [terms1, terms2, terms3].filter(term => term.trim() !== "")
-  const price = formData.get("price")?.toString();
-  if(!price) return { message: "Price is required" };
+  const rawData = Object.fromEntries(formData.entries());
+  const { terms1, terms2, terms3, ...rest } = rawData;
+  const terms = [terms1, terms2, terms3].filter((term): term is string => typeof term === "string" && term.trim() !== "",);
+
+  const validatedData = zodProductSchema.safeParse({ ...rest, terms });
+
+  if (!validatedData.success) {
+    const errors= validatedData.error.issues.map(err => err.message).join(", ")
+    throw new Error(`Validation failed: ${errors}`);
+  }
 
   await db.product.create({
-    data: {
-      name,
-      terms,
-      price,
-    },
+    data: validatedData.data,
   });
-    return { message: "product created successfully" };
+    return { successMessage: "Product is created!" };
  }
   catch (error) {
     console.log("Error creating product:", error);
-    return { message: error instanceof Error ? error.message : "An unknown error occurred" };
+    return { errorMessage: error instanceof Error ? error.message : "An unknown error occurred" };
   }
 };
+
+export const createInstructor = async (prevState: any, formData: FormData):Promise<{errorMessage?: string; successMessage?: string}> => {
+  try {
+    const rawData = Object.fromEntries(formData.entries());
+    const { image, bio1, bio2, bio3, ...rest } = rawData;
+
+    const bioLines = [bio1, bio2, bio3].filter((line): line is string => typeof line === "string" && line.trim() !== "",);
   
+    const validatedData = validateWithZod(zodInstructorSchema, { ...rest, bioLines });
+    const validatedImage = validateWithZod(zodImageSchema, { image });
+
+    const imagePath = await uploadImageToSupabase(validatedImage.image);
+
+  await db.instructor.create({
+    data: {
+      slug: validatedData.slug,
+      name: validatedData.name,
+      bioLines: validatedData.bioLines,
+      image: imagePath,
+      instagram: validatedData.instagram,
+      youTube: validatedData.youTube,
+  }
+  });
+ }
+  catch (error) {
+    console.log("Error creating instructor:", error);
+    return { errorMessage: error instanceof Error ? error.message : "An unknown error occurred" };
+  }
+  redirect("/admin/edit?success=instructorcreated");
+};

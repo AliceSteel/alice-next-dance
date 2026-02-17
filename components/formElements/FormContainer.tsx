@@ -5,7 +5,8 @@ import { toast } from "react-toastify";
 import { ActionFnType } from "@/types/actionFnType";
 
 const initialState = {
-  message: "",
+  errorMessage: "",
+  successMessage: "",
 };
 export default function FormContainer({
   action,
@@ -16,8 +17,11 @@ export default function FormContainer({
 }) {
   const [state, formAction] = useFormState(action, initialState);
   useEffect(() => {
-    if (state.message) {
-      toast.info(state.message);
+    if (state.errorMessage) {
+      toast.error(state.errorMessage);
+    }
+    if (state.successMessage) {
+      toast.success(state.successMessage);
     }
   }, [state]);
 

@@ -3,7 +3,10 @@ const nextConfig = {
   images: {
     remotePatterns: [
       //allow all remote images hosts:
-      { protocol: "https", hostname: "images.unsplash.com" },
+      {
+        protocol: "https",
+        hostname: "uthhrhkygpwqcytwblma.supabase.co",
+      },
       { protocol: "https", hostname: "picsum.photos" },
     ],
   },

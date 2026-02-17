@@ -42,8 +42,8 @@ model Instructor {
   slug        String @unique
   name        String
   image String
-  instagram String
-  youTube String
+  instagram String?
+  youTube String?
   bioLines String[]
 }
 

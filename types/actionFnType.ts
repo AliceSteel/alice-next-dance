@@ -1,1 +1,1 @@
-export type ActionFnType = ( prevState: any, formData: FormData ) => Promise<{ message: string }>;
+export type ActionFnType = ( prevState: any, formData: FormData ) => Promise<{ errorMessage?: string; successMessage?: string }>;

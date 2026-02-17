@@ -192,8 +192,8 @@ export type InstructorGroupByOutputType = {
   slug: string
   name: string
   image: string
-  instagram: string
-  youTube: string
+  instagram: string | null
+  youTube: string | null
   bioLines: string[]
   _count: InstructorCountAggregateOutputType | null
   _avg: InstructorAvgAggregateOutputType | null
@@ -225,8 +225,8 @@ export type InstructorWhereInput = {
   slug?: Prisma.StringFilter<"Instructor"> | string
   name?: Prisma.StringFilter<"Instructor"> | string
   image?: Prisma.StringFilter<"Instructor"> | string
-  instagram?: Prisma.StringFilter<"Instructor"> | string
-  youTube?: Prisma.StringFilter<"Instructor"> | string
+  instagram?: Prisma.StringNullableFilter<"Instructor"> | string | null
+  youTube?: Prisma.StringNullableFilter<"Instructor"> | string | null
   bioLines?: Prisma.StringNullableListFilter<"Instructor">
 }
 
@@ -235,8 +235,8 @@ export type InstructorOrderByWithRelationInput = {
   slug?: Prisma.SortOrder
   name?: Prisma.SortOrder
   image?: Prisma.SortOrder
-  instagram?: Prisma.SortOrder
-  youTube?: Prisma.SortOrder
+  instagram?: Prisma.SortOrderInput | Prisma.SortOrder
+  youTube?: Prisma.SortOrderInput | Prisma.SortOrder
   bioLines?: Prisma.SortOrder
 }
 
@@ -248,8 +248,8 @@ export type InstructorWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.InstructorWhereInput | Prisma.InstructorWhereInput[]
   name?: Prisma.StringFilter<"Instructor"> | string
   image?: Prisma.StringFilter<"Instructor"> | string
-  instagram?: Prisma.StringFilter<"Instructor"> | string
-  youTube?: Prisma.StringFilter<"Instructor"> | string
+  instagram?: Prisma.StringNullableFilter<"Instructor"> | string | null
+  youTube?: Prisma.StringNullableFilter<"Instructor"> | string | null
   bioLines?: Prisma.StringNullableListFilter<"Instructor">
 }, "id" | "slug">
 
@@ -258,8 +258,8 @@ export type InstructorOrderByWithAggregationInput = {
   slug?: Prisma.SortOrder
   name?: Prisma.SortOrder
   image?: Prisma.SortOrder
-  instagram?: Prisma.SortOrder
-  youTube?: Prisma.SortOrder
+  instagram?: Prisma.SortOrderInput | Prisma.SortOrder
+  youTube?: Prisma.SortOrderInput | Prisma.SortOrder
   bioLines?: Prisma.SortOrder
   _count?: Prisma.InstructorCountOrderByAggregateInput
   _avg?: Prisma.InstructorAvgOrderByAggregateInput
@@ -276,8 +276,8 @@ export type InstructorScalarWhereWithAggregatesInput = {
   slug?: Prisma.StringWithAggregatesFilter<"Instructor"> | string
   name?: Prisma.StringWithAggregatesFilter<"Instructor"> | string
   image?: Prisma.StringWithAggregatesFilter<"Instructor"> | string
-  instagram?: Prisma.StringWithAggregatesFilter<"Instructor"> | string
-  youTube?: Prisma.StringWithAggregatesFilter<"Instructor"> | string
+  instagram?: Prisma.StringNullableWithAggregatesFilter<"Instructor"> | string | null
+  youTube?: Prisma.StringNullableWithAggregatesFilter<"Instructor"> | string | null
   bioLines?: Prisma.StringNullableListFilter<"Instructor">
 }
 
@@ -285,8 +285,8 @@ export type InstructorCreateInput = {
   slug: string
   name: string
   image: string
-  instagram: string
-  youTube: string
+  instagram?: string | null
+  youTube?: string | null
   bioLines?: Prisma.InstructorCreatebioLinesInput | string[]
 }
 
@@ -295,8 +295,8 @@ export type InstructorUncheckedCreateInput = {
   slug: string
   name: string
   image: string
-  instagram: string
-  youTube: string
+  instagram?: string | null
+  youTube?: string | null
   bioLines?: Prisma.InstructorCreatebioLinesInput | string[]
 }
 
@@ -304,8 +304,8 @@ export type InstructorUpdateInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   image?: Prisma.StringFieldUpdateOperationsInput | string
-  instagram?: Prisma.StringFieldUpdateOperationsInput | string
-  youTube?: Prisma.StringFieldUpdateOperationsInput | string
+  instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  youTube?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bioLines?: Prisma.InstructorUpdatebioLinesInput | string[]
 }
 
@@ -314,8 +314,8 @@ export type InstructorUncheckedUpdateInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   image?: Prisma.StringFieldUpdateOperationsInput | string
-  instagram?: Prisma.StringFieldUpdateOperationsInput | string
-  youTube?: Prisma.StringFieldUpdateOperationsInput | string
+  instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  youTube?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bioLines?: Prisma.InstructorUpdatebioLinesInput | string[]
 }
 
@@ -324,8 +324,8 @@ export type InstructorCreateManyInput = {
   slug: string
   name: string
   image: string
-  instagram: string
-  youTube: string
+  instagram?: string | null
+  youTube?: string | null
   bioLines?: Prisma.InstructorCreatebioLinesInput | string[]
 }
 
@@ -333,8 +333,8 @@ export type InstructorUpdateManyMutationInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   image?: Prisma.StringFieldUpdateOperationsInput | string
-  instagram?: Prisma.StringFieldUpdateOperationsInput | string
-  youTube?: Prisma.StringFieldUpdateOperationsInput | string
+  instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  youTube?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bioLines?: Prisma.InstructorUpdatebioLinesInput | string[]
 }
 
@@ -343,8 +343,8 @@ export type InstructorUncheckedUpdateManyInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   image?: Prisma.StringFieldUpdateOperationsInput | string
-  instagram?: Prisma.StringFieldUpdateOperationsInput | string
-  youTube?: Prisma.StringFieldUpdateOperationsInput | string
+  instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  youTube?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bioLines?: Prisma.InstructorUpdatebioLinesInput | string[]
 }
 
@@ -386,6 +386,10 @@ export type InstructorSumOrderByAggregateInput = {
 
 export type InstructorCreatebioLinesInput = {
   set: string[]
+}
+
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
 }
 
 export type InstructorUpdatebioLinesInput = {
@@ -445,8 +449,8 @@ export type $InstructorPayload<ExtArgs extends runtime.Types.Extensions.Internal
     slug: string
     name: string
     image: string
-    instagram: string
-    youTube: string
+    instagram: string | null
+    youTube: string | null
     bioLines: string[]
   }, ExtArgs["result"]["instructor"]>
   composites: {}
