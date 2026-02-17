@@ -13,8 +13,8 @@ export type Class = {
     id:string;
     name:string;
     image: string | StaticImageData;
-    instagram: string;
-    youTube: string;
+    instagram: string | null;
+    youTube: string | null;
     bioLines: string[];
   };
 }

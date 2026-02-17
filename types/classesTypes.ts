@@ -13,7 +13,7 @@ export type Instructor = {
     id: string ;
     name: string;
     image: string | StaticImageData;
-    instagram: string;
+    instagram: string | null;
     youTube: string;
     bioLines: string[];
 }

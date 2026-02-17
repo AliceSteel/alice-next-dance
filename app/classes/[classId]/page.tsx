@@ -75,7 +75,7 @@ export default function Class({ params }: { params: { classId: string } }) {
                   <span className="mr-auto">{name}</span>
                   {socialLinks.map(({ href, icon, key }) => (
                     <a
-                      href={href}
+                      href={href ?? "#"}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="hover:scale-110"
