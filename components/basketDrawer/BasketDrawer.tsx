@@ -4,7 +4,7 @@ import type { RootState } from "@/store/store";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { Lineicons } from "@lineiconshq/react-lineicons";
-import type { BasketItem } from "@/store/slices/cart/basketItemTypes";
+import type { BasketItem } from "@/types/basketItemTypes";
 import Btn from "@/components/formElements/Btn";
 import { XmarkOutlined } from "@lineiconshq/free-icons";
 
@@ -13,7 +13,7 @@ export default function BasketDrawer() {
   const isBasketOpen = useSelector((s: RootState) => s.cart.isBasketOpen);
   const cartItems = useSelector((state: RootState) => state.cart.items);
   const totalQtyItems = useSelector(
-    (state: RootState) => state.cart.totalQtyItems
+    (state: RootState) => state.cart.totalQtyItems,
   );
   const cartTotal = useSelector((state: RootState) => state.cart.cartTotal);
 

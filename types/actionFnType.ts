@@ -1,0 +1,1 @@
+export type ActionFnType = ( prevState: any, formData: FormData ) => Promise<{ message: string }>;

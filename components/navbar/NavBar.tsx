@@ -164,13 +164,15 @@ function NavBar({ title }: NavbarProps) {
         className="group fixed z-20 top-0 w-full md:px-6 py-4 flex justify-between items-start gap-1"
       >
         {" "}
-        <div className="hidden md:block">
-          <Sidemenu
-            position="left"
-            menuItems={navlinksLeft}
-            isOpen={isDesktopOpen}
-          />
-        </div>
+        {isHydrated && (
+          <div className="hidden md:block">
+            <Sidemenu
+              position="left"
+              menuItems={navlinksLeft}
+              isOpen={isDesktopOpen}
+            />
+          </div>
+        )}
         <Logo title={title} />
         <MobileNavbar
           menuItems={mergedMobileRight}
@@ -180,13 +182,15 @@ function NavBar({ title }: NavbarProps) {
           isMounted={isMobileMenuMounted}
         />
         {/* DESKTOP RIGHT MENU */}
-        <div className="hidden md:block ">
-          <Sidemenu
-            position="right"
-            menuItems={rightDesktop}
-            isOpen={isDesktopOpen}
-          />
-        </div>
+        {isHydrated && (
+          <div className="hidden md:block ">
+            <Sidemenu
+              position="right"
+              menuItems={rightDesktop}
+              isOpen={isDesktopOpen}
+            />
+          </div>
+        )}
       </nav>
       <Modal>
         {type === "login" && <LoginForm />}

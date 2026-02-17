@@ -35,6 +35,6 @@ export const adminLinks: MenuItem[] = [
    {
       "id": 6,
       "title": "Admin",
-      "link": "/admin/sales"
+      "link": "/admin/edit"
     }
   ]

@@ -4,12 +4,13 @@ import Link from "next/link";
 
 export default function Sidebar() {
   const links = [
-    { name: "CMS", href: "/admin/cms" },
+    { name: "Create products", href: "/admin/create" },
+    { name: "Edit products", href: "/admin/edit" },
     { name: "Sales", href: "/admin/sales" },
   ];
   const pathname = usePathname();
   return (
-    <aside className="w-full md:w-64 text-white flex flex-row md:flex-col pt-16 md:pt-24 gap-4">
+    <aside className="w-full md:w-64 text-white flex flex-row md:flex-col pt-16 md:pt-32 gap-4">
       {links.map((link) => (
         <Link
           key={link.href}

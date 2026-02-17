@@ -1,3 +1,4 @@
+'use server';
 import db from "@/helpers/db";
 import { redirect } from "next/navigation";
 import type { ScheduleResponse } from "@/types/ScheduleItem";
@@ -53,5 +54,31 @@ export const fetchSchedule = async (): Promise<ScheduleResponse["weeks"]> => {
       teacher: entry.teacher ?? undefined,
     })),
   }));
+};
+
+
+export const createCMSAction = async (prevState: any, formData: FormData):Promise<{message:string}> => {
+ try {
+  const name = formData.get("name") as string;
+  const terms1 = formData.get("terms1") as string;
+  const terms2 = formData.get("terms2") as string;
+  const terms3 = formData.get("terms3") as string;
+  const terms = [terms1, terms2, terms3].filter(term => term.trim() !== "")
+  const price = formData.get("price")?.toString();
+  if(!price) return { message: "Price is required" };
+
+  await db.product.create({
+    data: {
+      name,
+      terms,
+      price,
+    },
+  });
+    return { message: "product created successfully" };
+ }
+  catch (error) {
+    console.log("Error creating product:", error);
+    return { message: error instanceof Error ? error.message : "An unknown error occurred" };
+  }
 };
   

@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import  { toast } from "react-toastify";
 import type { Pass } from "@/types/Pass";
-import type { BasketItem } from "./basketItemTypes";
+import type { BasketItem } from "../../../types/basketItemTypes";
 
 const initialState = {
     isBasketOpen: false,
