@@ -37,8 +37,7 @@ export default function Button({
     } ` +
     `${hidden ? "hidden" : "inline-flex"} ` +
     `${internalDisabled ? "cursor-not-allowed " : "cursor-pointer "} ` +
-    "items-center justify-center  hover:bg-blue-900rounded-2xl " +
-    "transition-colors ease-in duration-200 uppercase text-white disabled:bg-gray-400 disabled:pointer-events-none";
+    "items-center justify-center  hover:bg-blue-900 rounded-2xl transition-colors ease-in duration-200 uppercase text-white disabled:bg-gray-400 disabled:pointer-events-none";
 
   // if "to" is provided, render a Link styled as a button
   if (to) {

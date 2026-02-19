@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import type { ScheduleResponse } from "@/types/ScheduleItem";
 import { zodProductSchema, zodInstructorSchema, zodImageSchema, validateWithZod } from "@/helpers/zodSchema";
 import { uploadImageToSupabase } from "@/helpers/supabase";
+import type { ContentDataForEditPage } from "@/types/ContentDataForEditPage";
 
 export const fetchProducts = () => {
   return db.product.findMany({orderBy: { price: "asc" }});
@@ -111,4 +112,20 @@ export const createInstructor = async (prevState: any, formData: FormData):Promi
     return { errorMessage: error instanceof Error ? error.message : "An unknown error occurred" };
   }
   redirect("/admin/edit?success=instructorcreated");
+};
+
+export const fetchAdminContentToEdit: () => Promise<ContentDataForEditPage> = async () => {
+  const [products, classes, instructors, passesTitle, purchaseBtnTitle] = await Promise.all([
+    db.product.findMany({ orderBy: { price: "asc" } }),
+    db.class.findMany(),
+    db.instructor.findMany(),
+    db.passesTitle.findFirst(),
+    db.purchaseButtonTitle.findFirst(),
+  ]);
+
+  return { 
+    products, classes, instructors,  
+    passesTitle: { title: passesTitle?.title ?? "[No Title]" },
+    purchaseBtnTitle: { title: purchaseBtnTitle?.title ?? "[No Title]" }
+  } as ContentDataForEditPage;
 };
