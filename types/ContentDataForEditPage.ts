@@ -4,5 +4,4 @@ export type ContentDataForEditPage = {
   products: Array<{ id: number; name: string; price: string; terms: string[] }>;
   passesTitle: { title: string };
   purchaseBtnTitle: { title: string };
-  [key: string]: any; // This allows for any additional keys that might be added in the future
 };

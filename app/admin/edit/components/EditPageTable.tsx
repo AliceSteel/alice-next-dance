@@ -1,11 +1,12 @@
 "use client";
 
 import { SubmitBtn } from "@/components/formElements/SubmitBtn";
+import { type ContentDataForEditPage } from "@/types/ContentDataForEditPage";
 
 export default function EditPageTable({
   content,
 }: {
-  content: Record<string, any> | any[];
+  content: ContentDataForEditPage[keyof ContentDataForEditPage];
 }) {
   return (
     <table className="table-auto">
@@ -18,16 +19,24 @@ export default function EditPageTable({
 
       <tbody>
         {Array.isArray(content) ? (
-          content.map((item) => (
-            <tr key={item.id}>
-              <td>{item.name || item.title}</td>
-              <td className="flex gap-5 justify-end">
-                <SubmitBtn labelType="icon" actionType="edit" />
+          content.map((item) => {
+            const displayTitle =
+              "name" in item
+                ? item.name
+                : "title" in item
+                  ? item.title
+                  : "Untitled";
+            return (
+              <tr key={item.id}>
+                <td>{displayTitle}</td>
+                <td className="flex gap-5 justify-end">
+                  <SubmitBtn labelType="icon" actionType="edit" />
 
-                <SubmitBtn labelType="icon" actionType="delete" />
-              </td>
-            </tr>
-          ))
+                  <SubmitBtn labelType="icon" actionType="delete" />
+                </td>
+              </tr>
+            );
+          })
         ) : (
           <tr>
             <td>{content?.title as string}</td>
