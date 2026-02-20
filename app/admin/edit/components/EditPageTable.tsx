@@ -5,7 +5,7 @@ import { SubmitBtn } from "@/components/formElements/SubmitBtn";
 export default function EditPageTable({
   content,
 }: {
-  content: any[] | { title: string };
+  content: Record<string, any> | any[];
 }) {
   return (
     <table className="table-auto">

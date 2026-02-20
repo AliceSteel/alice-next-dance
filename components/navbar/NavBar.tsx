@@ -120,8 +120,6 @@ function NavBar({ title }: NavbarProps) {
     userName,
     isLoggedIn,
     totalQtyItems,
-    navlinksLeft,
-    navlinksRight,
     isHydrated,
     dispatch,
     signOut,
