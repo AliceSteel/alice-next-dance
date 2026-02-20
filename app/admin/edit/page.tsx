@@ -4,8 +4,7 @@ import type { ContentDataForEditPage } from "@/types/ContentDataForEditPage";
 
 export default async function EditPage() {
   const content = await fetchAdminContentToEdit();
-  const { products, classes, instructors, passesTitle, purchaseBtnTitle } =
-    content;
+
   const titles = Object.keys(content as ContentDataForEditPage);
   const sections = titles.map((title: string) => {
     return {
@@ -25,7 +24,9 @@ export default async function EditPage() {
           className="flex flex-col gap-2  max-w-[700px] w-full mx-auto"
         >
           <h1 className="text-xl text-center">Edit Content for: {label}</h1>
-          <EditPageTable content={content[key] as any} />
+          <EditPageTable
+            content={content[key as keyof ContentDataForEditPage]}
+          />
         </div>
       ))}
     </section>

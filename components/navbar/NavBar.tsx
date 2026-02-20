@@ -125,6 +125,7 @@ function NavBar({ title }: NavbarProps) {
     isHydrated,
     dispatch,
     signOut,
+    isAdmin,
   ]);
 
   useEffect(() => {

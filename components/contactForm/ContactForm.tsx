@@ -3,7 +3,6 @@ import { useState } from "react";
 import type { FormEvent } from "react";
 import FormInput from "@/components/formElements/FormInput";
 import emailjs from "@emailjs/browser";
-import Button from "@/components/formElements/Btn";
 import { SubmitBtn } from "../formElements/SubmitBtn";
 
 type Result = {
@@ -24,7 +23,6 @@ export default function ContactForm() {
     const email = (formData.get("email") || "").toString();
     const message = (formData.get("message") || "").toString();
 
-    // (Optional) same validations as before:
     if (name.trim().length <= 1) {
       setResult({ ok: false, error: "Name longer than 1 letter is required." });
       setIsSubmitting(false);
