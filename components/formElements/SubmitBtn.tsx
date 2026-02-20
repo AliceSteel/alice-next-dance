@@ -1,4 +1,5 @@
 "use client";
+import styles from "./submitBtn.module.css";
 import { Lineicons } from "@lineiconshq/react-lineicons";
 import {
   PenToSquareOutlined,
@@ -11,20 +12,29 @@ export function SubmitBtn({
   labelType = "text",
   actionType,
   label,
+  externalLoading = false,
 }: {
   labelType?: "text" | "icon";
   label?: string;
   actionType?: "edit" | "delete";
+  externalLoading?: boolean;
 }) {
   const { pending } = useFormStatus();
+
   const icon = actionType === "edit" ? PenToSquareOutlined : FileXmarkOutlined;
   return (
     <button
       type="submit"
-      disabled={pending}
-      className="py-2 px-4 min-h-10 bg-blue-600 inline-flex  items-center justify-center  hover:bg-blue-900 rounded-2xl transition-colors ease-in duration-200 uppercase text-white disabled:bg-gray-400 disabled:pointer-events-none"
+      disabled={pending || externalLoading}
+      className={`${labelType === "text" ? styles.submitBtn : "hover:scale-110"} min-h-10 min-w-10 rounded-lg px-2 py-3 uppercase text-white disabled:bg-gray-400 disabled:pointer-events-none self-center`}
     >
-      {pending ? (
+      <span className={styles.circle1}></span>
+      <span className={styles.circle2}></span>
+      <span className={styles.circle3}></span>
+      <span className={styles.circle4}></span>
+      <span className={styles.circle5}></span>
+
+      {pending || externalLoading ? (
         <Lineicons
           icon={Spinner3Duotone}
           size={16}
@@ -33,7 +43,7 @@ export function SubmitBtn({
       ) : labelType === "icon" ? (
         <Lineicons icon={icon} />
       ) : (
-        label
+        <span className={styles.text}>{label}</span>
       )}
     </button>
   );

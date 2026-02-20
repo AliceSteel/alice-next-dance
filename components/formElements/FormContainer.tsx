@@ -28,7 +28,7 @@ export default function FormContainer({
   return (
     <form
       action={formAction}
-      className="flex flex-col gap-5 border-[0.5px] p-5 rounded-md w-full"
+      className="flex flex-col gap-5 border-gray-500 border-[0.5px] border-dotted p-5 rounded-md w-full items-stretch"
     >
       {children}
     </form>

@@ -4,6 +4,7 @@ import type { FormEvent } from "react";
 import FormInput from "@/components/formElements/FormInput";
 import emailjs from "@emailjs/browser";
 import Button from "@/components/formElements/Btn";
+import { SubmitBtn } from "../formElements/SubmitBtn";
 
 type Result = {
   ok: boolean;
@@ -90,13 +91,8 @@ export default function ContactForm() {
 
       {result?.error && <p className="text-red-500">{result.error}</p>}
       {result?.ok && <p className="text-blue-600">Message successfully sent</p>}
-      <Button
-        label="Send"
-        disabled={!!result?.ok}
-        hidden={!!result?.ok}
-        loading={isSubmitting}
-        type="submit"
-      />
+
+      <SubmitBtn labelType="text" label="Send" externalLoading={isSubmitting} />
     </form>
   );
 }

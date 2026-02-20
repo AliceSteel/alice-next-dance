@@ -1,0 +1,50 @@
+.heroLine {
+  animation: heroLineUp var(--line-duration, 1000ms) ease-out both;
+  will-change: transform, opacity;
+  transform: translateZ(0); /* transform-gpu equivalent */
+}
+
+.heroOverlay {
+  opacity: 0;
+  background: radial-gradient(
+    circle at top,
+    rgba(30, 64, 175, 0.6) 0%,
+    transparent 60%,
+    #000 100%
+  );
+  animation: heroOverlayIn 500ms ease-in forwards;
+  animation-delay: var(--overlay-delay, 1200ms);
+}
+@media (prefers-reduced-motion: reduce) {
+  .heroLine {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes heroOverlayIn {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0.9;
+  }
+}
+
+@keyframes heroLineUp {
+  0% {
+    transform: translate3d(0, 100vh, 0);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.1;
+  }
+  100% {
+    transform: translate3d(0, 20vh, 0);
+    opacity: 1;
+  }
+}

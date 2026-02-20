@@ -1,6 +1,6 @@
 import backgroundImage from "@/public/images/blurred-black.jpg";
 import About from "@/components/about/About";
-//import { toast } from "react-toastify";
+import styles from "./home.module.css";
 import Image from "next/image";
 import heroLines from "@/data/heroLinesData";
 
@@ -24,7 +24,7 @@ const Home = () => {
         />
         {/* Dark overlay: fades in AFTER text finishes */}
         <div
-          className="absolute inset-0 pointer-events-none hero-overlay"
+          className={`absolute inset-0 pointer-events-none ${styles.heroOverlay}`}
           style={{ ["--overlay-delay" as string]: `${overlayDelayMs}ms` }}
         />
 
@@ -34,7 +34,7 @@ const Home = () => {
             {heroLines.map((line, i) => (
               <span
                 key={i}
-                className="hero-line"
+                className={styles.heroLine}
                 style={{
                   animationDelay: `${i * lineStaggerMs}ms`,
                   ["--line-duration" as string]: `${lineDurationMs}ms`,

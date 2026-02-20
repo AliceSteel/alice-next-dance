@@ -20,7 +20,7 @@ const iconMap: Record<string, IconData> = {
 
 export default function ContactPage() {
   return (
-    <section className="page-container flex flex-wrap gap-x-8 gap-y-12 md:gap-y-16 items-end pt-20">
+    <section className="page-container flex flex-wrap gap-x-8 gap-y-12 md:gap-y-16 items-end py-20">
       <PageTitle title="Contact" />
       <ul className="list-none flex gap-3 min-w-1/4">
         {socials.map((social) => {

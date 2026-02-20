@@ -8,6 +8,7 @@ import ClassesList from "@/components/classesList/ClassesList";
 import renderHighlighted from "@/helpers/renderHighlightedText";
 import { useSelector } from "react-redux";
 import { selectClasses } from "@/store/slices/classes/classesSlice";
+import styles from "./about.module.css";
 
 const START_ANGLES = aboutUsContent.numbers.stats.map(
   (_, index) => (index * 137) % 360,
@@ -110,9 +111,7 @@ export default function About() {
                   <div
                     className={[
                       "absolute inset-0 [will-change:transform] motion-reduce:animate-none",
-                      animateRings
-                        ? "motion-safe:animate-[spin-quarter_1600ms_ease-out_1_forwards]"
-                        : "",
+                      animateRings ? styles.animateRing : "",
                     ].join(" ")}
                   >
                     <span className="absolute left-1/2 -translate-x-1/2 top-0 w-2 h-2 rounded-full bg-sky-400" />
