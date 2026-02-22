@@ -19,9 +19,9 @@ export default function Modal({ children }: { children?: React.ReactNode }) {
   };
 
   return (
-    <div className="fixed z-20 inset-0 bg-black/40 backdrop-blur-xs flex items-center justify-center">
+    <div className="fixed z-20 inset-0 bg-black/70 backdrop-blur-xs flex items-center justify-center">
       <div
-        className="relative bg-[#272727] text-black rounded-3xl w-4/6 max-w-sm
+        className="relative bg-[#272727] text-black rounded-3xl w-5/6 max-w-fit
         transform-gpu opacity-0 shadow-lg shadow-blue-500/60
         motion-safe:animate-[modal-drop-bounce_700ms_ease-out_forwards]
         motion-reduce:opacity-100 motion-reduce:animate-none"

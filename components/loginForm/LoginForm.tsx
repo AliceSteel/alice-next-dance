@@ -9,7 +9,9 @@ export default function LoginForm() {
         appearance={{
           elements: {
             rootBox: "w-full max-w-full border-0",
-            card: "bg-[#272727] text-white p-6 rounded-3xl w-full overflow-hidden",
+            cardBox:
+              "w-full bg-[#272727] text-white rounded-3xl overflow-hidden ",
+            card: "bg-transparent px-4 py-5 sm:p-8",
             socialButtons: "flex flex-col gap-2 bg-white/20 rounded-lg",
             socialButtonsButton:
               "bg-white/20 text-black border border-gray-300 hover:bg-gray-100",

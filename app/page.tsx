@@ -13,7 +13,7 @@ const Home = () => {
 
   return (
     <>
-      <section className="w-full relative h-screen pt-40 overflow-hidden">
+      <section className="w-full relative h-screen pt-20 sm:pt-40 overflow-hidden">
         {/* Background image */}
         <Image
           src={backgroundImage}
