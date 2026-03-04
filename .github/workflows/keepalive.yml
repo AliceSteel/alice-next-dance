@@ -1,0 +1,15 @@
+name: Keep Supabase Active
+
+on:
+  schedule:
+    - cron: "0 */12 * * *"
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Call Supabase API
+        run: |
+          curl https://uthhrhkygpwqcytwblma.supabase.co/rest/v1/Instructor \
+          -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}"
