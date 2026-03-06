@@ -5,6 +5,7 @@ import type { ScheduleResponse } from "@/types/ScheduleItem";
 import { zodProductSchema, zodInstructorSchema, zodImageSchema, validateWithZod } from "@/helpers/zodSchema";
 import { uploadImageToSupabase } from "@/helpers/supabase";
 import type { ContentDataForEditPage } from "@/types/ContentDataForEditPage";
+import { revalidatePath } from "next/cache";
 
 export const fetchProducts = () => {
   return db.product.findMany({orderBy: { price: "asc" }});
@@ -76,12 +77,13 @@ export const createProduct = async (prevState: any, formData: FormData):Promise<
   await db.product.create({
     data: validatedData.data,
   });
-    return { successMessage: "Product is created!" };
+  //  return { successMessage: "Product is created!" }; - alternative to redirect to edit page where we see the product we created
  }
   catch (error) {
     console.log("Error creating product:", error);
     return { errorMessage: error instanceof Error ? error.message : "An unknown error occurred" };
   }
+  redirect("/admin/edit?success=productcreated");
 };
 
 export const createInstructor = async (prevState: any, formData: FormData):Promise<{errorMessage?: string; successMessage?: string}> => {
@@ -111,6 +113,7 @@ export const createInstructor = async (prevState: any, formData: FormData):Promi
     console.log("Error creating instructor:", error);
     return { errorMessage: error instanceof Error ? error.message : "An unknown error occurred" };
   }
+
   redirect("/admin/edit?success=instructorcreated");
 };
 
@@ -129,3 +132,30 @@ export const fetchAdminContentToEdit: () => Promise<ContentDataForEditPage> = as
     purchaseBtnTitle: { title: purchaseBtnTitle?.title ?? "[No Title]" }
   } as ContentDataForEditPage;
 };
+
+export const deleteRecord = async (prevState: any, formData: FormData) => {
+  const productId = Number(formData.get("id"));
+  const contentTable = formData.get("contentTitle");
+
+  try {
+   switch (contentTable) {
+      case "products":
+        await db.product.delete({ where: { id: productId } });
+        break;
+      case "instructors":
+        await db.instructor.delete({ where: { id: productId } });
+        break;
+      case "classes":
+        await db.class.delete({ where: { id: productId } });
+        break;
+      default:
+        return { errorMessage: `Unknown content type: ${contentTable}` };
+    }
+    //revalidatePath("/admin/edit");
+    //return { successMessage: "Record deleted successfully!" };
+  } catch (error) {
+    console.log("Error deleting product:", error);
+    return { errorMessage: error instanceof Error ? error.message : "An unknown error occurred" };
+  }
+  redirect("/admin/edit?success=recorddeleted");
+}

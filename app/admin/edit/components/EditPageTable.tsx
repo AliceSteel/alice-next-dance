@@ -1,53 +1,85 @@
 "use client";
 
+import FormContainer from "@/components/formElements/FormContainer";
 import { SubmitBtn } from "@/components/formElements/SubmitBtn";
 import { type ContentDataForEditPage } from "@/types/ContentDataForEditPage";
+import { deleteRecord } from "@/helpers/actions";
+import { Lineicons } from "@lineiconshq/react-lineicons";
+import { PenToSquareOutlined } from "@lineiconshq/free-icons";
+import { useState } from "react";
 
 export default function EditPageTable({
+  contentTitle,
   content,
 }: {
   content: ContentDataForEditPage[keyof ContentDataForEditPage];
+  contentTitle: string;
 }) {
+  const [openId, setOpenId] = useState<number | null>(null);
+
+  const items = Array.isArray(content) ? content : content ? [content] : [];
+
   return (
-    <table className="table-auto">
-      <thead className="border-b border-gray-500">
-        <tr>
-          <th className="text-left">Record Title</th>
-          <th className="text-right">Actions</th>
-        </tr>
-      </thead>
+    <div className="w-full">
+      <div className="flex justify-between border-b border-gray-500 py-3">
+        <span className="font-bold">Record Title</span>
+        <span className="font-bold">Actions</span>
+      </div>
+      <div>
+        {items.map((item) => {
+          const id = (item as any).id ?? 0;
 
-      <tbody>
-        {Array.isArray(content) ? (
-          content.map((item) => {
-            const displayTitle =
-              "name" in item
-                ? item.name
-                : "title" in item
-                  ? item.title
-                  : "Untitled";
-            return (
-              <tr key={item.id}>
-                <td>{displayTitle}</td>
-                <td className="flex gap-5 justify-end">
-                  <SubmitBtn labelType="icon" actionType="edit" />
+          const isOpen = openId === id;
+          const displayTitle =
+            "name" in item
+              ? item.name
+              : "title" in item
+                ? item.title
+                : "Untitled";
 
-                  <SubmitBtn labelType="icon" actionType="delete" />
-                </td>
-              </tr>
-            );
-          })
-        ) : (
-          <tr>
-            <td>{content?.title as string}</td>
-            <td className="flex gap-5 justify-end">
-              <SubmitBtn labelType="icon" actionType="edit" />
+          return (
+            <div key={id} className="border-b border-gray-700/50">
+              <div className="flex justify-between items-center px-2 hover:bg-gradient-to-r hover:from-transparent hover:to-white/10 transition-all rounded-md">
+                <span>{displayTitle as string}</span>
+                <div className="flex gap-5 justify-end">
+                  <button
+                    onClick={() => setOpenId(isOpen ? null : id)}
+                    className="hover:scale-110 p-2"
+                  >
+                    <Lineicons icon={PenToSquareOutlined} />
+                  </button>
+                  <FormContainer action={deleteRecord}>
+                    <input type="hidden" name="id" value={id} />
+                    <input
+                      type="hidden"
+                      name="contentTitle"
+                      value={contentTitle}
+                    />
+                    <SubmitBtn labelType="icon" actionType="delete" />
+                  </FormContainer>
+                </div>
+              </div>
 
-              <SubmitBtn labelType="icon" actionType="delete" />
-            </td>
-          </tr>
-        )}
-      </tbody>
-    </table>
+              <div
+                className={`overflow-hidden transition-all duration-300 ${
+                  isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+                }`}
+              >
+                <div className="px-4 py-3 bg-white/5 rounded-md mx-2 mb-2">
+                  {Object.entries(item).map(([key, value]) => (
+                    <div key={key} className="flex gap-3 py-1">
+                      <span className="text-gray-400 capitalize w-32">
+                        {key}:
+                      </span>
+                      <span>{String(value)}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
   );
 }

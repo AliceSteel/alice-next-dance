@@ -20,14 +20,16 @@ export function SubmitBtn({
   externalLoading?: boolean;
 }) {
   const { pending } = useFormStatus();
+  //const pending = true;
 
   const icon = actionType === "edit" ? PenToSquareOutlined : FileXmarkOutlined;
   return (
     <button
       type="submit"
       disabled={pending || externalLoading}
-      className={`${labelType === "text" ? styles.submitBtn : "hover:scale-110"} min-h-10 min-w-10 rounded-lg px-2 py-3 uppercase text-white disabled:bg-gray-400 disabled:pointer-events-none self-center`}
+      className={`${labelType === "text" ? styles.submitBtn : "hover:scale-110"} min-h-10 min-w-10 rounded-lg p-2 flex justify-center uppercase text-white disabled:bg-gray-400/10 disabled:pointer-events-none self-center`}
     >
+      {/* BUBles anumation on hover: */}
       <span className={styles.circle1}></span>
       <span className={styles.circle2}></span>
       <span className={styles.circle3}></span>
@@ -35,11 +37,7 @@ export function SubmitBtn({
       <span className={styles.circle5}></span>
 
       {pending || externalLoading ? (
-        <Lineicons
-          icon={Spinner3Duotone}
-          size={16}
-          className="animate-spin mr-2"
-        />
+        <Lineicons icon={Spinner3Duotone} size={20} className="animate-spin" />
       ) : labelType === "icon" ? (
         <Lineicons icon={icon} />
       ) : (

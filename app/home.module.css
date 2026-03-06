@@ -1,7 +1,7 @@
 .heroLine {
   animation: heroLineUp var(--line-duration, 1000ms) ease-out both;
   will-change: transform, opacity;
-  transform: translateZ(0); /* transform-gpu equivalent */
+  transform: translateZ(0);
 }
 
 .heroOverlay {

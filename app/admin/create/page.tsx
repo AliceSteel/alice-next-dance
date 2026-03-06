@@ -10,7 +10,7 @@ export default function CreatePage() {
     <section className="min-h-screen max-w-[600px] w-full flex flex-col items-start gap-5 pt-20">
       <h2>Create content for passes products: </h2>
 
-      <FormContainer action={createProduct}>
+      <FormContainer action={createProduct} border={true}>
         <FormInput name="name" type="text" placeholder="enter name" />
         <TextAreaInput
           name="terms1"
@@ -35,7 +35,7 @@ export default function CreatePage() {
 
       <h2>Create content for instructors: </h2>
 
-      <FormContainer action={createInstructor}>
+      <FormContainer action={createInstructor} border={true}>
         <FormInput name="name" type="text" placeholder="enter name" />
         <FormInput name="slug" type="text" placeholder="enter dance style" />
         <TextAreaInput

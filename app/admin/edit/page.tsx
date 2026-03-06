@@ -1,9 +1,20 @@
 import { fetchAdminContentToEdit } from "@/helpers/actions";
 import EditPageTable from "./components/EditPageTable";
 import type { ContentDataForEditPage } from "@/types/ContentDataForEditPage";
-
-export default async function EditPage() {
+import SuccessToast from "./components/SuccessToast";
+export default async function EditPage({
+  searchParams,
+}: {
+  searchParams: { success?: string };
+}) {
   const content = await fetchAdminContentToEdit();
+  const { success } = searchParams;
+  const successMessages: Record<string, string> = {
+    productcreated: "Product created successfully!",
+    instructorcreated: "Instructor created successfully!",
+    recorddeleted: "Record deleted successfully!",
+  };
+  const successMessage = success ? successMessages[success] : null;
 
   const titles = Object.keys(content as ContentDataForEditPage);
   const sections = titles.map((title: string) => {
@@ -18,6 +29,7 @@ export default async function EditPage() {
 
   return (
     <section className="page-container py-8 flex flex-col gap-10">
+      {successMessage && <SuccessToast message={successMessage} />}
       {sections.map(({ key, label }) => (
         <div
           key={key}
@@ -26,6 +38,7 @@ export default async function EditPage() {
           <h1 className="text-xl text-center">Edit Content for: {label}</h1>
           <EditPageTable
             content={content[key as keyof ContentDataForEditPage]}
+            contentTitle={key}
           />
         </div>
       ))}
