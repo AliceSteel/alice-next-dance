@@ -27,7 +27,7 @@ export default function EditPageTable({
       </div>
       <div>
         {items.map((item) => {
-          const id = (item as any).id ?? 0;
+          const id = (item as { id: number }).id ?? 0;
 
           const isOpen = openId === id;
           const displayTitle =
