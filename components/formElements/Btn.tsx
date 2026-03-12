@@ -1,4 +1,6 @@
 import Link from "next/link";
+import styles from "./submitBtn.module.css";
+
 import type { MouseEventHandler } from "react";
 import { Lineicons } from "@lineiconshq/react-lineicons";
 import { Spinner3Duotone } from "@lineiconshq/free-icons";
@@ -29,15 +31,11 @@ export default function Button({
   const internalDisabled = disabled || loading;
 
   const baseClass =
-    `${size === "small" ? "p-2 text-sm " : " py-2 px-4 "} min-h-10 ` +
-    `${
-      variant === "secondary"
-        ? "bg-black/80 border-white/80 border"
-        : "bg-blue-600"
-    } ` +
+    `${size === "small" ? "p-2 text-sm " : " py-2 px-4 "} ` +
+    `${variant === "secondary" ? styles.submitBtn : "bg-blue-600 hover:bg-blue-900"} ` +
     `${hidden ? "hidden" : "inline-flex"} ` +
     `${internalDisabled ? "cursor-not-allowed " : "cursor-pointer "} ` +
-    "items-center justify-center  hover:bg-blue-900 rounded-2xl transition-colors ease-in duration-200 uppercase text-white disabled:bg-gray-400 disabled:pointer-events-none";
+    "transition-colors ease-in duration-200 disabled:bg-gray-400/10 min-w-10 min-h-10 rounded-lg overflow-hidden p-3 flex justify-center uppercase text-white text-nowrap";
 
   // if "to" is provided, render a Link styled as a button
   if (to) {
@@ -55,6 +53,13 @@ export default function Button({
       className={baseClass}
       onClick={onClick}
     >
+      {/* BUBles animation on hover: */}
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+
       {loading && type === "submit" ? (
         <Lineicons
           icon={Spinner3Duotone}
@@ -62,7 +67,7 @@ export default function Button({
           className="animate-spin mr-2"
         />
       ) : (
-        label
+        <span>{label}</span>
       )}
     </button>
   );

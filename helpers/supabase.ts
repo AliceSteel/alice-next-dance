@@ -23,3 +23,12 @@ export const uploadImageToSupabase = async (file: File) => {
     const publicUrl = supabase.storage.from(bucketName).getPublicUrl(fileName).data.publicUrl;
     return publicUrl;
 };
+
+export const deleteImage = (url: string) => {
+    let fileName = url;
+    if(url.includes('/')) {
+        const urlParts = url.split("/");
+        fileName = urlParts[urlParts.length - 1];    
+    }
+    supabase.storage.from(bucketName).remove([fileName]);
+}

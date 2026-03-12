@@ -3,9 +3,8 @@ import db from "@/helpers/db";
 import { redirect } from "next/navigation";
 import type { ScheduleResponse } from "@/types/ScheduleItem";
 import { zodProductSchema, zodInstructorSchema, zodImageSchema, validateWithZod } from "@/helpers/zodSchema";
-import { uploadImageToSupabase } from "@/helpers/supabase";
+import { deleteImage, uploadImageToSupabase } from "@/helpers/supabase";
 import type { ContentDataForEditPage } from "@/types/ContentDataForEditPage";
-import { revalidatePath } from "next/cache";
 
 export const fetchProducts = () => {
   return db.product.findMany({orderBy: { price: "asc" }});
@@ -60,7 +59,7 @@ export const fetchSchedule = async (): Promise<ScheduleResponse["weeks"]> => {
   }));
 };
 
-
+//create content page actions:
 export const createProduct = async (prevState: any, formData: FormData):Promise<{errorMessage?: string; successMessage?: string}> => {
  try {
   const rawData = Object.fromEntries(formData.entries());
@@ -117,6 +116,7 @@ export const createInstructor = async (prevState: any, formData: FormData):Promi
   redirect("/admin/edit?success=instructorcreated");
 };
 
+//Edit page actions: 
 export const fetchAdminContentToEdit: () => Promise<ContentDataForEditPage> = async () => {
   const [products, classes, instructors, passesTitle, purchaseBtnTitle] = await Promise.all([
     db.product.findMany({ orderBy: { price: "asc" } }),
@@ -136,26 +136,41 @@ export const fetchAdminContentToEdit: () => Promise<ContentDataForEditPage> = as
 export const deleteRecord = async (prevState: any, formData: FormData) => {
   const productId = Number(formData.get("id"));
   const contentTable = formData.get("contentTitle");
+  let imageRecord = '';
 
   try {
    switch (contentTable) {
       case "products":
-        await db.product.delete({ where: { id: productId } });
+      const productRecord = await db.product.delete({ where: { id: productId } });
         break;
       case "instructors":
-        await db.instructor.delete({ where: { id: productId } });
+        const instructorRecord = await db.instructor.delete({ where: { id: productId } });
+        imageRecord = instructorRecord?.image ?? '';
         break;
       case "classes":
-        await db.class.delete({ where: { id: productId } });
+        const classRecord = await db.class.delete({ where: { id: productId } });
+        imageRecord = classRecord?.imageUrl ?? '';
         break;
       default:
         return { errorMessage: `Unknown content type: ${contentTable}` };
     }
-    //revalidatePath("/admin/edit");
+
+   imageRecord ? await deleteImage(imageRecord) : null;
+    //revalidatePath("/admin/edit"); - alternative to redirecting
     //return { successMessage: "Record deleted successfully!" };
   } catch (error) {
     console.log("Error deleting product:", error);
     return { errorMessage: error instanceof Error ? error.message : "An unknown error occurred" };
   }
   redirect("/admin/edit?success=recorddeleted");
+}
+
+export const editContent = async (prevState: any, formData: FormData) => {
+
+  console.log("Form data received for editing:", Object.fromEntries(formData.entries()));
+  return { successMessage: "Edit functionality is not implemented yet." };
+}
+
+export const editImageContent = async(prevState: any, formData: FormData)=>{
+  return { successMessage: 'mocked edit image functionality'}
 }

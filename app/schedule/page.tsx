@@ -22,10 +22,10 @@ export default async function SchedulePage() {
       {/* CHECK if it scrolls down after modal closed here */}
       <section id="membership-options" className="page-container py-20">
         <h2 className="text-2xl uppercase mb-5">{passesTitle}</h2>
+        <Suspense fallback={<div>Loading prices...</div>}>
+          <PriceList prices={products} purchaseButtonTitle={btnTitle} />
+        </Suspense>
       </section>
-      <Suspense fallback={<div>Loading prices...</div>}>
-        <PriceList prices={products} purchaseButtonTitle={btnTitle} />
-      </Suspense>
     </>
   );
 }

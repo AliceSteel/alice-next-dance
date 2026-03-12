@@ -7,6 +7,10 @@ import { deleteRecord } from "@/helpers/actions";
 import { Lineicons } from "@lineiconshq/react-lineicons";
 import { PenToSquareOutlined } from "@lineiconshq/free-icons";
 import { useState } from "react";
+import FormInput from "@/components/formElements/FormInput";
+import TextAreaInput from "@/components/formElements/TextArea";
+import { editContent } from "@/helpers/actions";
+import ImageInput from "@/components/formElements/ImageInput";
 
 export default function EditPageTable({
   contentTitle,
@@ -59,22 +63,49 @@ export default function EditPageTable({
                   </FormContainer>
                 </div>
               </div>
-
+              {/* edit table is open on edit button click */}
               <div
                 className={`overflow-hidden transition-all duration-300 ${
-                  isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+                  isOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
                 }`}
               >
-                <div className="px-4 py-3 bg-white/5 rounded-md mx-2 mb-2">
-                  {Object.entries(item).map(([key, value]) => (
-                    <div key={key} className="flex gap-3 py-1">
-                      <span className="text-gray-400 capitalize w-32">
-                        {key}:
-                      </span>
-                      <span>{String(value)}</span>
-                    </div>
-                  ))}
-                </div>
+                <FormContainer action={editContent} border={true}>
+                  <input type="hidden" name="id" value={id} />
+                  {Object.entries(item)
+                    .filter(([key]) => key !== "id")
+                    .map(([key, value]) => (
+                      <div key={key} className="flex gap-3 py-1 w-full">
+                        <span className="text-gray-400 capitalize w-20">
+                          {key}:
+                        </span>
+                        {key === "image" || key === "imageUrl" ? (
+                          <ImageInput placeholder={String(value)} />
+                        ) : value && typeof value === "string" ? (
+                          <FormInput
+                            placeholder={String(value)}
+                            name={key}
+                            type="text"
+                          />
+                        ) : typeof value === "number" ? (
+                          <FormInput
+                            type="number"
+                            name={key}
+                            placeholder={String(value)}
+                          />
+                        ) : (
+                          <TextAreaInput
+                            name={key}
+                            placeholder={
+                              Array.isArray(value)
+                                ? (value as string[]).join("\n")
+                                : JSON.stringify(value)
+                            }
+                          />
+                        )}
+                      </div>
+                    ))}
+                  <SubmitBtn label="Save" actionType="edit" />
+                </FormContainer>
               </div>
             </div>
           );

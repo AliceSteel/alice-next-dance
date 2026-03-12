@@ -1,11 +1,7 @@
 .submitBtn {
-  color: white;
   background-color: #171717;
   border: #0c66ed 1px dotted;
-  width: 115px;
   position: relative;
-  cursor: pointer;
-  overflow: hidden;
 }
 
 .submitBtn span:not(:nth-child(6)) {
@@ -44,7 +40,7 @@
   transform: translate(3.5em, -3.8em);
 }
 
-.submitBtn:hover span:not(:nth-child(6)) {
+.submitBtn:not(:disabled):hover span:not(:nth-child(6)) {
   transform: translate(-50%, -50%) scale(4);
   transition: 1.5s ease;
 }

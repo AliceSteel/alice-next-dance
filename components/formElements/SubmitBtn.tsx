@@ -27,21 +27,21 @@ export function SubmitBtn({
     <button
       type="submit"
       disabled={pending || externalLoading}
-      className={`${labelType === "text" ? styles.submitBtn : "hover:scale-110"} min-h-10 min-w-10 rounded-lg p-2 flex justify-center uppercase text-white disabled:bg-gray-400/10 disabled:pointer-events-none self-center`}
+      className={`${labelType === "text" ? styles.submitBtn : "hover:scale-110"} mx-auto disabled:bg-gray-400/10 disabled:pointer-events-none min-w-10 min-h-10 rounded-lg overflow-hidden p-3 flex justify-center uppercase text-white text-nowrap`}
     >
-      {/* BUBles anumation on hover: */}
-      <span className={styles.circle1}></span>
-      <span className={styles.circle2}></span>
-      <span className={styles.circle3}></span>
-      <span className={styles.circle4}></span>
-      <span className={styles.circle5}></span>
+      {/* BUBles animation on hover: */}
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
 
       {pending || externalLoading ? (
         <Lineicons icon={Spinner3Duotone} size={20} className="animate-spin" />
       ) : labelType === "icon" ? (
         <Lineicons icon={icon} />
       ) : (
-        <span className={styles.text}>{label}</span>
+        <span>{label}</span>
       )}
     </button>
   );
