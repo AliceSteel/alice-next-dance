@@ -30,7 +30,7 @@ export default function FormContainer({
         onSuccess();
       }
     }
-  }, [state]);
+  }, [state, onSuccess]);
 
   return (
     <form

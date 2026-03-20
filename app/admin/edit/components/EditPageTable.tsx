@@ -83,7 +83,7 @@ export default function EditPageTable({
                     <input
                       type="hidden"
                       name="slug"
-                      value={(item as any).slug}
+                      value={(item as { slug: string }).slug}
                     />
                   )}
                   {Object.entries(item)
