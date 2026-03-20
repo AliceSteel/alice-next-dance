@@ -88,7 +88,7 @@ const PriceList = ({
                       : "border-none"
                   }`}
                 >
-                  <div className="w-3/4 sm:w-2/4 flex flex-col gap-2 pt-2">
+                  <div className="w-3/4 sm:w-2/4 flex flex-col gap-2 pt-2 sm:pt-0">
                     {" "}
                     {pass.terms &&
                       pass.terms.map((term, i) => (

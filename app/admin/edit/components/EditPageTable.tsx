@@ -3,13 +3,12 @@
 import FormContainer from "@/components/formElements/FormContainer";
 import { SubmitBtn } from "@/components/formElements/SubmitBtn";
 import { type ContentDataForEditPage } from "@/types/ContentDataForEditPage";
-import { deleteRecord } from "@/helpers/actions";
+import { deleteRecord, editContent } from "@/helpers/actions";
 import { Lineicons } from "@lineiconshq/react-lineicons";
 import { PenToSquareOutlined } from "@lineiconshq/free-icons";
 import { useState } from "react";
 import FormInput from "@/components/formElements/FormInput";
 import TextAreaInput from "@/components/formElements/TextArea";
-import { editContent } from "@/helpers/actions";
 import ImageInput from "@/components/formElements/ImageInput";
 
 export default function EditPageTable({
@@ -66,20 +65,36 @@ export default function EditPageTable({
               {/* edit table is open on edit button click */}
               <div
                 className={`overflow-hidden transition-all duration-300 ${
-                  isOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
+                  isOpen ? "max-h-[2000px] opacity-100" : "max-h-0 opacity-0"
                 }`}
               >
-                <FormContainer action={editContent} border={true}>
+                <FormContainer
+                  action={editContent}
+                  border={true}
+                  onSuccess={() => setOpenId(null)} // to close the drop down after successful edit, can be removed if you want it to stay open
+                >
                   <input type="hidden" name="id" value={id} />
+                  <input
+                    type="hidden"
+                    name="contentTitle"
+                    value={contentTitle}
+                  />
+                  {"slug" in item && (
+                    <input
+                      type="hidden"
+                      name="slug"
+                      value={(item as any).slug}
+                    />
+                  )}
                   {Object.entries(item)
-                    .filter(([key]) => key !== "id")
+                    .filter(([key]) => key !== "id" && key !== "slug")
                     .map(([key, value]) => (
                       <div key={key} className="flex gap-3 py-1 w-full">
                         <span className="text-gray-400 capitalize w-20">
                           {key}:
                         </span>
                         {key === "image" || key === "imageUrl" ? (
-                          <ImageInput placeholder={String(value)} />
+                          <ImageInput placeholder={String(value)} name={key} />
                         ) : value && typeof value === "string" ? (
                           <FormInput
                             placeholder={String(value)}

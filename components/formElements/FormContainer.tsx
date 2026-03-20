@@ -12,10 +12,12 @@ export default function FormContainer({
   action,
   children,
   border = false,
+  onSuccess,
 }: {
   action: ActionFnType;
   children: React.ReactNode;
   border?: boolean;
+  onSuccess?: () => void;
 }) {
   const [state, formAction] = useFormState(action, initialState);
   useEffect(() => {
@@ -24,6 +26,9 @@ export default function FormContainer({
     }
     if (state.successMessage) {
       toast.success(state.successMessage);
+      if (onSuccess) {
+        onSuccess();
+      }
     }
   }, [state]);
 

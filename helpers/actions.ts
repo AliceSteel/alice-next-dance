@@ -5,6 +5,7 @@ import type { ScheduleResponse } from "@/types/ScheduleItem";
 import { zodProductSchema, zodInstructorSchema, zodImageSchema, validateWithZod } from "@/helpers/zodSchema";
 import { deleteImage, uploadImageToSupabase } from "@/helpers/supabase";
 import type { ContentDataForEditPage } from "@/types/ContentDataForEditPage";
+import { revalidatePath } from "next/cache";
 
 export const fetchProducts = () => {
   return db.product.findMany({orderBy: { price: "asc" }});
@@ -165,12 +166,90 @@ export const deleteRecord = async (prevState: any, formData: FormData) => {
   redirect("/admin/edit?success=recorddeleted");
 }
 
+async function replaceImage(formData: FormData, fieldName: string, oldImageUrl: string | null): Promise<string | undefined> {
+  const imageFile = formData.get(fieldName);
+  if (!(imageFile instanceof File) || imageFile.size === 0) return undefined;
+  const validatedImage = validateWithZod(zodImageSchema, { image: imageFile });
+  if (oldImageUrl) await deleteImage(oldImageUrl);
+  return uploadImageToSupabase(validatedImage.image);
+}
+
 export const editContent = async (prevState: any, formData: FormData) => {
+  const contentTitle = formData.get("contentTitle") as string;
+  const id = Number(formData.get("id"));
+  try{ 
+   /*  const rawData = Object.fromEntries(formData.entries());
+    const { id, terms, ...rest } = rawData;
+    const termsArr = String(terms).split('.').map(term => term.trim()).filter(term => term !== "");
 
-  console.log("Form data received for editing:", Object.fromEntries(formData.entries()));
-  return { successMessage: "Edit functionality is not implemented yet." };
+    const validatedData = zodProductSchema.safeParse({ ...rest, terms: termsArr });
+    
+    if (!validatedData.success) {
+      const errors= validatedData.error.issues.map(err => err.message).join(", ")
+      throw new Error(`Validation failed: ${errors}`);
+    }
+
+  await db.product.update({
+    where: { id: Number(id) },
+    data: validatedData.data,
+  }); */
+   switch (contentTitle) {
+      case "products": {
+        const { name, price, terms } = Object.fromEntries(formData.entries()) as any;
+        const termsArr = String(terms).split('\n').map((t: string) => t.trim()).filter(Boolean);
+        const validated = zodProductSchema.safeParse({ name, price, terms: termsArr });
+
+        if (!validated.success) throw new Error(validated.error.issues.map(i => i.message).join(", "));
+
+        await db.product.update({ where: { id }, data: validated.data });
+        break;
+      }
+      case "classes": {
+        const { slug, title, description } = Object.fromEntries(formData.entries()) as any;
+        const existing = await db.class.findUnique({ where: { id }, select: { imageUrl: true } });
+        const imageUrl = await replaceImage(formData, "imageUrl", existing?.imageUrl ?? null);
+        
+        await db.class.update({ where: { id }, data: { slug, title, description, ...(imageUrl && { imageUrl }) } });
+        break;
+      }
+      case "instructors": {
+        const { slug, name, instagram, youTube, bioLines } = Object.fromEntries(formData.entries()) as any;
+        const bioLinesArr = String(bioLines).split('\n').map((l: string) => l.trim()).filter(Boolean);
+        const validated = validateWithZod(zodInstructorSchema, { slug, name, instagram, youTube, bioLines: bioLinesArr });
+
+        const existing = await db.instructor.findUnique({ where: { id }, select: { image: true } });
+        const image = await replaceImage(formData, "image", existing?.image ?? null);
+
+        await db.instructor.update({ where: { id }, data: { ...validated, ...(image && { image }) } });        break;
+      }
+      case "passesTitle": {
+      const title = formData.get("title") as string;
+      await db.passesTitle.upsert({
+        where: { title: (await db.passesTitle.findFirst())?.title ?? "" },
+        update: { title },
+        create: { title },
+      });
+      break;
+    }
+
+    case "purchaseBtnTitle": {
+      const title = formData.get("title") as string;
+      await db.purchaseButtonTitle.upsert({
+        where: { title: (await db.purchaseButtonTitle.findFirst())?.title ?? "" },
+        update: { title },
+        create: { title },
+      });
+      break;
+    }
+      default:
+        return { errorMessage: `Unknown content type: ${contentTitle}` };
+    }
+    revalidatePath('/admin/edit');
+    return { successMessage: "Record edited successfully!" };
+  }
+  catch (error) {
+    console.log("Error editing content:", error);
+    return { errorMessage: error instanceof Error ? error.message : "An unknown error occurred" };
+  }
 }
 
-export const editImageContent = async(prevState: any, formData: FormData)=>{
-  return { successMessage: 'mocked edit image functionality'}
-}

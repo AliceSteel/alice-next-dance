@@ -48,7 +48,7 @@ export default async function RootLayout({
       return {
         id: c.slug,
         title: c.title,
-        imageUrl: `/images/${c.imageUrl}`, // filenames you seeded
+        imageUrl: c.imageUrl,
         description: c.description,
         text1: c.text1 ?? undefined,
         text2: c.text2 ?? undefined,
@@ -56,7 +56,7 @@ export default async function RootLayout({
           ? {
               id: i.slug,
               name: i.name,
-              image: `/images/${i.image}`, // filenames from instructorsData.json
+              image: i.image,
               instagram: i.instagram,
               youTube: i.youTube,
               bioLines: i.bioLines,
