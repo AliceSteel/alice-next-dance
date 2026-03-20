@@ -1,6 +1,6 @@
 "use client";
 import { useFormState } from "react-dom";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { toast } from "react-toastify";
 import { ActionFnType } from "@/types/actionFnType";
 
@@ -20,6 +20,10 @@ export default function FormContainer({
   onSuccess?: () => void;
 }) {
   const [state, formAction] = useFormState(action, initialState);
+
+  const onSuccessRef = useRef(onSuccess);
+  onSuccessRef.current = onSuccess;
+
   useEffect(() => {
     if (state.errorMessage) {
       toast.error(state.errorMessage);
@@ -30,7 +34,7 @@ export default function FormContainer({
         onSuccess();
       }
     }
-  }, [state, onSuccess]);
+  }, [state]);
 
   return (
     <form

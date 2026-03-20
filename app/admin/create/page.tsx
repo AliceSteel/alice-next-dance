@@ -7,7 +7,7 @@ import ImageInput from "@/components/formElements/ImageInput";
 
 export default function CreatePage() {
   return (
-    <section className="min-h-screen max-w-[600px] w-full flex flex-col items-start gap-5 pt-20">
+    <section className="min-h-screen max-w-[600px] mx-auto w-full flex flex-col items-start gap-5 pt-20">
       <h2>Create content for passes products: </h2>
 
       <FormContainer action={createProduct} border={true}>

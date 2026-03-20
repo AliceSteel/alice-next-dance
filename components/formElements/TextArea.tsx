@@ -1,3 +1,6 @@
+"use client";
+import { useState } from "react";
+
 export default function TextAreaInput({
   name,
   placeholder,
@@ -9,6 +12,9 @@ export default function TextAreaInput({
   required?: boolean;
   rows?: number;
 }) {
+  const [value, setValue] = useState(placeholder);
+  const isDefault = value === placeholder;
+
   return (
     <textarea
       id={name}
@@ -16,7 +22,8 @@ export default function TextAreaInput({
       defaultValue={placeholder}
       required={required}
       rows={rows}
-      className="p-2 px-3 rounded-lg bg-white/15 placeholder:text-white/30 text-white focus:outline-none focus-visible:outline-2 focus-visible:outline-sky-800 w-full m-1"
+      className={`p-2 px-3 rounded-lg bg-white/15 text-white focus:outline-none focus-visible:outline-2 focus-visible:outline-sky-800 w-full m-1 ${isDefault ? " text-white/30" : " text-white"}`}
+      onChange={(e) => setValue(e.target.value)}
     />
   );
 }
