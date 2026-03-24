@@ -1,9 +1,11 @@
 import { useState, useMemo, useEffect } from "react";
-import type { ClassesListProps, ClassCard } from "./ClassesListProps";
+import type { ClassesListProps } from "./ClassesSliderProps";
+import type { ClassCardType } from "@/types/ClassCard";
 import Link from "next/link";
 import Image from "next/image";
 import { Lineicons } from "@lineiconshq/react-lineicons";
 import { ArrowRightOutlined } from "@lineiconshq/free-icons";
+import ClassCard from "@/components/classCard/ClassCard";
 
 export default function ClassesList(props: ClassesListProps) {
   const { classes } = props;
@@ -42,6 +44,7 @@ export default function ClassesList(props: ClassesListProps) {
   if (!classes || classes.length === 0) {
     return null;
   }
+  const cardWidth = `${100 / classes.length}%`;
   // Touch handling for mobile swipe
 
   const onTouchStart = (e: React.TouchEvent) => {
@@ -106,31 +109,14 @@ export default function ClassesList(props: ClassesListProps) {
               width: `${(classes.length / VISIBLE_COUNT) * 100}%`,
             }}
           >
-            {classes.map((classItem: ClassCard) => (
-              <Link
-                href={`/classes/${classItem.id}`}
+            {classes.map((classItem: ClassCardType) => (
+              <div
                 key={classItem.id}
-                className="relative rounded-lg shadow-lg overflow-hidden"
-                style={{ width: `${100 / classes.length}%` }}
+                style={{ width: cardWidth }}
+                className="h-[300px] flex-shrink-0"
               >
-                <Image
-                  src={
-                    typeof classItem.imageUrl === "string"
-                      ? classItem.imageUrl
-                      : classItem.imageUrl?.src || ""
-                  }
-                  loading="lazy"
-                  width={600}
-                  height={600}
-                  alt={classItem.title}
-                  className="w-full aspect-square object-cover"
-                />
-                <div className="absolute top-2 right-4">
-                  <h2 className="capitalize text-white drop-shadow-lg">
-                    {classItem.title}
-                  </h2>
-                </div>
-              </Link>
+                <ClassCard classItem={classItem} />
+              </div>
             ))}
           </div>
         </div>

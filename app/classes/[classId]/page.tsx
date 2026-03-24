@@ -48,7 +48,7 @@ export default function Class({ params }: { params: { classId: string } }) {
           >
             <PageTitle title={classItem.title} />
           </div>
-          <p ref={descriptionRef} className="text-white mt-auto pt-6">
+          <p ref={descriptionRef} className="text-white mt-auto pt-6 z-10">
             {classItem.description}
           </p>
         </div>

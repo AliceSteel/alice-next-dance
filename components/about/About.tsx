@@ -4,7 +4,7 @@ import backgroundImage from "@/public/images/ballet-blurred.jpg";
 import { aboutUsContent } from "@/data/aboutUsData";
 import { useEffect, useRef, useState } from "react";
 import SectionTitle from "@/components/sectionTitle/SectionTitle";
-import ClassesList from "@/components/classesList/ClassesList";
+import ClassesSlider from "@/components/classesList/ClassesSlider";
 import renderHighlighted from "@/helpers/renderHighlightedText";
 import { useSelector } from "react-redux";
 import { selectClasses } from "@/store/slices/classes/classesSlice";
@@ -137,7 +137,7 @@ export default function About() {
           />
         </div>
         <div className="col-span-full mt-8 mb-28">
-          <ClassesList classes={classes} />
+          <ClassesSlider classes={classes} />
         </div>
       </div>
     </div>
