@@ -1,8 +1,6 @@
 import { useState, useMemo, useEffect } from "react";
 import type { ClassesListProps } from "./ClassesSliderProps";
 import type { ClassCardType } from "@/types/ClassCard";
-import Link from "next/link";
-import Image from "next/image";
 import { Lineicons } from "@lineiconshq/react-lineicons";
 import { ArrowRightOutlined } from "@lineiconshq/free-icons";
 import ClassCard from "@/components/classCard/ClassCard";

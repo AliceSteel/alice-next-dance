@@ -43,9 +43,9 @@ function ClassesPage() {
             <PageTitle title="DANCE STYLES" />
           </div>
           <p ref={descriptionRef} className="text-white mt-auto pt-6 z-10">
-            Explore our diverse dance styles. Whether you're a beginner or an
-            experienced dancer, our classes offer something for everyone. Join
-            us and find your rhythm!
+            Explore our diverse dance styles. For beginners or experienced
+            dancers, our classes offer something for everyone. Join us and find
+            your rhythm!
           </p>
         </div>
       </section>
