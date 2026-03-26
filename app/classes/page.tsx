@@ -10,9 +10,10 @@ import { ClassCardType } from "@/types/ClassCard";
 
 function ClassesPage() {
   const classes = useSelector(selectClasses);
-  const descriptionRef = useRef<HTMLParagraphElement>(null);
 
-  const isPinned = usePinnedText(descriptionRef, 200);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const descriptionRef = useRef<HTMLParagraphElement>(null);
+  const { isPinned, botOff } = usePinnedText(titleRef, descriptionRef, 80);
 
   const gridClasses = [
     "col-start-1 col-span-2 md:col-span-1 row-start-1",
@@ -34,11 +35,9 @@ function ClassesPage() {
         />
         <div className="pt-40 page-container pb-6 h-full flex flex-col">
           <div
-            className={
-              isPinned
-                ? "fixed top-20 z-10"
-                : "absolute bottom-40 sm:bottom-20 z-10"
-            }
+            ref={titleRef}
+            className={isPinned ? "fixed top-20 z-10" : "absolute z-10"}
+            style={!isPinned ? { bottom: `${botOff}px` } : undefined}
           >
             <PageTitle title="DANCE STYLES" />
           </div>
