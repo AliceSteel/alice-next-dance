@@ -32,7 +32,7 @@ export default function Button({
 
   const baseClass =
     `${size === "small" ? "p-2 text-sm " : " py-2 px-4 "} ` +
-    `${variant === "secondary" ? styles.submitBtn : "bg-blue-600 hover:bg-blue-900"} ` +
+    `${variant === "secondary" ? styles.submitBtn : "bg-blue-600 hover:bg-blue-900 w-full"} ` +
     `${hidden ? "hidden" : "inline-flex"} ` +
     `${internalDisabled ? "cursor-not-allowed " : "cursor-pointer "} ` +
     "transition-colors ease-in duration-200 disabled:bg-gray-400/10 min-w-10 min-h-10 rounded-lg overflow-hidden p-3 flex justify-center uppercase text-white text-nowrap";

@@ -10,6 +10,7 @@ import { usePinnedText } from "@/helpers/usePinnedText";
 import Button from "@/components/formElements/Btn";
 import { Lineicons } from "@lineiconshq/react-lineicons";
 import { InstagramOutlined, YoutubeOutlined } from "@lineiconshq/free-icons";
+import ShareBtn from "@/components/shareBtn/ShareBtn";
 
 export default function Class({ params }: { params: { classId: string } }) {
   const { classId } = params;
@@ -67,8 +68,8 @@ export default function Class({ params }: { params: { classId: string } }) {
       {instructor && (
         <section className="page-container py-8">
           <h4 className="mb-8">Instructors:</h4>
-          <div className="flex flex-col lg:flex-row gap-8">
-            <div className="flex-1 flex flex-col justify-between gap-8">
+          <div className="flex flex-col lg:flex-row gap-8 relative">
+            <div className="flex-1 sticky top-20 h-fit flex flex-col gap-4">
               {" "}
               <ul className="list-none flex flex-col gap-0 leading-[105%]">
                 <li className="uppercase text-sky-400 text-3xl mb-2 flex justify-end gap-1">
@@ -96,7 +97,13 @@ export default function Class({ params }: { params: { classId: string } }) {
                     </li>
                   ))}
               </ul>
-              <Button label="Join class" to={`/schedule?filtered=${classId}`} />
+              <div className="flex gap-4">
+                <Button
+                  label="Join class"
+                  to={`/schedule?filtered=${classId}`}
+                />
+                <ShareBtn pageId={classId} name={name ?? ""} />
+              </div>
             </div>
             <div className="flex-1 mt-auto">
               {" "}
