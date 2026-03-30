@@ -19,6 +19,7 @@ model Product {
   name   String
   price String
   terms  String[] @default([])
+  basketItems BasketItem[]
 }
 model PassesTitle {
   title String @unique
@@ -66,4 +67,26 @@ model ScheduleEntry {
   teacher     String // e.g., "Sofia M."
   
   week        Week   @relation(fields: [weekId], references: [id], onDelete: Cascade)
+}
+
+model Basket {
+  basketId       String @id @default(uuid())
+  clerkId  String
+  basketItems     BasketItem[]
+  qtyItemsInBasket Int @default(0)
+  basketTotalPrice Int @default(0)
+  shipping Int @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model BasketItem {
+  id        String @id @default(uuid())
+  product Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId Int
+  quantity  Int @default(1)
+  basket    Basket   @relation(fields: [basketId], references: [basketId], onDelete: Cascade)
+  basketId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

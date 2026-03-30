@@ -1,11 +1,15 @@
 "use client";
 
 import { SignIn } from "@clerk/nextjs";
+import { usePathname } from "next/navigation";
 
 export default function LoginForm() {
+  const pathname = usePathname();
+
   return (
     <section className="w-full max-w-md relative overflow-hidden">
       <SignIn
+        fallbackRedirectUrl={pathname}
         appearance={{
           elements: {
             rootBox: "w-full max-w-full border-0",

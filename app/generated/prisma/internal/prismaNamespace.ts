@@ -390,7 +390,9 @@ export const ModelName = {
   Class: 'Class',
   Instructor: 'Instructor',
   Week: 'Week',
-  ScheduleEntry: 'ScheduleEntry'
+  ScheduleEntry: 'ScheduleEntry',
+  Basket: 'Basket',
+  BasketItem: 'BasketItem'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -406,7 +408,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "product" | "passesTitle" | "purchaseButtonTitle" | "class" | "instructor" | "week" | "scheduleEntry"
+    modelProps: "product" | "passesTitle" | "purchaseButtonTitle" | "class" | "instructor" | "week" | "scheduleEntry" | "basket" | "basketItem"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -928,6 +930,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Basket: {
+      payload: Prisma.$BasketPayload<ExtArgs>
+      fields: Prisma.BasketFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.BasketFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BasketPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.BasketFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BasketPayload>
+        }
+        findFirst: {
+          args: Prisma.BasketFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BasketPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.BasketFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BasketPayload>
+        }
+        findMany: {
+          args: Prisma.BasketFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BasketPayload>[]
+        }
+        create: {
+          args: Prisma.BasketCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BasketPayload>
+        }
+        createMany: {
+          args: Prisma.BasketCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.BasketCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BasketPayload>[]
+        }
+        delete: {
+          args: Prisma.BasketDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BasketPayload>
+        }
+        update: {
+          args: Prisma.BasketUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BasketPayload>
+        }
+        deleteMany: {
+          args: Prisma.BasketDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.BasketUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.BasketUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BasketPayload>[]
+        }
+        upsert: {
+          args: Prisma.BasketUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BasketPayload>
+        }
+        aggregate: {
+          args: Prisma.BasketAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateBasket>
+        }
+        groupBy: {
+          args: Prisma.BasketGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BasketGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.BasketCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BasketCountAggregateOutputType> | number
+        }
+      }
+    }
+    BasketItem: {
+      payload: Prisma.$BasketItemPayload<ExtArgs>
+      fields: Prisma.BasketItemFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.BasketItemFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BasketItemPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.BasketItemFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BasketItemPayload>
+        }
+        findFirst: {
+          args: Prisma.BasketItemFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BasketItemPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.BasketItemFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BasketItemPayload>
+        }
+        findMany: {
+          args: Prisma.BasketItemFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BasketItemPayload>[]
+        }
+        create: {
+          args: Prisma.BasketItemCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BasketItemPayload>
+        }
+        createMany: {
+          args: Prisma.BasketItemCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.BasketItemCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BasketItemPayload>[]
+        }
+        delete: {
+          args: Prisma.BasketItemDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BasketItemPayload>
+        }
+        update: {
+          args: Prisma.BasketItemUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BasketItemPayload>
+        }
+        deleteMany: {
+          args: Prisma.BasketItemDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.BasketItemUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.BasketItemUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BasketItemPayload>[]
+        }
+        upsert: {
+          args: Prisma.BasketItemUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BasketItemPayload>
+        }
+        aggregate: {
+          args: Prisma.BasketItemAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateBasketItem>
+        }
+        groupBy: {
+          args: Prisma.BasketItemGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BasketItemGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.BasketItemCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BasketItemCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1041,6 +1191,31 @@ export const ScheduleEntryScalarFieldEnum = {
 export type ScheduleEntryScalarFieldEnum = (typeof ScheduleEntryScalarFieldEnum)[keyof typeof ScheduleEntryScalarFieldEnum]
 
 
+export const BasketScalarFieldEnum = {
+  basketId: 'basketId',
+  clerkId: 'clerkId',
+  qtyItemsInBasket: 'qtyItemsInBasket',
+  basketTotalPrice: 'basketTotalPrice',
+  shipping: 'shipping',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type BasketScalarFieldEnum = (typeof BasketScalarFieldEnum)[keyof typeof BasketScalarFieldEnum]
+
+
+export const BasketItemScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  quantity: 'quantity',
+  basketId: 'basketId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type BasketItemScalarFieldEnum = (typeof BasketItemScalarFieldEnum)[keyof typeof BasketItemScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1096,6 +1271,20 @@ export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 
  * Reference to a field of type 'String[]'
  */
 export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String[]'>
+    
+
+
+/**
+ * Reference to a field of type 'DateTime'
+ */
+export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+    
+
+
+/**
+ * Reference to a field of type 'DateTime[]'
+ */
+export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
     
 
 
@@ -1214,6 +1403,8 @@ export type GlobalOmitConfig = {
   instructor?: Prisma.InstructorOmit
   week?: Prisma.WeekOmit
   scheduleEntry?: Prisma.ScheduleEntryOmit
+  basket?: Prisma.BasketOmit
+  basketItem?: Prisma.BasketItemOmit
 }
 
 /* Types for Logging */

@@ -57,7 +57,9 @@ export const ModelName = {
   Class: 'Class',
   Instructor: 'Instructor',
   Week: 'Week',
-  ScheduleEntry: 'ScheduleEntry'
+  ScheduleEntry: 'ScheduleEntry',
+  Basket: 'Basket',
+  BasketItem: 'BasketItem'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -148,6 +150,31 @@ export const ScheduleEntryScalarFieldEnum = {
 } as const
 
 export type ScheduleEntryScalarFieldEnum = (typeof ScheduleEntryScalarFieldEnum)[keyof typeof ScheduleEntryScalarFieldEnum]
+
+
+export const BasketScalarFieldEnum = {
+  basketId: 'basketId',
+  clerkId: 'clerkId',
+  qtyItemsInBasket: 'qtyItemsInBasket',
+  basketTotalPrice: 'basketTotalPrice',
+  shipping: 'shipping',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type BasketScalarFieldEnum = (typeof BasketScalarFieldEnum)[keyof typeof BasketScalarFieldEnum]
+
+
+export const BasketItemScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  quantity: 'quantity',
+  basketId: 'basketId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type BasketItemScalarFieldEnum = (typeof BasketItemScalarFieldEnum)[keyof typeof BasketItemScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -42,7 +42,10 @@ const PriceList = ({
   const addToBasket =
     (pass: Pass) => (e: React.MouseEvent<HTMLButtonElement>) => {
       e.stopPropagation();
+
       if (!isLoggedIn) {
+        sessionStorage.setItem("pendingCartItem", JSON.stringify(pass));
+
         dispatch(openModal("login"));
         return;
       }

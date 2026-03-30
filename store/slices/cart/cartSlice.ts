@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import  { toast } from "react-toastify";
 import type { Pass } from "@/types/Pass";
 import type { BasketItem } from "../../../types/basketItemTypes";
+import { set } from "zod";
 
 const initialState = {
     isBasketOpen: false,
@@ -66,6 +67,7 @@ const cartSlice = createSlice({
         }
     }
 });
+
 
 export const { openBasketDrawer, closeBasketDrawer,addToCart, removeFromCart, clearCart } = cartSlice.actions;
 export default cartSlice.reducer;

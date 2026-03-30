@@ -6,7 +6,9 @@ import { zodProductSchema, zodInstructorSchema, zodImageSchema, validateWithZod 
 import { deleteImage, uploadImageToSupabase } from "@/helpers/supabase";
 import type { ContentDataForEditPage } from "@/types/ContentDataForEditPage";
 import { revalidatePath } from "next/cache";
+import { currentUser } from "@clerk/nextjs/server";
 
+/* LOAD PAGE CONTENT------------------------------------------------------------- */
 export const fetchProducts = () => {
   return db.product.findMany({orderBy: { price: "asc" }});
 }
@@ -18,11 +20,11 @@ export const fetchPassesTitleRecord = async() => {
 
 export const fetchBtnTitleRecord = async() => {
   const row = await db.purchaseButtonTitle.findFirst();
- return row?.title ?? "Purchase";
+  return row?.title ?? "Purchase";
 }
 
-export const fetchClasses = () => {
-  return db.class.findMany();
+export const fetchClasses = async() => {
+  return await db.class.findMany();
 }
 
 export const fetchSingleClass = async (slug: string) => {
@@ -33,8 +35,8 @@ export const fetchSingleClass = async (slug: string) => {
   return danceClass;
 }
 
-export const fetchAllInstructors = () => {
-  return db.instructor.findMany();
+export const fetchAllInstructors = async () => {
+  return await db.instructor.findMany();
 }
 
 
@@ -60,7 +62,7 @@ export const fetchSchedule = async (): Promise<ScheduleResponse["weeks"]> => {
   }));
 };
 
-//create content page actions:
+/* CREATE PAGE ACTIONS------------------------------------------------------------- */
 export const createProduct = async (prevState: any, formData: FormData):Promise<{errorMessage?: string; successMessage?: string}> => {
  try {
   const rawData = Object.fromEntries(formData.entries());
@@ -117,7 +119,7 @@ export const createInstructor = async (prevState: any, formData: FormData):Promi
   redirect("/admin/edit?success=instructorcreated");
 };
 
-//Edit page actions: 
+/* EDIT PAGE ACTIONS------------------------------------------------------------- */
 export const fetchAdminContentToEdit: () => Promise<ContentDataForEditPage> = async () => {
   const [products, classes, instructors, passesTitle, purchaseBtnTitle] = await Promise.all([
     db.product.findMany({ orderBy: { price: "asc" } }),
@@ -178,21 +180,7 @@ export const editContent = async (prevState: any, formData: FormData) => {
   const contentTitle = formData.get("contentTitle") as string;
   const id = Number(formData.get("id"));
   try{ 
-   /*  const rawData = Object.fromEntries(formData.entries());
-    const { id, terms, ...rest } = rawData;
-    const termsArr = String(terms).split('.').map(term => term.trim()).filter(term => term !== "");
-
-    const validatedData = zodProductSchema.safeParse({ ...rest, terms: termsArr });
-    
-    if (!validatedData.success) {
-      const errors= validatedData.error.issues.map(err => err.message).join(", ")
-      throw new Error(`Validation failed: ${errors}`);
-    }
-
-  await db.product.update({
-    where: { id: Number(id) },
-    data: validatedData.data,
-  }); */
+  
    switch (contentTitle) {
       case "products": {
         const { name, price, terms } = Object.fromEntries(formData.entries()) as any;
@@ -251,5 +239,29 @@ export const editContent = async (prevState: any, formData: FormData) => {
     console.log("Error editing content:", error);
     return { errorMessage: error instanceof Error ? error.message : "An unknown error occurred" };
   }
+}
+
+/* BASKET ACTIONS---------------------------------------------------------- */
+export const fetchOrCreateBasket = async (userId: string) => {
+  const user = await currentUser();
+
+  if (!user) throw new Error("User not authenticated");
+
+  const clerkId = user.id;
+
+  let basket = await db.basket.findFirst({ where: { clerkId }, include: { basketItems: { include: { product: true } } } });
+
+
+}
+export const fetchBasketItems = async (basketId: string) => {
+}
+export const addItemToBasket = async (basketId: string, productId: number, quantity: number) => {
+   return { successMessage: "Item has been added to the basket - test!" }
+}
+
+const createOrUpdateBasketItem = async (basketId: string, productId: number, quantity: number) => {}
+
+export const deleteBasketItem = async (basketItemId: string) => {
+  return { successMessage: "Item has been removed from the basket - test!" }
 }
 
