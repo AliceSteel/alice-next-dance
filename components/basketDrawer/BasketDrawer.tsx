@@ -47,72 +47,76 @@ export default function BasketDrawer() {
         onClick={onClose}
         aria-hidden={!isBasketOpen}
       />
-      <aside
-        className={`fixed right-0 top-0 z-40 h-full flex flex-col justify-start w-[min(100%,24rem)] bg-black text-white
+      {mounted && (
+        <aside
+          className={`fixed right-0 top-0 z-40 h-full flex flex-col justify-start w-[min(100%,24rem)] bg-black text-white
           shadow-lg shadow-blue-500/40
           transform-gpu transition-transform duration-300 ease-out
           ${isBasketOpen ? "translate-x-0" : "translate-x-full"}`}
-        aria-hidden={!isBasketOpen}
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="flex items- justify-between p-4 border-b border-white/10">
-          <h2 className="text-xl">
-            Basket{mounted && totalQtyItems ? ` (${totalQtyItems})` : ""}
-          </h2>
-          <button
-            onClick={onClose}
-            title="Close basket"
-            className="hover:opacity-80 transition-opacity"
-            aria-label="Close basket"
-          >
-            <Lineicons
-              icon={XmarkOutlined}
-              size={20}
-              className="text-white/50"
-            />
-          </button>
-        </div>
-        <ul className="p-4 space-y-3 overflow-y-auto">
-          {cartItems.length === 0 ? (
-            <p className="text-white/60">Your basket is empty.</p>
-          ) : (
-            cartItems.map((item: BasketItem) => (
-              <li key={item.id} className="flex justify-between items-center">
-                <div className="truncate">
-                  <span className="text-white">{item.name}</span>
-                  <span className="text-white/60"> × {item.quantity}</span>
-                </div>
-                <div className="text-white/80">
-                  $
-                  {(
-                    parseFloat(item.price.replace("$", "")) * item.quantity
-                  ).toFixed(2)}
-                </div>
-              </li>
-            ))
-          )}
-        </ul>
-        <button
-          className={`text-xs underline w-fit self-end px-4 uppercase text-white ${
-            cartItems.length === 0 ? "hidden" : "blocck cursor-pointer"
-          }`}
-          onClick={() => dispatch(clearCart())}
-          disabled={cartItems.length === 0}
+          aria-hidden={!isBasketOpen}
+          onClick={(e) => e.stopPropagation()}
         >
-          Clear Basket
-        </button>
-        <div className="mt-auto text-white p-4 border-t border-white/10 flex flex-col gap-3">
-          <div className="flex items-center justify-between">
-            <span>Total:</span>
-            <span>${cartTotal.toFixed(2)}</span>
+          <div className="flex items-center justify-between p-4 border-b border-white/10">
+            <h2 className="text-xl">
+              Basket{totalQtyItems ? ` (${totalQtyItems})` : ""}
+            </h2>
+            <button
+              onClick={onClose}
+              title="Close basket"
+              className="hover:opacity-80 transition-opacity"
+              aria-label="Close basket"
+            >
+              <Lineicons
+                icon={XmarkOutlined}
+                size={20}
+                className="text-white/50"
+              />
+            </button>
           </div>
-          <Btn
-            label="Checkout"
+          <ul className="p-4 space-y-3 overflow-y-auto">
+            {cartItems.length === 0 ? (
+              <p className="text-white/60">Your basket is empty.</p>
+            ) : (
+              cartItems.map((item: BasketItem) => (
+                <li key={item.id} className="flex justify-between items-center">
+                  <div className="truncate">
+                    <span className="text-white">{item.name}</span>
+                    <span className="text-white/60"> × {item.quantity}</span>
+                  </div>
+                  <div className="text-white/80">
+                    $
+                    {(
+                      parseFloat(item.price.replace("$", "")) * item.quantity
+                    ).toFixed(2)}
+                  </div>
+                </li>
+              ))
+            )}
+          </ul>
+          <button
+            className={`text-xs underline w-fit self-end px-4 uppercase text-white ${
+              cartItems.length === 0 ? "hidden" : "block cursor-pointer"
+            }`}
+            onClick={() => dispatch(clearCart())}
             disabled={cartItems.length === 0}
-            onClick={redirectToCheckout}
-          />
-        </div>
-      </aside>
+          >
+            Clear Basket
+          </button>
+          <div className="mt-auto text-white p-4 border-t border-white/10 flex flex-col gap-3">
+            {mounted && (
+              <div className="flex items-center justify-between">
+                <span>Total:</span>
+                <span>${cartTotal.toFixed(2)}</span>
+              </div>
+            )}
+            <Btn
+              label="Checkout"
+              disabled={cartItems.length === 0}
+              onClick={redirectToCheckout}
+            />
+          </div>
+        </aside>
+      )}
     </>
   );
 }
