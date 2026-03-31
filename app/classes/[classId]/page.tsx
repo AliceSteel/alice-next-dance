@@ -11,14 +11,11 @@ import Button from "@/components/formElements/Btn";
 import { Lineicons } from "@lineiconshq/react-lineicons";
 import { InstagramOutlined, YoutubeOutlined } from "@lineiconshq/free-icons";
 import ShareBtn from "@/components/shareBtn/ShareBtn";
+import ClassHero from "@/components/classHero/ClassHero";
 
 export default function Class({ params }: { params: { classId: string } }) {
   const { classId } = params;
   const classItem = useSelector(selectClassById(classId ?? ""));
-
-  const titleRef = useRef<HTMLHeadingElement>(null);
-  const descriptionRef = useRef<HTMLParagraphElement>(null);
-  const { isPinned, botOff } = usePinnedText(titleRef, descriptionRef, 80);
 
   if (!classItem) return <p>Class not found</p>;
 
@@ -32,28 +29,7 @@ export default function Class({ params }: { params: { classId: string } }) {
 
   return (
     <>
-      <section className="relative w-full h-screen">
-        <Image
-          src={classItem.imageUrl}
-          alt={classItem.title}
-          fill
-          style={{ objectFit: "cover" }}
-          priority
-        />
-
-        <div className="pt-40 page-container pb-6 h-full flex flex-col">
-          <div
-            ref={titleRef}
-            className={isPinned ? "fixed top-20 z-10" : "absolute z-10"}
-            style={!isPinned ? { bottom: `${botOff}px` } : undefined}
-          >
-            <PageTitle title={classItem.title} />
-          </div>
-          <p ref={descriptionRef} className="text-white mt-auto pt-6 z-10">
-            {classItem.description}
-          </p>
-        </div>
-      </section>
+      <ClassHero classItem={classItem} />
 
       <section className="bg-[#222222] ">
         <div className="page-container flex flex-col gap-8 py-8">

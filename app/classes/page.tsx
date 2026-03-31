@@ -1,20 +1,20 @@
 "use client";
 import { selectClasses } from "@/store/slices/classes/classesSlice";
-import PageTitle from "@/components/pageTitle/PageTitle";
-import Image from "next/image";
-import { usePinnedText } from "@/helpers/usePinnedText";
-import { useRef } from "react";
 import { useSelector } from "react-redux";
 import ClassCard from "@/components/classCard/ClassCard";
 import { ClassCardType } from "@/types/ClassCard";
+import ClassHero from "@/components/classHero/ClassHero";
 
 function ClassesPage() {
   const classes = useSelector(selectClasses);
 
-  const titleRef = useRef<HTMLHeadingElement>(null);
-  const descriptionRef = useRef<HTMLParagraphElement>(null);
-  const { isPinned, botOff } = usePinnedText(titleRef, descriptionRef, 80);
-
+  const heroData = {
+    imageUrl:
+      "https://uthhrhkygpwqcytwblma.supabase.co/storage/v1/object/public/images-bucket/1774014993372-black-n-white.jpg",
+    title: "DANCE STYLES",
+    description:
+      "Explore our diverse dance styles. For beginners or experienced dancers, our classes offer something for everyone. Join us and find your rhythm!",
+  };
   const gridClasses = [
     "col-start-1 col-span-2 md:col-span-1 row-start-1",
     "col-start-1 md:col-start-2 row-start-2 md:row-start-1",
@@ -25,29 +25,7 @@ function ClassesPage() {
 
   return (
     <>
-      <section className="relative w-full h-screen">
-        <Image
-          src="https://uthhrhkygpwqcytwblma.supabase.co/storage/v1/object/public/images-bucket/1774014993372-black-n-white.jpg"
-          alt="Classes background"
-          fill
-          style={{ objectFit: "cover" }}
-          priority
-        />
-        <div className="pt-40 page-container pb-6 h-full flex flex-col">
-          <div
-            ref={titleRef}
-            className={isPinned ? "fixed top-20 z-10" : "absolute z-10"}
-            style={!isPinned ? { bottom: `${botOff}px` } : undefined}
-          >
-            <PageTitle title="DANCE STYLES" />
-          </div>
-          <p ref={descriptionRef} className="text-white mt-auto pt-6 z-10">
-            Explore our diverse dance styles. For beginners or experienced
-            dancers, our classes offer something for everyone. Join us and find
-            your rhythm!
-          </p>
-        </div>
-      </section>
+      <ClassHero classItem={heroData} />
 
       <section className="page-container py-8 bg-[#222222] ">
         <div className="grid grid-cols-2 md:grid-cols-4 grid-flow-row md:grid-rows-3 gap-1 max-h-screen">
