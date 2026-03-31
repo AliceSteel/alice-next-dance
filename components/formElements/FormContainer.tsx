@@ -30,8 +30,8 @@ export default function FormContainer({
     }
     if (state.successMessage) {
       toast.success(state.successMessage);
-      if (onSuccess) {
-        onSuccess();
+      if (onSuccessRef.current) {
+        onSuccessRef.current();
       }
     }
   }, [state]);

@@ -2,13 +2,16 @@
 import { clearCart, closeBasketDrawer } from "@/store/slices/cart/cartSlice";
 import type { RootState } from "@/store/store";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Lineicons } from "@lineiconshq/react-lineicons";
 import type { BasketItem } from "@/types/basketItemTypes";
 import Btn from "@/components/formElements/Btn";
 import { XmarkOutlined } from "@lineiconshq/free-icons";
 
 export default function BasketDrawer() {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
   const dispatch = useDispatch();
   const isBasketOpen = useSelector((s: RootState) => s.cart.isBasketOpen);
   const cartItems = useSelector((state: RootState) => state.cart.items);
@@ -54,7 +57,7 @@ export default function BasketDrawer() {
       >
         <div className="flex items- justify-between p-4 border-b border-white/10">
           <h2 className="text-xl">
-            Basket{totalQtyItems ? ` (${totalQtyItems})` : ""}
+            Basket{mounted && totalQtyItems ? ` (${totalQtyItems})` : ""}
           </h2>
           <button
             onClick={onClose}
