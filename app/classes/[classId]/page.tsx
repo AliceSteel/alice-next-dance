@@ -1,12 +1,9 @@
 "use client";
 import Image from "next/image";
-import PageTitle from "@/components/pageTitle/PageTitle";
 import { type Class } from "@/types/ClassDescription";
 import { useSelector } from "react-redux";
 import { selectClassById } from "@/store/slices/classes/classesSlice";
 import renderHighlighted from "@/helpers/renderHighlightedText";
-import { useRef } from "react";
-import { usePinnedText } from "@/helpers/usePinnedText";
 import Button from "@/components/formElements/Btn";
 import { Lineicons } from "@lineiconshq/react-lineicons";
 import { InstagramOutlined, YoutubeOutlined } from "@lineiconshq/free-icons";
