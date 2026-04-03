@@ -252,18 +252,18 @@ export const createOrder = async (basketItems: BasketItem[], total: number)  => 
 
   if (!user) throw new Error("User not authenticated");
   try {
-      const clerkId = user.id;
+    const clerkId = user.id;
 
     await db.order.create({
       data: {
-        clerkId: user.id,
-        total,
+        clerkId,
+        orderTotalPrice: total, 
         status: "pending",
         orderItems: {
           create: basketItems.map((item: BasketItem) => ({
             productId: item.id,
             quantity: item.quantity,
-            price: parseFloat(item.price.replace("$", "")),
+            price: item.price,
           })),
         },
       }});
@@ -277,7 +277,8 @@ export const createOrder = async (basketItems: BasketItem[], total: number)  => 
 
 export const fetchUserOrders = async () => {
       
-  try{
+  try {
+
     const user = await currentUser();
     if (!user) throw new Error("User not authenticated");
     const orders = await db.order.findMany({
@@ -285,11 +286,10 @@ export const fetchUserOrders = async () => {
         orderBy: { createdAt: "desc" },
         include: { orderItems: { include: { product: true } } },
       });
-      return orders;
+    return orders;
       
   } catch (error) {
     console.log("Error fetching orders:", error);
     return { errorMessage: error instanceof Error ? error.message : "An unknown error occurred" };    
   }
-
 }

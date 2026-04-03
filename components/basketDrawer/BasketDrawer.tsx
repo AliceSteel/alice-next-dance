@@ -8,6 +8,7 @@ import type { BasketItem } from "@/types/basketItemTypes";
 import Btn from "@/components/formElements/Btn";
 import { XmarkOutlined } from "@lineiconshq/free-icons";
 import useMounted from "@/app/composables/useMounted";
+import { createOrder } from "@/helpers/actions";
 
 export default function BasketDrawer() {
   const mounted = useMounted();
@@ -19,6 +20,7 @@ export default function BasketDrawer() {
     (state: RootState) => state.cart.totalQtyItems,
   );
   const cartTotal = useSelector((state: RootState) => state.cart.cartTotal);
+  const [buttonPending, setButtonPending] = useState(false);
 
   useEffect(() => {
     if (isBasketOpen) {
@@ -31,11 +33,14 @@ export default function BasketDrawer() {
   const onClose = () => {
     dispatch(closeBasketDrawer());
   };
-  const redirectToCheckout = () => {
+  const redirectToCheckout = async () => {
     // Implement checkout redirection logic here
-    alert("Redirecting to checkout...");
+    setButtonPending(true);
     console.log("sending items", cartItems);
+    await createOrder(cartItems, parseFloat(cartTotal));
+    dispatch(clearCart());
     onClose();
+    setButtonPending(false);
   };
 
   return (
@@ -110,8 +115,8 @@ export default function BasketDrawer() {
               </div>
             )}
             <Btn
-              label="Checkout"
-              disabled={cartItems.length === 0}
+              label={buttonPending ? "Processing..." : "Checkout"}
+              disabled={cartItems.length === 0 || buttonPending}
               onClick={redirectToCheckout}
             />
           </div>
