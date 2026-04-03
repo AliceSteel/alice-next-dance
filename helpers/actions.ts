@@ -281,6 +281,7 @@ export const fetchUserOrders = async () => {
 
     const user = await currentUser();
     if (!user) throw new Error("User not authenticated");
+
     const orders = await db.order.findMany({
         where: { clerkId: user?.id },
         orderBy: { createdAt: "desc" },
@@ -290,6 +291,6 @@ export const fetchUserOrders = async () => {
       
   } catch (error) {
     console.log("Error fetching orders:", error);
-    return { errorMessage: error instanceof Error ? error.message : "An unknown error occurred" };    
+    throw new Error(error instanceof Error ? error.message : "An unknown error occurred");
   }
 }

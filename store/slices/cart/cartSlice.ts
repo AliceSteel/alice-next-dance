@@ -55,9 +55,11 @@ const cartSlice = createSlice({
             toast.info("Item removed from cart");
         },
 
-        clearCart: () => {
+        clearCart: (state, action: { payload: { showToast?: boolean } }) => {
             localStorage.removeItem("cartState");
-            toast.info("Cart cleared");
+            if (action.payload.showToast) {
+                toast.info("Cart cleared");
+            }
             return { ...initialState };
         },
         calculateTotals: (state) => {

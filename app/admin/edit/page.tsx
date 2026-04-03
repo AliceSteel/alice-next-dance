@@ -1,7 +1,8 @@
 import { fetchAdminContentToEdit } from "@/helpers/actions";
 import EditPageTable from "./components/EditPageTable";
 import type { ContentDataForEditPage } from "@/types/ContentDataForEditPage";
-import SuccessToast from "./components/SuccessToast";
+import SuccessToast from "./components/SuccessToast"; //have to use this instead of normal toast as this is SSR page
+
 export default async function EditPage({
   searchParams,
 }: {

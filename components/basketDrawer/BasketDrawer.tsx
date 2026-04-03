@@ -33,12 +33,11 @@ export default function BasketDrawer() {
   const onClose = () => {
     dispatch(closeBasketDrawer());
   };
+
   const redirectToCheckout = async () => {
-    // Implement checkout redirection logic here
     setButtonPending(true);
-    console.log("sending items", cartItems);
     await createOrder(cartItems, parseFloat(cartTotal));
-    dispatch(clearCart());
+    dispatch(clearCart({ showToast: false }));
     onClose();
     setButtonPending(false);
   };
@@ -102,7 +101,7 @@ export default function BasketDrawer() {
             className={`text-xs underline w-fit self-end px-4 uppercase text-white ${
               cartItems.length === 0 ? "hidden" : "block cursor-pointer"
             }`}
-            onClick={() => dispatch(clearCart())}
+            onClick={() => dispatch(clearCart({ showToast: true }))}
             disabled={cartItems.length === 0}
           >
             Clear Basket
