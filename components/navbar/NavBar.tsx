@@ -19,6 +19,7 @@ import { useClerk } from "@clerk/nextjs";
 import MobileNavbar from "./components/MobileNavbar";
 import { navlinksLeft, navlinksRight, adminLinks } from "./navlinksData";
 import { selectIsLoggedIn, isUserAdmin } from "@/store/slices/user/userSlice";
+import useMounted from "@/app/composables/useMounted";
 
 function NavBar({ title }: NavbarProps) {
   const { signOut } = useClerk();
@@ -35,11 +36,7 @@ function NavBar({ title }: NavbarProps) {
 
   const alreadyMounted = useRef(false);
 
-  const [isHydrated, setIsHydrated] = useState(false);
-
-  useEffect(() => {
-    setIsHydrated(true);
-  }, []);
+  const isHydrated = useMounted();
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobileMenuMounted, setIsMobileMenuMounted] = useState(false);

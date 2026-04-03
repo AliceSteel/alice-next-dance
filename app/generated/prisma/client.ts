@@ -75,12 +75,12 @@ export type Week = Prisma.WeekModel
  */
 export type ScheduleEntry = Prisma.ScheduleEntryModel
 /**
- * Model Basket
+ * Model Order
  * 
  */
-export type Basket = Prisma.BasketModel
+export type Order = Prisma.OrderModel
 /**
- * Model BasketItem
+ * Model OrderItem
  * 
  */
-export type BasketItem = Prisma.BasketItemModel
+export type OrderItem = Prisma.OrderItemModel

@@ -19,7 +19,7 @@ model Product {
   name   String
   price String
   terms  String[] @default([])
-  basketItems BasketItem[]
+  orderItems OrderItem[]
 }
 model PassesTitle {
   title String @unique
@@ -69,24 +69,24 @@ model ScheduleEntry {
   week        Week   @relation(fields: [weekId], references: [id], onDelete: Cascade)
 }
 
-model Basket {
-  basketId       String @id @default(uuid())
+model Order {
+  orderId       String @id @default(uuid())
   clerkId  String
-  basketItems     BasketItem[]
-  qtyItemsInBasket Int @default(0)
-  basketTotalPrice Int @default(0)
-  shipping Int @default(0)
+  orderItems     OrderItem[]
+  qtyItemsInOrder Int @default(0)
+  orderTotalPrice Int @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  status String @default("pending") // e.g., "pending", "completed", "cancelled"
 }
 
-model BasketItem {
+model OrderItem {
   id        String @id @default(uuid())
   product Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId Int
   quantity  Int @default(1)
-  basket    Basket   @relation(fields: [basketId], references: [basketId], onDelete: Cascade)
-  basketId  String
+  order    Order   @relation(fields: [orderId], references: [orderId], onDelete: Cascade)
+  orderId  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

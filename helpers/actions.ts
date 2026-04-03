@@ -7,6 +7,7 @@ import { deleteImage, uploadImageToSupabase } from "@/helpers/supabase";
 import type { ContentDataForEditPage } from "@/types/ContentDataForEditPage";
 import { revalidatePath } from "next/cache";
 import { currentUser } from "@clerk/nextjs/server";
+import { BasketItem } from "@/types/basketItemTypes";
 
 /* LOAD PAGE CONTENT------------------------------------------------------------- */
 export const fetchProducts = () => {
@@ -182,6 +183,7 @@ export const editContent = async (prevState: any, formData: FormData) => {
   try{ 
   
    switch (contentTitle) {
+
       case "products": {
         const { name, price, terms } = Object.fromEntries(formData.entries()) as any;
         const termsArr = String(terms).split('\n').map((t: string) => t.trim()).filter(Boolean);
@@ -192,6 +194,7 @@ export const editContent = async (prevState: any, formData: FormData) => {
         await db.product.update({ where: { id }, data: validated.data });
         break;
       }
+
       case "classes": {
         const { slug, title, description } = Object.fromEntries(formData.entries()) as any;
         const existing = await db.class.findUnique({ where: { id }, select: { imageUrl: true } });
@@ -208,17 +211,19 @@ export const editContent = async (prevState: any, formData: FormData) => {
         const existing = await db.instructor.findUnique({ where: { id }, select: { image: true } });
         const image = await replaceImage(formData, "image", existing?.image ?? null);
 
-        await db.instructor.update({ where: { id }, data: { ...validated, ...(image && { image }) } });        break;
+        await db.instructor.update({ where: { id }, data: { ...validated, ...(image && { image }) } });        
+        break;
       }
+
       case "passesTitle": {
-      const title = formData.get("title") as string;
-      await db.passesTitle.upsert({
-        where: { title: (await db.passesTitle.findFirst())?.title ?? "" },
-        update: { title },
-        create: { title },
-      });
-      break;
-    }
+        const title = formData.get("title") as string;
+        await db.passesTitle.upsert({
+          where: { title: (await db.passesTitle.findFirst())?.title ?? "" },
+          update: { title },
+          create: { title },
+        });
+        break;
+      }
 
     case "purchaseBtnTitle": {
       const title = formData.get("title") as string;
@@ -241,27 +246,50 @@ export const editContent = async (prevState: any, formData: FormData) => {
   }
 }
 
-/* BASKET ACTIONS---------------------------------------------------------- */
-export const fetchOrCreateBasket = async (userId: string) => {
+/* ORDER ACTIONS---------------------------------------------------------- */
+export const createOrder = async (basketItems: BasketItem[], total: number)  => {
   const user = await currentUser();
 
   if (!user) throw new Error("User not authenticated");
+  try {
+      const clerkId = user.id;
 
-  const clerkId = user.id;
+    await db.order.create({
+      data: {
+        clerkId: user.id,
+        total,
+        status: "pending",
+        orderItems: {
+          create: basketItems.map((item: BasketItem) => ({
+            productId: item.id,
+            quantity: item.quantity,
+            price: parseFloat(item.price.replace("$", "")),
+          })),
+        },
+      }});
 
-  let basket = await db.basket.findFirst({ where: { clerkId }, include: { basketItems: { include: { product: true } } } });
+  } catch (error) {
+    console.log("Error creating order:", error);
+    return { errorMessage: error instanceof Error ? error.message : "An unknown error occurred" };    
+  }
+  redirect("/account?success=ordercreated");
+}
 
+export const fetchUserOrders = async () => {
+      
+  try{
+    const user = await currentUser();
+    if (!user) throw new Error("User not authenticated");
+    const orders = await db.order.findMany({
+        where: { clerkId: user?.id },
+        orderBy: { createdAt: "desc" },
+        include: { orderItems: { include: { product: true } } },
+      });
+      return orders;
+      
+  } catch (error) {
+    console.log("Error fetching orders:", error);
+    return { errorMessage: error instanceof Error ? error.message : "An unknown error occurred" };    
+  }
 
 }
-export const fetchBasketItems = async (basketId: string) => {
-}
-export const addItemToBasket = async (basketId: string, productId: number, quantity: number) => {
-   return { successMessage: "Item has been added to the basket - test!" }
-}
-
-const createOrUpdateBasketItem = async (basketId: string, productId: number, quantity: number) => {}
-
-export const deleteBasketItem = async (basketItemId: string) => {
-  return { successMessage: "Item has been removed from the basket - test!" }
-}
-

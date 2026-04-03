@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "seed": "tsx prisma/seed.ts",
-    "db_push": "npx prisma db push",
+    "db_push": "npx prisma db push && npx prisma generate",
     "prisma_studio": "npx prisma studio"
   },
   "dependencies": {

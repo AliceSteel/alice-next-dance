@@ -1,4 +1,4 @@
-'use client";';
+"use client";
 import { clearCart, closeBasketDrawer } from "@/store/slices/cart/cartSlice";
 import type { RootState } from "@/store/store";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,10 +7,10 @@ import { Lineicons } from "@lineiconshq/react-lineicons";
 import type { BasketItem } from "@/types/basketItemTypes";
 import Btn from "@/components/formElements/Btn";
 import { XmarkOutlined } from "@lineiconshq/free-icons";
+import useMounted from "@/app/composables/useMounted";
 
 export default function BasketDrawer() {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
+  const mounted = useMounted();
 
   const dispatch = useDispatch();
   const isBasketOpen = useSelector((s: RootState) => s.cart.isBasketOpen);

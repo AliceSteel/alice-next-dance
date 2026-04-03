@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectIsLoggedIn } from "@/store/slices/user/userSlice";
 import { openModal } from "@/store/slices/modal/modalSlice";
 import type { RootState } from "@/store/store";
+import useMounted from "@/app/composables/useMounted";
 
 const PriceList = ({
   prices,
@@ -19,6 +20,7 @@ const PriceList = ({
   const cartItems = useSelector((state: RootState) => state.cart.items);
 
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const mounted = useMounted();
 
   const dispatch = useDispatch();
 
@@ -55,7 +57,8 @@ const PriceList = ({
     <ul className="flex flex-col">
       {prices &&
         prices.map((pass: Pass, index: number) => {
-          const isInCart = cartItems.some((item: Pass) => item.id === pass.id);
+          const isInCart =
+            mounted && cartItems.some((item: Pass) => item.id === pass.id);
           const label = isInCart ? "Added" : purchaseButtonTitle;
           const isOpen = openIndex === index;
 
