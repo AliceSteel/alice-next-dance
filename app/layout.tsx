@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import NavBar from "../components/navbar/NavBar";
 import { Onest, BioRhyme } from "next/font/google";
 import { Providers } from "./Providers";
-import { fetchClasses, fetchAllInstructors } from "@/helpers/actions";
+import { fetchClasses, fetchAllInstructors } from "@/app/actions/actions";
 import type { Class } from "@/types/ClassDescription";
 import type { Category } from "@/store/slices/classes/classesTypes";
 import { ClerkProvider } from "@clerk/nextjs";

@@ -1,4 +1,4 @@
-import { fetchAdminContentToEdit } from "@/helpers/actions";
+import { fetchAdminContentToEdit } from "@/app/actions/actions";
 import EditPageTable from "./components/EditPageTable";
 import type { ContentDataForEditPage } from "@/types/ContentDataForEditPage";
 import SuccessToast from "./components/SuccessToast"; //have to use this instead of normal toast as this is SSR page

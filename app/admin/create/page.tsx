@@ -1,7 +1,7 @@
 import { SubmitBtn } from "@/components/formElements/SubmitBtn";
 import FormInput from "@/components/formElements/FormInput";
 import TextAreaInput from "@/components/formElements/TextArea";
-import { createProduct, createInstructor } from "@/helpers/actions";
+import { createProduct, createInstructor } from "@/app/actions/actions";
 import FormContainer from "@/components/formElements/FormContainer";
 import ImageInput from "@/components/formElements/ImageInput";
 

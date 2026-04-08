@@ -5,7 +5,7 @@ import {
   fetchPassesTitleRecord,
   fetchBtnTitleRecord,
   fetchSchedule,
-} from "@/helpers/actions";
+} from "@/app/actions/actions";
 import { Suspense } from "react";
 import type { ScheduleResponse } from "@/types/ScheduleItem";
 

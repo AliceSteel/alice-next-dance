@@ -8,7 +8,7 @@ import type { BasketItem } from "@/types/basketItemTypes";
 import Btn from "@/components/formElements/Btn";
 import { XmarkOutlined } from "@lineiconshq/free-icons";
 import useMounted from "@/app/composables/useMounted";
-import { createOrder } from "@/helpers/actions";
+import { createOrder } from "@/app/actions/actions";
 
 export default function BasketDrawer() {
   const mounted = useMounted();
@@ -37,7 +37,6 @@ export default function BasketDrawer() {
   const redirectToCheckout = async () => {
     setButtonPending(true);
     await createOrder(cartItems, parseFloat(cartTotal));
-    dispatch(clearCart({ showToast: false }));
     onClose();
     setButtonPending(false);
   };

@@ -1,5 +1,5 @@
 import "dotenv/config";
-import prisma from "@/helpers/db";
+import prisma from "@/app/actions/db";
 import productsData from "./passesData.json";
 import classesData from "./classesData.json";
 import instructorsData from "./instructorsData.json";

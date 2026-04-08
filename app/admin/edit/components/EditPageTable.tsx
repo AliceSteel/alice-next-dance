@@ -3,7 +3,7 @@
 import FormContainer from "@/components/formElements/FormContainer";
 import { SubmitBtn } from "@/components/formElements/SubmitBtn";
 import { type ContentDataForEditPage } from "@/types/ContentDataForEditPage";
-import { deleteRecord, editContent } from "@/helpers/actions";
+import { deleteRecord, editContent } from "@/app/actions/actions";
 import { Lineicons } from "@lineiconshq/react-lineicons";
 import { PenToSquareOutlined } from "@lineiconshq/free-icons";
 import { useState } from "react";
