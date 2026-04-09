@@ -11,7 +11,7 @@ export default function ClearCartOnSuccess({ success }: { success?: string }) {
     if (success === "ordercreated") {
       dispatch(clearCart({ showToast: false }));
     }
-  }, []);
+  }, [dispatch, success]);
 
   return null;
 }

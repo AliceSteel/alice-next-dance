@@ -21,6 +21,7 @@ export default function ClassHero({
       <Image
         src={classItem.imageUrl}
         alt={classItem.title}
+        sizes="100vw"
         fill
         style={{ objectFit: "cover" }}
         priority

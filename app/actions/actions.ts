@@ -1,13 +1,15 @@
 'use server';
 import db from "@/app/actions/db";
 import { redirect } from "next/navigation";
-import type { ScheduleResponse } from "@/types/ScheduleItem";
+import type { ScheduleResponse , TimeSlot} from "@/types/ScheduleItem";
 import { zodProductSchema, zodInstructorSchema, zodImageSchema, validateWithZod } from "@/helpers/zodSchema";
 import { deleteImage, uploadImageToSupabase } from "@/app/actions/supabase";
 import type { ContentDataForEditPage } from "@/types/ContentDataForEditPage";
+
 import { revalidatePath } from "next/cache";
 import { currentUser } from "@clerk/nextjs/server";
 import { BasketItem } from "@/types/basketItemTypes";
+import { ActionFnType } from "@/types/actionFnType";
 
 /* LOAD PAGE CONTENT------------------------------------------------------------- */
 export const fetchProducts = () => {
@@ -55,7 +57,7 @@ export const fetchSchedule = async (): Promise<ScheduleResponse["weeks"]> => {
     entries: week.entries.map((entry) => ({
       id: entry.entryId,           
       day: entry.day,
-      timeSlot: entry.timeSlot as any, 
+      timeSlot: entry.timeSlot as TimeSlot, 
       classId: entry.classId,
       label: entry.label ?? undefined,
       teacher: entry.teacher ?? undefined,
@@ -64,7 +66,7 @@ export const fetchSchedule = async (): Promise<ScheduleResponse["weeks"]> => {
 };
 
 /* CREATE PAGE ACTIONS------------------------------------------------------------- */
-export const createProduct = async (prevState: any, formData: FormData):Promise<{errorMessage?: string; successMessage?: string}> => {
+export const createProduct: ActionFnType = async (prevState, formData: FormData):Promise<{errorMessage?: string; successMessage?: string}> => {
  try {
   const rawData = Object.fromEntries(formData.entries());
   const { terms1, terms2, terms3, ...rest } = rawData;
@@ -89,7 +91,7 @@ export const createProduct = async (prevState: any, formData: FormData):Promise<
   redirect("/admin/edit?success=productcreated");
 };
 
-export const createInstructor = async (prevState: any, formData: FormData):Promise<{errorMessage?: string; successMessage?: string}> => {
+export const createInstructor: ActionFnType = async (prevState, formData: FormData):Promise<{errorMessage?: string; successMessage?: string}> => {
   try {
     const rawData = Object.fromEntries(formData.entries());
     const { image, bio1, bio2, bio3, ...rest } = rawData;
@@ -137,7 +139,7 @@ export const fetchAdminContentToEdit: () => Promise<ContentDataForEditPage> = as
   } as ContentDataForEditPage;
 };
 
-export const deleteRecord = async (prevState: any, formData: FormData) => {
+export const deleteRecord: ActionFnType = async (prevState, formData: FormData) => {
   const productId = Number(formData.get("id"));
   const contentTable = formData.get("contentTitle");
   let imageRecord = '';
@@ -145,7 +147,7 @@ export const deleteRecord = async (prevState: any, formData: FormData) => {
   try {
    switch (contentTable) {
       case "products":
-      const productRecord = await db.product.delete({ where: { id: productId } });
+        await db.product.delete({ where: { id: productId } });
         break;
       case "instructors":
         const instructorRecord = await db.instructor.delete({ where: { id: productId } });
@@ -177,7 +179,7 @@ async function replaceImage(formData: FormData, fieldName: string, oldImageUrl: 
   return uploadImageToSupabase(validatedImage.image);
 }
 
-export const editContent = async (prevState: any, formData: FormData) => {
+export const editContent: ActionFnType = async (prevState, formData: FormData) => {
   const contentTitle = formData.get("contentTitle") as string;
   const id = Number(formData.get("id"));
   try{ 
@@ -185,7 +187,7 @@ export const editContent = async (prevState: any, formData: FormData) => {
    switch (contentTitle) {
 
       case "products": {
-        const { name, price, terms } = Object.fromEntries(formData.entries()) as any;
+        const { name, price, terms } = Object.fromEntries(formData.entries()) as Record<string, string>;
         const termsArr = String(terms).split('\n').map((t: string) => t.trim()).filter(Boolean);
         const validated = zodProductSchema.safeParse({ name, price, terms: termsArr });
 
@@ -196,7 +198,7 @@ export const editContent = async (prevState: any, formData: FormData) => {
       }
 
       case "classes": {
-        const { slug, title, description } = Object.fromEntries(formData.entries()) as any;
+        const { slug, title, description } = Object.fromEntries(formData.entries()) as Record<string, string>;
         const existing = await db.class.findUnique({ where: { id }, select: { imageUrl: true } });
         const imageUrl = await replaceImage(formData, "imageUrl", existing?.imageUrl ?? null);
         
@@ -204,7 +206,7 @@ export const editContent = async (prevState: any, formData: FormData) => {
         break;
       }
       case "instructors": {
-        const { slug, name, instagram, youTube, bioLines } = Object.fromEntries(formData.entries()) as any;
+        const { slug, name, instagram, youTube, bioLines } = Object.fromEntries(formData.entries()) as Record<string, string>;
         const bioLinesArr = String(bioLines).split('\n').map((l: string) => l.trim()).filter(Boolean);
         const validated = validateWithZod(zodInstructorSchema, { slug, name, instagram, youTube, bioLines: bioLinesArr });
 
@@ -271,12 +273,12 @@ export const createOrder = async (basketItems: BasketItem[], total: number)  => 
       }});
 
     orderId = order.orderId;
-
+    console.log("Order created from actions with ID:", orderId);
   } catch (error) {
     console.log("Error creating order:", error);
     return { errorMessage: error instanceof Error ? error.message : "An unknown error occurred" };    
   }
-  redirect("/checkout?orderId=" + orderId);
+  return orderId;
 }
 
 export const fetchUserOrders = async () => {
@@ -314,6 +316,7 @@ export const fetchAllOrders = async () => {
 
 export const updateOrderStatus = async (orderId: string, newStatus: string) => {
   try {
+    console.log(`Updating order ${orderId} to status: ${newStatus}`);
     await db.order.update({
       where: { orderId },
       data: { status: newStatus },

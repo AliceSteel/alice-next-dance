@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 
 import { stripe } from "../../lib/stripe";
+import { updateOrderStatus } from "../actions/actions";
 
 export default async function Return({
   searchParams,
@@ -12,15 +13,19 @@ export default async function Return({
   if (!session_id)
     throw new Error("Please provide a valid session_id (`cs_test_...`)");
 
-  const { status } = await stripe.checkout.sessions.retrieve(session_id, {
+  const session = await stripe.checkout.sessions.retrieve(session_id, {
     expand: ["line_items", "payment_intent"],
   });
 
-  if (status === "open") {
+  if (session.status === "open") {
     return redirect("/");
   }
 
-  if (status === "complete") {
+  if (session.status === "complete") {
+    const orderId = session.metadata?.orderId;
+    if (orderId) {
+      await updateOrderStatus(orderId, "complete");
+    }
     redirect("/account?success=ordercreated");
   }
 }

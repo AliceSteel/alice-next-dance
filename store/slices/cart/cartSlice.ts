@@ -57,6 +57,8 @@ const cartSlice = createSlice({
 
         clearCart: (state, action: { payload: { showToast?: boolean } }) => {
             localStorage.removeItem("cartState");
+            console.log("Cart cleared from localStorage");
+            console.log('state items: ', state.items);
             if (action.payload.showToast) {
                 toast.info("Cart cleared");
             }
