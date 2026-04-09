@@ -161,7 +161,7 @@ export const deleteRecord: ActionFnType = async (prevState, formData: FormData) 
         return { errorMessage: `Unknown content type: ${contentTable}` };
     }
 
-   imageRecord ? await deleteImage(imageRecord) : null;
+    if (imageRecord) await deleteImage(imageRecord);
     //revalidatePath("/admin/edit"); - alternative to redirecting
     //return { successMessage: "Record deleted successfully!" };
   } catch (error) {
