@@ -15,8 +15,8 @@ export async function fetchClientSecret(orderId: string, basketItems: BasketItem
     line_items: basketItems.map((item) => ({
         quantity: item.quantity,
         price_data: {
-            currency: 'usd',
-            unit_amount: Math.round(parseFloat(item.price.replace('$', '')) * 100),
+            currency: 'dkk',
+            unit_amount: Math.round(parseFloat(item.price.replace('DKK', '')) * 100),
             product_data: {
             name: item.name,
             },

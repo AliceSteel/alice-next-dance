@@ -13,7 +13,7 @@ export default function Orders({ orders }: { orders: Order[] }) {
               <p>Product ID: {item.productId}</p>
             </div>
           ))}
-          <p>Total: ${order.orderTotalPrice}</p>
+          <p>Total: DKK {order.orderTotalPrice}</p>
           <p>Status: {order.status}</p>
           <p>Created At: {new Date(order.createdAt).toLocaleString()}</p>
         </li>

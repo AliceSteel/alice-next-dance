@@ -94,9 +94,10 @@ export default function BasketDrawer() {
                     <span className="text-white/60"> × {item.quantity}</span>
                   </div>
                   <div className="text-white/80">
-                    $
+                    DKK{" "}
                     {(
-                      parseFloat(item.price.replace("$", "")) * item.quantity
+                      parseFloat(item.price.replace(/[^0-9.]/g, "")) *
+                      item.quantity
                     ).toFixed(2)}
                   </div>
                 </li>
@@ -113,10 +114,10 @@ export default function BasketDrawer() {
             Clear Basket
           </button>
           <div className="mt-auto text-white p-4 border-t border-white/10 flex flex-col gap-3">
-            {mounted && (
+            {mounted && cartItems.length > 0 && (
               <div className="flex items-center justify-between">
                 <span>Total:</span>
-                <span>${cartTotal.toFixed(2)}</span>
+                <span>DKK {cartTotal?.toFixed(2)}</span>
               </div>
             )}
             <Btn

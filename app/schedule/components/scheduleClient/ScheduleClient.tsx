@@ -122,7 +122,7 @@ function ScheduleClient({ weeks }: ScheduleClientProps) {
 
   return (
     <>
-      <section className="page-container flex flex-col md:flex-row gap-10 py-20 min-h-screen relative">
+      <section className="page-container flex flex-col items-center md:flex-row gap-10 py-20 min-h-screen relative">
         <div className="w-full md:w-1/5 flex flex-col items-start gap-8 ">
           <h2 className="text-2xl uppercase">
             Our Schedule for {currentWeek.label}

@@ -19,10 +19,16 @@ const getCartItemsFromStorage = () => {
   // Client-side: try to get from localStorage
   try {
     const storedCart = window.localStorage.getItem("cartState");
-    return storedCart ? JSON.parse(storedCart) : initialState;
+
+    if (!storedCart) return initialState;
+    const parsed = JSON.parse(storedCart);
+    const items: BasketItem[] = parsed.items ?? [];
+    parsed.totalQtyItems = items.reduce((total: number, item: BasketItem) => total + item.quantity, 0);
+    parsed.cartTotal = items.reduce((total: number, item: BasketItem) => total + parseFloat(item.price.replace(/[^0-9.]/g, "")) * item.quantity, 0);
+    return parsed;
   } catch {
     return initialState;
-  }
+}
 }
 
 const cartSlice = createSlice({
@@ -57,8 +63,6 @@ const cartSlice = createSlice({
 
         clearCart: (state, action: { payload: { showToast?: boolean } }) => {
             localStorage.removeItem("cartState");
-            console.log("Cart cleared from localStorage");
-            console.log('state items: ', state.items);
             if (action.payload.showToast) {
                 toast.info("Cart cleared");
             }
@@ -66,7 +70,7 @@ const cartSlice = createSlice({
         },
         calculateTotals: (state) => {
           state.totalQtyItems = state.items.reduce((total: number, item:BasketItem) => total + item.quantity, 0);
-          state.cartTotal = state.items.reduce((total: number, item:BasketItem) => total + parseFloat(item.price.replace("$", "")) * item.quantity, 0);
+          state.cartTotal = state.items.reduce((total: number, item:BasketItem) => total + parseFloat(item.price.replace(/[^0-9.]/g, "")) * item.quantity, 0);          
           localStorage.setItem("cartState", JSON.stringify(state));
         }
     }

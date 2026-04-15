@@ -18,14 +18,51 @@ export default function ScheduleGrid({
     <div className="w-full overflow-x-auto sm:overflow-x-visible">
       <div className="relative grid grid-cols-8 grid-rows-6 text-center w-[600px] sm:w-full ">
         {/* header row: day names */}
-        <div></div>
+        <div className="flex justify-end items-center">
+          {/* Previous week button */}
+          {weekIndex > 0 && (
+            <button
+              type="button"
+              className="h-16 w-6 text-blue-500 hover:scale-105 transition-all duration-300 cursor-pointer mr-2"
+              title="Previous Week"
+              onClick={() =>
+                setWeekIndex((prevIndex: number) =>
+                  prevIndex > 0 ? prevIndex - 1 : prevIndex,
+                )
+              }
+            >
+              <Lineicons icon={ChevronLeftOutlined} size={40} />
+            </button>
+          )}
+        </div>
+        {/* WEEK DAYS:  */}
         {days.map((day) => (
           <div
             key={day}
-            className="font-semibold text-white border border-gray-600 bg-white/10 text-sm p-2 flex flex-col items-center justify-center"
+            className="font-semibold text-white border border-gray-600 bg-white/10 text-sm p-2 flex flex-col items-center justify-center relative"
           >
             <span>{day}</span>
             <span>{currentWeek.startDate}</span>
+            {/* NEXT WEEK Button: */}
+            {day === "Sun" && weekIndex < weeks.length - 1 && (
+              <button
+                type="button"
+                className="absolute right-1 top-[calc(50%-1.5rem)] h-10 w-6  text-blue-500 hover:scale-105 transition-all duration-300 cursor-pointer"
+                title="Next Week"
+                onClick={() =>
+                  setWeekIndex(
+                    (prevIndex) =>
+                      prevIndex < weeks.length - 1 ? prevIndex + 1 : prevIndex, // <-- increment
+                  )
+                }
+              >
+                <Lineicons
+                  icon={ChevronLeftOutlined}
+                  size={40}
+                  className="rotate-180"
+                />
+              </button>
+            )}
           </div>
         ))}
 
@@ -92,46 +129,6 @@ export default function ScheduleGrid({
             })}
           </div>
         ))}
-        {/* navigation buttons, previous week: */}
-
-        {weekIndex > 0 && (
-          <button
-            type="button"
-            className="absolute left-2 top-3 sm:top-9 h-16 w-6"
-            title="Previous Week"
-            onClick={() =>
-              setWeekIndex((prevIndex: number) =>
-                prevIndex > 0 ? prevIndex - 1 : prevIndex,
-              )
-            }
-          >
-            <Lineicons
-              icon={ChevronLeftOutlined}
-              size={40}
-              className="text-blue-500 hover:text-white/100 transition-opacity duration-300 cursor-pointer"
-            />
-          </button>
-        )}
-        {/* Next week button */}
-        {weekIndex < weeks.length - 1 && (
-          <button
-            type="button"
-            className="absolute right-4 top-3 sm:top-9 h-10 w-6"
-            title="Next Week"
-            onClick={() =>
-              setWeekIndex(
-                (prevIndex) =>
-                  prevIndex < weeks.length - 1 ? prevIndex + 1 : prevIndex, // <-- increment
-              )
-            }
-          >
-            <Lineicons
-              icon={ChevronLeftOutlined}
-              size={40}
-              className="rotate-180 text-blue-500 hover:text-white/100 transition-opacity duration-300 cursor-pointer"
-            />
-          </button>
-        )}
       </div>
     </div>
   );
