@@ -206,7 +206,7 @@ export type ClassGroupByOutputType = {
   _max: ClassMaxAggregateOutputType | null
 }
 
-type GetClassGroupByPayload<T extends ClassGroupByArgs> = Prisma.PrismaPromise<
+export type GetClassGroupByPayload<T extends ClassGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<ClassGroupByOutputType, T['by']> &
       {
@@ -232,6 +232,7 @@ export type ClassWhereInput = {
   description?: Prisma.StringFilter<"Class"> | string
   text1?: Prisma.StringFilter<"Class"> | string
   text2?: Prisma.StringFilter<"Class"> | string
+  scheduleTemplates?: Prisma.ScheduleTemplateListRelationFilter
 }
 
 export type ClassOrderByWithRelationInput = {
@@ -242,6 +243,7 @@ export type ClassOrderByWithRelationInput = {
   description?: Prisma.SortOrder
   text1?: Prisma.SortOrder
   text2?: Prisma.SortOrder
+  scheduleTemplates?: Prisma.ScheduleTemplateOrderByRelationAggregateInput
 }
 
 export type ClassWhereUniqueInput = Prisma.AtLeast<{
@@ -255,6 +257,7 @@ export type ClassWhereUniqueInput = Prisma.AtLeast<{
   description?: Prisma.StringFilter<"Class"> | string
   text1?: Prisma.StringFilter<"Class"> | string
   text2?: Prisma.StringFilter<"Class"> | string
+  scheduleTemplates?: Prisma.ScheduleTemplateListRelationFilter
 }, "id" | "slug">
 
 export type ClassOrderByWithAggregationInput = {
@@ -292,6 +295,7 @@ export type ClassCreateInput = {
   description: string
   text1: string
   text2: string
+  scheduleTemplates?: Prisma.ScheduleTemplateCreateNestedManyWithoutDanceClassInput
 }
 
 export type ClassUncheckedCreateInput = {
@@ -302,6 +306,7 @@ export type ClassUncheckedCreateInput = {
   description: string
   text1: string
   text2: string
+  scheduleTemplates?: Prisma.ScheduleTemplateUncheckedCreateNestedManyWithoutDanceClassInput
 }
 
 export type ClassUpdateInput = {
@@ -311,6 +316,7 @@ export type ClassUpdateInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   text1?: Prisma.StringFieldUpdateOperationsInput | string
   text2?: Prisma.StringFieldUpdateOperationsInput | string
+  scheduleTemplates?: Prisma.ScheduleTemplateUpdateManyWithoutDanceClassNestedInput
 }
 
 export type ClassUncheckedUpdateInput = {
@@ -321,6 +327,7 @@ export type ClassUncheckedUpdateInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   text1?: Prisma.StringFieldUpdateOperationsInput | string
   text2?: Prisma.StringFieldUpdateOperationsInput | string
+  scheduleTemplates?: Prisma.ScheduleTemplateUncheckedUpdateManyWithoutDanceClassNestedInput
 }
 
 export type ClassCreateManyInput = {
@@ -390,6 +397,108 @@ export type ClassSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
 }
 
+export type ClassScalarRelationFilter = {
+  is?: Prisma.ClassWhereInput
+  isNot?: Prisma.ClassWhereInput
+}
+
+export type ClassCreateNestedOneWithoutScheduleTemplatesInput = {
+  create?: Prisma.XOR<Prisma.ClassCreateWithoutScheduleTemplatesInput, Prisma.ClassUncheckedCreateWithoutScheduleTemplatesInput>
+  connectOrCreate?: Prisma.ClassCreateOrConnectWithoutScheduleTemplatesInput
+  connect?: Prisma.ClassWhereUniqueInput
+}
+
+export type ClassUpdateOneRequiredWithoutScheduleTemplatesNestedInput = {
+  create?: Prisma.XOR<Prisma.ClassCreateWithoutScheduleTemplatesInput, Prisma.ClassUncheckedCreateWithoutScheduleTemplatesInput>
+  connectOrCreate?: Prisma.ClassCreateOrConnectWithoutScheduleTemplatesInput
+  upsert?: Prisma.ClassUpsertWithoutScheduleTemplatesInput
+  connect?: Prisma.ClassWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ClassUpdateToOneWithWhereWithoutScheduleTemplatesInput, Prisma.ClassUpdateWithoutScheduleTemplatesInput>, Prisma.ClassUncheckedUpdateWithoutScheduleTemplatesInput>
+}
+
+export type ClassCreateWithoutScheduleTemplatesInput = {
+  slug: string
+  title: string
+  imageUrl: string
+  description: string
+  text1: string
+  text2: string
+}
+
+export type ClassUncheckedCreateWithoutScheduleTemplatesInput = {
+  id?: number
+  slug: string
+  title: string
+  imageUrl: string
+  description: string
+  text1: string
+  text2: string
+}
+
+export type ClassCreateOrConnectWithoutScheduleTemplatesInput = {
+  where: Prisma.ClassWhereUniqueInput
+  create: Prisma.XOR<Prisma.ClassCreateWithoutScheduleTemplatesInput, Prisma.ClassUncheckedCreateWithoutScheduleTemplatesInput>
+}
+
+export type ClassUpsertWithoutScheduleTemplatesInput = {
+  update: Prisma.XOR<Prisma.ClassUpdateWithoutScheduleTemplatesInput, Prisma.ClassUncheckedUpdateWithoutScheduleTemplatesInput>
+  create: Prisma.XOR<Prisma.ClassCreateWithoutScheduleTemplatesInput, Prisma.ClassUncheckedCreateWithoutScheduleTemplatesInput>
+  where?: Prisma.ClassWhereInput
+}
+
+export type ClassUpdateToOneWithWhereWithoutScheduleTemplatesInput = {
+  where?: Prisma.ClassWhereInput
+  data: Prisma.XOR<Prisma.ClassUpdateWithoutScheduleTemplatesInput, Prisma.ClassUncheckedUpdateWithoutScheduleTemplatesInput>
+}
+
+export type ClassUpdateWithoutScheduleTemplatesInput = {
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  text1?: Prisma.StringFieldUpdateOperationsInput | string
+  text2?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type ClassUncheckedUpdateWithoutScheduleTemplatesInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  text1?: Prisma.StringFieldUpdateOperationsInput | string
+  text2?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+
+/**
+ * Count Type ClassCountOutputType
+ */
+
+export type ClassCountOutputType = {
+  scheduleTemplates: number
+}
+
+export type ClassCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  scheduleTemplates?: boolean | ClassCountOutputTypeCountScheduleTemplatesArgs
+}
+
+/**
+ * ClassCountOutputType without action
+ */
+export type ClassCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ClassCountOutputType
+   */
+  select?: Prisma.ClassCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * ClassCountOutputType without action
+ */
+export type ClassCountOutputTypeCountScheduleTemplatesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ScheduleTemplateWhereInput
+}
 
 
 export type ClassSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -400,6 +509,8 @@ export type ClassSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   description?: boolean
   text1?: boolean
   text2?: boolean
+  scheduleTemplates?: boolean | Prisma.Class$scheduleTemplatesArgs<ExtArgs>
+  _count?: boolean | Prisma.ClassCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["class"]>
 
 export type ClassSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -433,10 +544,18 @@ export type ClassSelectScalar = {
 }
 
 export type ClassOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "slug" | "title" | "imageUrl" | "description" | "text1" | "text2", ExtArgs["result"]["class"]>
+export type ClassInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  scheduleTemplates?: boolean | Prisma.Class$scheduleTemplatesArgs<ExtArgs>
+  _count?: boolean | Prisma.ClassCountOutputTypeDefaultArgs<ExtArgs>
+}
+export type ClassIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type ClassIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $ClassPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Class"
-  objects: {}
+  objects: {
+    scheduleTemplates: Prisma.$ScheduleTemplatePayload<ExtArgs>[]
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     slug: string
@@ -839,6 +958,7 @@ readonly fields: ClassFieldRefs;
  */
 export interface Prisma__ClassClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  scheduleTemplates<T extends Prisma.Class$scheduleTemplatesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Class$scheduleTemplatesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ScheduleTemplatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -892,6 +1012,10 @@ export type ClassFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.Interna
    */
   omit?: Prisma.ClassOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ClassInclude<ExtArgs> | null
+  /**
    * Filter, which Class to fetch.
    */
   where: Prisma.ClassWhereUniqueInput
@@ -910,6 +1034,10 @@ export type ClassFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensions.
    */
   omit?: Prisma.ClassOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ClassInclude<ExtArgs> | null
+  /**
    * Filter, which Class to fetch.
    */
   where: Prisma.ClassWhereUniqueInput
@@ -927,6 +1055,10 @@ export type ClassFindFirstArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Omit specific fields from the Class
    */
   omit?: Prisma.ClassOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ClassInclude<ExtArgs> | null
   /**
    * Filter, which Class to fetch.
    */
@@ -976,6 +1108,10 @@ export type ClassFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions.I
    */
   omit?: Prisma.ClassOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ClassInclude<ExtArgs> | null
+  /**
    * Filter, which Class to fetch.
    */
   where?: Prisma.ClassWhereInput
@@ -1024,6 +1160,10 @@ export type ClassFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    */
   omit?: Prisma.ClassOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ClassInclude<ExtArgs> | null
+  /**
    * Filter, which Classes to fetch.
    */
   where?: Prisma.ClassWhereInput
@@ -1051,6 +1191,11 @@ export type ClassFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    * Skip the first `n` Classes.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of Classes.
+   */
   distinct?: Prisma.ClassScalarFieldEnum | Prisma.ClassScalarFieldEnum[]
 }
 
@@ -1066,6 +1211,10 @@ export type ClassCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
    * Omit specific fields from the Class
    */
   omit?: Prisma.ClassOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ClassInclude<ExtArgs> | null
   /**
    * The data needed to create a Class.
    */
@@ -1114,6 +1263,10 @@ export type ClassUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
    * Omit specific fields from the Class
    */
   omit?: Prisma.ClassOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ClassInclude<ExtArgs> | null
   /**
    * The data needed to update a Class.
    */
@@ -1181,6 +1334,10 @@ export type ClassUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
    */
   omit?: Prisma.ClassOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ClassInclude<ExtArgs> | null
+  /**
    * The filter to search for the Class to update in case it exists.
    */
   where: Prisma.ClassWhereUniqueInput
@@ -1207,6 +1364,10 @@ export type ClassDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
    */
   omit?: Prisma.ClassOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ClassInclude<ExtArgs> | null
+  /**
    * Filter which Class to delete.
    */
   where: Prisma.ClassWhereUniqueInput
@@ -1227,6 +1388,30 @@ export type ClassDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
 }
 
 /**
+ * Class.scheduleTemplates
+ */
+export type Class$scheduleTemplatesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ScheduleTemplate
+   */
+  select?: Prisma.ScheduleTemplateSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ScheduleTemplate
+   */
+  omit?: Prisma.ScheduleTemplateOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ScheduleTemplateInclude<ExtArgs> | null
+  where?: Prisma.ScheduleTemplateWhereInput
+  orderBy?: Prisma.ScheduleTemplateOrderByWithRelationInput | Prisma.ScheduleTemplateOrderByWithRelationInput[]
+  cursor?: Prisma.ScheduleTemplateWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ScheduleTemplateScalarFieldEnum | Prisma.ScheduleTemplateScalarFieldEnum[]
+}
+
+/**
  * Class without action
  */
 export type ClassDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1238,4 +1423,8 @@ export type ClassDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
    * Omit specific fields from the Class
    */
   omit?: Prisma.ClassOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ClassInclude<ExtArgs> | null
 }

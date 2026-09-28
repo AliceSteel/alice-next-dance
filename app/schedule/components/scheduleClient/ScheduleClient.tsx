@@ -5,7 +5,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectCategories } from "@/store/slices/classes/classesSlice";
 import Button from "@/components/formElements/Btn";
 import { useState, useEffect, useMemo } from "react";
-import type { ScheduleEntry, ScheduleWeek } from "@/types/ScheduleItem";
+import type {
+  BookableScheduleEntry,
+  BookableScheduleWeek,
+} from "@/types/ScheduleItem";
 import type { Category } from "@/store/slices/classes/classesTypes";
 import ScheduleGrid from "../scheduleGrid/ScheduleGrid";
 import { openModal } from "@/store/slices/modal/modalSlice";
@@ -79,8 +82,6 @@ function ScheduleClient({ weeks }: ScheduleClientProps) {
 
   const [weekIndex, setWeekIndex] = useState<number>(0);
 
-  const currentWeek: ScheduleWeek = weeks[weekIndex];
-
   const allCategories: Category[] = [
     { id: "all", title: "All" },
     ...(classCategories ?? []),
@@ -99,10 +100,23 @@ function ScheduleClient({ weeks }: ScheduleClientProps) {
     ],
     [],
   );
+  if (weeks.length === 0) {
+    return (
+      <section className="page-container py-20">
+        <h1 className="text-2xl">Schedule</h1>
+        <p className="mt-4 text-gray-400">
+          No classes are scheduled yet. Please check back soon.
+        </p>
+      </section>
+    );
+  }
+
+  const currentWeek: BookableScheduleWeek = weeks[weekIndex] ?? weeks[0];
+
   const getEntryFor = (day: string, slot: string) =>
     currentWeek.entries.find((e) => e.day === day && e.timeSlot === slot);
 
-  const handleEntryClick = (entry: ScheduleEntry) => {
+  const handleEntryClick = (entry: BookableScheduleEntry) => {
     // 1. not logged in → go login, then membership
     if (!isLoggedIn) {
       dispatch(openModal("login"));

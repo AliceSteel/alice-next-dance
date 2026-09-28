@@ -130,7 +130,7 @@ export type PurchaseButtonTitleGroupByOutputType = {
   _max: PurchaseButtonTitleMaxAggregateOutputType | null
 }
 
-type GetPurchaseButtonTitleGroupByPayload<T extends PurchaseButtonTitleGroupByArgs> = Prisma.PrismaPromise<
+export type GetPurchaseButtonTitleGroupByPayload<T extends PurchaseButtonTitleGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<PurchaseButtonTitleGroupByOutputType, T['by']> &
       {
@@ -842,6 +842,11 @@ export type PurchaseButtonTitleFindManyArgs<ExtArgs extends runtime.Types.Extens
    * Skip the first `n` PurchaseButtonTitles.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of PurchaseButtonTitles.
+   */
   distinct?: Prisma.PurchaseButtonTitleScalarFieldEnum | Prisma.PurchaseButtonTitleScalarFieldEnum[]
 }
 

@@ -1,32 +1,34 @@
 import "dotenv/config";
 import prisma from "@/app/actions/db";
-import productsData from "./passesData.json";
-import classesData from "./classesData.json";
-import instructorsData from "./instructorsData.json";
+//import productsData from "./passesData.json";
+//import classesData from "./classesData.json";
+//import instructorsData from "./instructorsData.json";
 import scheduleData from "./scheduleData.json";
 
 async function main() {
- /*  for (const product of productsData.passes) {
+  /*  for (const product of productsData.passes) {
     await prisma.product.create({
       data: {
         name: product.name,
         price: product.price,
         terms: product.terms,
+        credits: product.credits,
+        validityDays: product.validityDays,
       },
     });
-  }
-  await prisma.passesTitle.create({
+  } */
+  /*  await prisma.passesTitle.create({
     data: {
       title: productsData.passesTitle,
     },
-  });
-  await prisma.purchaseButtonTitle.create({
+  }); */
+  /*   await prisma.purchaseButtonTitle.create({
     data: {
       title: productsData.purchaseButtonTitle,
     },
-  });
-   */
-  for (const danceClass of classesData.classes) {
+  }); */
+
+  /*   for (const danceClass of classesData.classes) {
     await prisma.class.create({
       data: {
         slug: danceClass.slug,
@@ -37,11 +39,11 @@ async function main() {
         text2: danceClass.text2,
       },
     });
-  }
-
- /*  for (const instructor of instructorsData.instructors) {
+  } */
+  /* 
+  for (const instructor of instructorsData.instructors) {
     await prisma.instructor.create({
-      data: { 
+      data: {
         slug: instructor.id,
         name: instructor.name,
         image: instructor.image,
@@ -50,34 +52,34 @@ async function main() {
         bioLines: instructor.bioLines,
       },
     });
-  } 
-  for (const week of scheduleData.weeks) {
-    await prisma.week.create({
-      data: {
-        id: week.id,
-        label: week.label,
-        startDate: week.startDate,
-        days: week.days,
-        entries: {
-          create: week.entries.map((entry) => ({
-            entryId: entry.id,
-            day: entry.day,
-            timeSlot: entry.timeSlot,
-            classId: entry.classId,
-            label: entry.label,
-            teacher: entry.teacher,
-          })),
-        },
-      },
+  }
+   */
+  for (const template of scheduleData.templates) {
+    const data = {
+      classSlug: template.classSlug,
+      instructorSlug: template.instructorSlug,
+      label: template.label,
+      weekday: template.weekday,
+      startTime: template.startTime,
+      durationMin: template.durationMin,
+      timezone: template.timezone,
+      effectiveFrom: new Date(`${template.effectiveFrom}T00:00:00.000Z`),
+      effectiveTo: template.effectiveTo
+        ? new Date(`${template.effectiveTo}T00:00:00.000Z`)
+        : null,
+      capacity: template.capacity,
+    };
+    await prisma.scheduleTemplate.upsert({
+      where: { id: template.id },
+      create: { id: template.id, ...data },
+      update: {},
     });
-  } */
-  
+  }
+
+  console.log(`Seeded ${scheduleData.templates.length} schedule templates.`);
 }
 
 main()
-  .then(async () => {
-    console.log("Seeding completed.");
-  })
   .catch((e) => {
     console.error(e);
     process.exit(1);

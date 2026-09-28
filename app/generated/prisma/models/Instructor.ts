@@ -202,7 +202,7 @@ export type InstructorGroupByOutputType = {
   _max: InstructorMaxAggregateOutputType | null
 }
 
-type GetInstructorGroupByPayload<T extends InstructorGroupByArgs> = Prisma.PrismaPromise<
+export type GetInstructorGroupByPayload<T extends InstructorGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<InstructorGroupByOutputType, T['by']> &
       {
@@ -228,6 +228,7 @@ export type InstructorWhereInput = {
   instagram?: Prisma.StringNullableFilter<"Instructor"> | string | null
   youTube?: Prisma.StringNullableFilter<"Instructor"> | string | null
   bioLines?: Prisma.StringNullableListFilter<"Instructor">
+  scheduleTemplates?: Prisma.ScheduleTemplateListRelationFilter
 }
 
 export type InstructorOrderByWithRelationInput = {
@@ -238,6 +239,7 @@ export type InstructorOrderByWithRelationInput = {
   instagram?: Prisma.SortOrderInput | Prisma.SortOrder
   youTube?: Prisma.SortOrderInput | Prisma.SortOrder
   bioLines?: Prisma.SortOrder
+  scheduleTemplates?: Prisma.ScheduleTemplateOrderByRelationAggregateInput
 }
 
 export type InstructorWhereUniqueInput = Prisma.AtLeast<{
@@ -251,6 +253,7 @@ export type InstructorWhereUniqueInput = Prisma.AtLeast<{
   instagram?: Prisma.StringNullableFilter<"Instructor"> | string | null
   youTube?: Prisma.StringNullableFilter<"Instructor"> | string | null
   bioLines?: Prisma.StringNullableListFilter<"Instructor">
+  scheduleTemplates?: Prisma.ScheduleTemplateListRelationFilter
 }, "id" | "slug">
 
 export type InstructorOrderByWithAggregationInput = {
@@ -288,6 +291,7 @@ export type InstructorCreateInput = {
   instagram?: string | null
   youTube?: string | null
   bioLines?: Prisma.InstructorCreatebioLinesInput | string[]
+  scheduleTemplates?: Prisma.ScheduleTemplateCreateNestedManyWithoutInstructorInput
 }
 
 export type InstructorUncheckedCreateInput = {
@@ -298,6 +302,7 @@ export type InstructorUncheckedCreateInput = {
   instagram?: string | null
   youTube?: string | null
   bioLines?: Prisma.InstructorCreatebioLinesInput | string[]
+  scheduleTemplates?: Prisma.ScheduleTemplateUncheckedCreateNestedManyWithoutInstructorInput
 }
 
 export type InstructorUpdateInput = {
@@ -307,6 +312,7 @@ export type InstructorUpdateInput = {
   instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   youTube?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bioLines?: Prisma.InstructorUpdatebioLinesInput | string[]
+  scheduleTemplates?: Prisma.ScheduleTemplateUpdateManyWithoutInstructorNestedInput
 }
 
 export type InstructorUncheckedUpdateInput = {
@@ -317,6 +323,7 @@ export type InstructorUncheckedUpdateInput = {
   instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   youTube?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bioLines?: Prisma.InstructorUpdatebioLinesInput | string[]
+  scheduleTemplates?: Prisma.ScheduleTemplateUncheckedUpdateManyWithoutInstructorNestedInput
 }
 
 export type InstructorCreateManyInput = {
@@ -384,6 +391,11 @@ export type InstructorSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
 }
 
+export type InstructorScalarRelationFilter = {
+  is?: Prisma.InstructorWhereInput
+  isNot?: Prisma.InstructorWhereInput
+}
+
 export type InstructorCreatebioLinesInput = {
   set: string[]
 }
@@ -397,6 +409,103 @@ export type InstructorUpdatebioLinesInput = {
   push?: string | string[]
 }
 
+export type InstructorCreateNestedOneWithoutScheduleTemplatesInput = {
+  create?: Prisma.XOR<Prisma.InstructorCreateWithoutScheduleTemplatesInput, Prisma.InstructorUncheckedCreateWithoutScheduleTemplatesInput>
+  connectOrCreate?: Prisma.InstructorCreateOrConnectWithoutScheduleTemplatesInput
+  connect?: Prisma.InstructorWhereUniqueInput
+}
+
+export type InstructorUpdateOneRequiredWithoutScheduleTemplatesNestedInput = {
+  create?: Prisma.XOR<Prisma.InstructorCreateWithoutScheduleTemplatesInput, Prisma.InstructorUncheckedCreateWithoutScheduleTemplatesInput>
+  connectOrCreate?: Prisma.InstructorCreateOrConnectWithoutScheduleTemplatesInput
+  upsert?: Prisma.InstructorUpsertWithoutScheduleTemplatesInput
+  connect?: Prisma.InstructorWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.InstructorUpdateToOneWithWhereWithoutScheduleTemplatesInput, Prisma.InstructorUpdateWithoutScheduleTemplatesInput>, Prisma.InstructorUncheckedUpdateWithoutScheduleTemplatesInput>
+}
+
+export type InstructorCreateWithoutScheduleTemplatesInput = {
+  slug: string
+  name: string
+  image: string
+  instagram?: string | null
+  youTube?: string | null
+  bioLines?: Prisma.InstructorCreatebioLinesInput | string[]
+}
+
+export type InstructorUncheckedCreateWithoutScheduleTemplatesInput = {
+  id?: number
+  slug: string
+  name: string
+  image: string
+  instagram?: string | null
+  youTube?: string | null
+  bioLines?: Prisma.InstructorCreatebioLinesInput | string[]
+}
+
+export type InstructorCreateOrConnectWithoutScheduleTemplatesInput = {
+  where: Prisma.InstructorWhereUniqueInput
+  create: Prisma.XOR<Prisma.InstructorCreateWithoutScheduleTemplatesInput, Prisma.InstructorUncheckedCreateWithoutScheduleTemplatesInput>
+}
+
+export type InstructorUpsertWithoutScheduleTemplatesInput = {
+  update: Prisma.XOR<Prisma.InstructorUpdateWithoutScheduleTemplatesInput, Prisma.InstructorUncheckedUpdateWithoutScheduleTemplatesInput>
+  create: Prisma.XOR<Prisma.InstructorCreateWithoutScheduleTemplatesInput, Prisma.InstructorUncheckedCreateWithoutScheduleTemplatesInput>
+  where?: Prisma.InstructorWhereInput
+}
+
+export type InstructorUpdateToOneWithWhereWithoutScheduleTemplatesInput = {
+  where?: Prisma.InstructorWhereInput
+  data: Prisma.XOR<Prisma.InstructorUpdateWithoutScheduleTemplatesInput, Prisma.InstructorUncheckedUpdateWithoutScheduleTemplatesInput>
+}
+
+export type InstructorUpdateWithoutScheduleTemplatesInput = {
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.StringFieldUpdateOperationsInput | string
+  instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  youTube?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bioLines?: Prisma.InstructorUpdatebioLinesInput | string[]
+}
+
+export type InstructorUncheckedUpdateWithoutScheduleTemplatesInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.StringFieldUpdateOperationsInput | string
+  instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  youTube?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bioLines?: Prisma.InstructorUpdatebioLinesInput | string[]
+}
+
+
+/**
+ * Count Type InstructorCountOutputType
+ */
+
+export type InstructorCountOutputType = {
+  scheduleTemplates: number
+}
+
+export type InstructorCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  scheduleTemplates?: boolean | InstructorCountOutputTypeCountScheduleTemplatesArgs
+}
+
+/**
+ * InstructorCountOutputType without action
+ */
+export type InstructorCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the InstructorCountOutputType
+   */
+  select?: Prisma.InstructorCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * InstructorCountOutputType without action
+ */
+export type InstructorCountOutputTypeCountScheduleTemplatesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ScheduleTemplateWhereInput
+}
 
 
 export type InstructorSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -407,6 +516,8 @@ export type InstructorSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   instagram?: boolean
   youTube?: boolean
   bioLines?: boolean
+  scheduleTemplates?: boolean | Prisma.Instructor$scheduleTemplatesArgs<ExtArgs>
+  _count?: boolean | Prisma.InstructorCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["instructor"]>
 
 export type InstructorSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -440,10 +551,18 @@ export type InstructorSelectScalar = {
 }
 
 export type InstructorOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "slug" | "name" | "image" | "instagram" | "youTube" | "bioLines", ExtArgs["result"]["instructor"]>
+export type InstructorInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  scheduleTemplates?: boolean | Prisma.Instructor$scheduleTemplatesArgs<ExtArgs>
+  _count?: boolean | Prisma.InstructorCountOutputTypeDefaultArgs<ExtArgs>
+}
+export type InstructorIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type InstructorIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $InstructorPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Instructor"
-  objects: {}
+  objects: {
+    scheduleTemplates: Prisma.$ScheduleTemplatePayload<ExtArgs>[]
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     slug: string
@@ -846,6 +965,7 @@ readonly fields: InstructorFieldRefs;
  */
 export interface Prisma__InstructorClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  scheduleTemplates<T extends Prisma.Instructor$scheduleTemplatesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Instructor$scheduleTemplatesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ScheduleTemplatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -899,6 +1019,10 @@ export type InstructorFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.In
    */
   omit?: Prisma.InstructorOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InstructorInclude<ExtArgs> | null
+  /**
    * Filter, which Instructor to fetch.
    */
   where: Prisma.InstructorWhereUniqueInput
@@ -917,6 +1041,10 @@ export type InstructorFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extens
    */
   omit?: Prisma.InstructorOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InstructorInclude<ExtArgs> | null
+  /**
    * Filter, which Instructor to fetch.
    */
   where: Prisma.InstructorWhereUniqueInput
@@ -934,6 +1062,10 @@ export type InstructorFindFirstArgs<ExtArgs extends runtime.Types.Extensions.Int
    * Omit specific fields from the Instructor
    */
   omit?: Prisma.InstructorOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InstructorInclude<ExtArgs> | null
   /**
    * Filter, which Instructor to fetch.
    */
@@ -983,6 +1115,10 @@ export type InstructorFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensi
    */
   omit?: Prisma.InstructorOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InstructorInclude<ExtArgs> | null
+  /**
    * Filter, which Instructor to fetch.
    */
   where?: Prisma.InstructorWhereInput
@@ -1031,6 +1167,10 @@ export type InstructorFindManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    */
   omit?: Prisma.InstructorOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InstructorInclude<ExtArgs> | null
+  /**
    * Filter, which Instructors to fetch.
    */
   where?: Prisma.InstructorWhereInput
@@ -1058,6 +1198,11 @@ export type InstructorFindManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Skip the first `n` Instructors.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of Instructors.
+   */
   distinct?: Prisma.InstructorScalarFieldEnum | Prisma.InstructorScalarFieldEnum[]
 }
 
@@ -1073,6 +1218,10 @@ export type InstructorCreateArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Omit specific fields from the Instructor
    */
   omit?: Prisma.InstructorOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InstructorInclude<ExtArgs> | null
   /**
    * The data needed to create a Instructor.
    */
@@ -1121,6 +1270,10 @@ export type InstructorUpdateArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Omit specific fields from the Instructor
    */
   omit?: Prisma.InstructorOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InstructorInclude<ExtArgs> | null
   /**
    * The data needed to update a Instructor.
    */
@@ -1188,6 +1341,10 @@ export type InstructorUpsertArgs<ExtArgs extends runtime.Types.Extensions.Intern
    */
   omit?: Prisma.InstructorOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InstructorInclude<ExtArgs> | null
+  /**
    * The filter to search for the Instructor to update in case it exists.
    */
   where: Prisma.InstructorWhereUniqueInput
@@ -1214,6 +1371,10 @@ export type InstructorDeleteArgs<ExtArgs extends runtime.Types.Extensions.Intern
    */
   omit?: Prisma.InstructorOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InstructorInclude<ExtArgs> | null
+  /**
    * Filter which Instructor to delete.
    */
   where: Prisma.InstructorWhereUniqueInput
@@ -1234,6 +1395,30 @@ export type InstructorDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.In
 }
 
 /**
+ * Instructor.scheduleTemplates
+ */
+export type Instructor$scheduleTemplatesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ScheduleTemplate
+   */
+  select?: Prisma.ScheduleTemplateSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ScheduleTemplate
+   */
+  omit?: Prisma.ScheduleTemplateOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ScheduleTemplateInclude<ExtArgs> | null
+  where?: Prisma.ScheduleTemplateWhereInput
+  orderBy?: Prisma.ScheduleTemplateOrderByWithRelationInput | Prisma.ScheduleTemplateOrderByWithRelationInput[]
+  cursor?: Prisma.ScheduleTemplateWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ScheduleTemplateScalarFieldEnum | Prisma.ScheduleTemplateScalarFieldEnum[]
+}
+
+/**
  * Instructor without action
  */
 export type InstructorDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1245,4 +1430,8 @@ export type InstructorDefaultArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Omit specific fields from the Instructor
    */
   omit?: Prisma.InstructorOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InstructorInclude<ExtArgs> | null
 }

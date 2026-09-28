@@ -28,22 +28,30 @@ export type AggregateProduct = {
 
 export type ProductAvgAggregateOutputType = {
   id: number | null
+  credits: number | null
+  validityDays: number | null
 }
 
 export type ProductSumAggregateOutputType = {
   id: number | null
+  credits: number | null
+  validityDays: number | null
 }
 
 export type ProductMinAggregateOutputType = {
   id: number | null
   name: string | null
   price: string | null
+  credits: number | null
+  validityDays: number | null
 }
 
 export type ProductMaxAggregateOutputType = {
   id: number | null
   name: string | null
   price: string | null
+  credits: number | null
+  validityDays: number | null
 }
 
 export type ProductCountAggregateOutputType = {
@@ -51,28 +59,38 @@ export type ProductCountAggregateOutputType = {
   name: number
   price: number
   terms: number
+  credits: number
+  validityDays: number
   _all: number
 }
 
 
 export type ProductAvgAggregateInputType = {
   id?: true
+  credits?: true
+  validityDays?: true
 }
 
 export type ProductSumAggregateInputType = {
   id?: true
+  credits?: true
+  validityDays?: true
 }
 
 export type ProductMinAggregateInputType = {
   id?: true
   name?: true
   price?: true
+  credits?: true
+  validityDays?: true
 }
 
 export type ProductMaxAggregateInputType = {
   id?: true
   name?: true
   price?: true
+  credits?: true
+  validityDays?: true
 }
 
 export type ProductCountAggregateInputType = {
@@ -80,6 +98,8 @@ export type ProductCountAggregateInputType = {
   name?: true
   price?: true
   terms?: true
+  credits?: true
+  validityDays?: true
   _all?: true
 }
 
@@ -174,6 +194,8 @@ export type ProductGroupByOutputType = {
   name: string
   price: string
   terms: string[]
+  credits: number | null
+  validityDays: number
   _count: ProductCountAggregateOutputType | null
   _avg: ProductAvgAggregateOutputType | null
   _sum: ProductSumAggregateOutputType | null
@@ -181,7 +203,7 @@ export type ProductGroupByOutputType = {
   _max: ProductMaxAggregateOutputType | null
 }
 
-type GetProductGroupByPayload<T extends ProductGroupByArgs> = Prisma.PrismaPromise<
+export type GetProductGroupByPayload<T extends ProductGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<ProductGroupByOutputType, T['by']> &
       {
@@ -204,6 +226,8 @@ export type ProductWhereInput = {
   name?: Prisma.StringFilter<"Product"> | string
   price?: Prisma.StringFilter<"Product"> | string
   terms?: Prisma.StringNullableListFilter<"Product">
+  credits?: Prisma.IntNullableFilter<"Product"> | number | null
+  validityDays?: Prisma.IntFilter<"Product"> | number
   orderItems?: Prisma.OrderItemListRelationFilter
 }
 
@@ -212,6 +236,8 @@ export type ProductOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   price?: Prisma.SortOrder
   terms?: Prisma.SortOrder
+  credits?: Prisma.SortOrderInput | Prisma.SortOrder
+  validityDays?: Prisma.SortOrder
   orderItems?: Prisma.OrderItemOrderByRelationAggregateInput
 }
 
@@ -223,6 +249,8 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringFilter<"Product"> | string
   price?: Prisma.StringFilter<"Product"> | string
   terms?: Prisma.StringNullableListFilter<"Product">
+  credits?: Prisma.IntNullableFilter<"Product"> | number | null
+  validityDays?: Prisma.IntFilter<"Product"> | number
   orderItems?: Prisma.OrderItemListRelationFilter
 }, "id">
 
@@ -231,6 +259,8 @@ export type ProductOrderByWithAggregationInput = {
   name?: Prisma.SortOrder
   price?: Prisma.SortOrder
   terms?: Prisma.SortOrder
+  credits?: Prisma.SortOrderInput | Prisma.SortOrder
+  validityDays?: Prisma.SortOrder
   _count?: Prisma.ProductCountOrderByAggregateInput
   _avg?: Prisma.ProductAvgOrderByAggregateInput
   _max?: Prisma.ProductMaxOrderByAggregateInput
@@ -246,12 +276,16 @@ export type ProductScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"Product"> | string
   price?: Prisma.StringWithAggregatesFilter<"Product"> | string
   terms?: Prisma.StringNullableListFilter<"Product">
+  credits?: Prisma.IntNullableWithAggregatesFilter<"Product"> | number | null
+  validityDays?: Prisma.IntWithAggregatesFilter<"Product"> | number
 }
 
 export type ProductCreateInput = {
   name: string
   price: string
   terms?: Prisma.ProductCreatetermsInput | string[]
+  credits?: number | null
+  validityDays: number
   orderItems?: Prisma.OrderItemCreateNestedManyWithoutProductInput
 }
 
@@ -260,6 +294,8 @@ export type ProductUncheckedCreateInput = {
   name: string
   price: string
   terms?: Prisma.ProductCreatetermsInput | string[]
+  credits?: number | null
+  validityDays: number
   orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutProductInput
 }
 
@@ -267,6 +303,8 @@ export type ProductUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.StringFieldUpdateOperationsInput | string
   terms?: Prisma.ProductUpdatetermsInput | string[]
+  credits?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   orderItems?: Prisma.OrderItemUpdateManyWithoutProductNestedInput
 }
 
@@ -275,6 +313,8 @@ export type ProductUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.StringFieldUpdateOperationsInput | string
   terms?: Prisma.ProductUpdatetermsInput | string[]
+  credits?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutProductNestedInput
 }
 
@@ -283,12 +323,16 @@ export type ProductCreateManyInput = {
   name: string
   price: string
   terms?: Prisma.ProductCreatetermsInput | string[]
+  credits?: number | null
+  validityDays: number
 }
 
 export type ProductUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.StringFieldUpdateOperationsInput | string
   terms?: Prisma.ProductUpdatetermsInput | string[]
+  credits?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type ProductUncheckedUpdateManyInput = {
@@ -296,6 +340,8 @@ export type ProductUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.StringFieldUpdateOperationsInput | string
   terms?: Prisma.ProductUpdatetermsInput | string[]
+  credits?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type StringNullableListFilter<$PrismaModel = never> = {
@@ -311,26 +357,36 @@ export type ProductCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   price?: Prisma.SortOrder
   terms?: Prisma.SortOrder
+  credits?: Prisma.SortOrder
+  validityDays?: Prisma.SortOrder
 }
 
 export type ProductAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  credits?: Prisma.SortOrder
+  validityDays?: Prisma.SortOrder
 }
 
 export type ProductMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   price?: Prisma.SortOrder
+  credits?: Prisma.SortOrder
+  validityDays?: Prisma.SortOrder
 }
 
 export type ProductMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   price?: Prisma.SortOrder
+  credits?: Prisma.SortOrder
+  validityDays?: Prisma.SortOrder
 }
 
 export type ProductSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  credits?: Prisma.SortOrder
+  validityDays?: Prisma.SortOrder
 }
 
 export type ProductScalarRelationFilter = {
@@ -349,6 +405,14 @@ export type StringFieldUpdateOperationsInput = {
 export type ProductUpdatetermsInput = {
   set?: string[]
   push?: string | string[]
+}
+
+export type NullableIntFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
 export type IntFieldUpdateOperationsInput = {
@@ -377,6 +441,8 @@ export type ProductCreateWithoutOrderItemsInput = {
   name: string
   price: string
   terms?: Prisma.ProductCreatetermsInput | string[]
+  credits?: number | null
+  validityDays: number
 }
 
 export type ProductUncheckedCreateWithoutOrderItemsInput = {
@@ -384,6 +450,8 @@ export type ProductUncheckedCreateWithoutOrderItemsInput = {
   name: string
   price: string
   terms?: Prisma.ProductCreatetermsInput | string[]
+  credits?: number | null
+  validityDays: number
 }
 
 export type ProductCreateOrConnectWithoutOrderItemsInput = {
@@ -406,6 +474,8 @@ export type ProductUpdateWithoutOrderItemsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.StringFieldUpdateOperationsInput | string
   terms?: Prisma.ProductUpdatetermsInput | string[]
+  credits?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type ProductUncheckedUpdateWithoutOrderItemsInput = {
@@ -413,6 +483,8 @@ export type ProductUncheckedUpdateWithoutOrderItemsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.StringFieldUpdateOperationsInput | string
   terms?: Prisma.ProductUpdatetermsInput | string[]
+  credits?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 
@@ -451,6 +523,8 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   name?: boolean
   price?: boolean
   terms?: boolean
+  credits?: boolean
+  validityDays?: boolean
   orderItems?: boolean | Prisma.Product$orderItemsArgs<ExtArgs>
   _count?: boolean | Prisma.ProductCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["product"]>
@@ -460,6 +534,8 @@ export type ProductSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   name?: boolean
   price?: boolean
   terms?: boolean
+  credits?: boolean
+  validityDays?: boolean
 }, ExtArgs["result"]["product"]>
 
 export type ProductSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -467,6 +543,8 @@ export type ProductSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   name?: boolean
   price?: boolean
   terms?: boolean
+  credits?: boolean
+  validityDays?: boolean
 }, ExtArgs["result"]["product"]>
 
 export type ProductSelectScalar = {
@@ -474,9 +552,11 @@ export type ProductSelectScalar = {
   name?: boolean
   price?: boolean
   terms?: boolean
+  credits?: boolean
+  validityDays?: boolean
 }
 
-export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "price" | "terms", ExtArgs["result"]["product"]>
+export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "price" | "terms" | "credits" | "validityDays", ExtArgs["result"]["product"]>
 export type ProductInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   orderItems?: boolean | Prisma.Product$orderItemsArgs<ExtArgs>
   _count?: boolean | Prisma.ProductCountOutputTypeDefaultArgs<ExtArgs>
@@ -494,6 +574,8 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     name: string
     price: string
     terms: string[]
+    credits: number | null
+    validityDays: number
   }, ExtArgs["result"]["product"]>
   composites: {}
 }
@@ -922,6 +1004,8 @@ export interface ProductFieldRefs {
   readonly name: Prisma.FieldRef<"Product", 'String'>
   readonly price: Prisma.FieldRef<"Product", 'String'>
   readonly terms: Prisma.FieldRef<"Product", 'String[]'>
+  readonly credits: Prisma.FieldRef<"Product", 'Int'>
+  readonly validityDays: Prisma.FieldRef<"Product", 'Int'>
 }
     
 
@@ -1118,6 +1202,11 @@ export type ProductFindManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Skip the first `n` Products.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of Products.
+   */
   distinct?: Prisma.ProductScalarFieldEnum | Prisma.ProductScalarFieldEnum[]
 }
 

@@ -53,10 +53,14 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   Product: 'Product',
   PassesTitle: 'PassesTitle',
+  Pass: 'Pass',
+  Booking: 'Booking',
   PurchaseButtonTitle: 'PurchaseButtonTitle',
   Class: 'Class',
   Instructor: 'Instructor',
   Week: 'Week',
+  ClassSession: 'ClassSession',
+  ScheduleTemplate: 'ScheduleTemplate',
   ScheduleEntry: 'ScheduleEntry',
   Order: 'Order',
   OrderItem: 'OrderItem'
@@ -82,7 +86,9 @@ export const ProductScalarFieldEnum = {
   id: 'id',
   name: 'name',
   price: 'price',
-  terms: 'terms'
+  terms: 'terms',
+  credits: 'credits',
+  validityDays: 'validityDays'
 } as const
 
 export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum]
@@ -93,6 +99,30 @@ export const PassesTitleScalarFieldEnum = {
 } as const
 
 export type PassesTitleScalarFieldEnum = (typeof PassesTitleScalarFieldEnum)[keyof typeof PassesTitleScalarFieldEnum]
+
+
+export const PassScalarFieldEnum = {
+  id: 'id',
+  clerkId: 'clerkId',
+  orderItemId: 'orderItemId',
+  creditsRemaining: 'creditsRemaining',
+  expiresAt: 'expiresAt'
+} as const
+
+export type PassScalarFieldEnum = (typeof PassScalarFieldEnum)[keyof typeof PassScalarFieldEnum]
+
+
+export const BookingScalarFieldEnum = {
+  id: 'id',
+  clerkId: 'clerkId',
+  sessionId: 'sessionId',
+  passId: 'passId',
+  status: 'status',
+  bookedAt: 'bookedAt',
+  cancelledAt: 'cancelledAt'
+} as const
+
+export type BookingScalarFieldEnum = (typeof BookingScalarFieldEnum)[keyof typeof BookingScalarFieldEnum]
 
 
 export const PurchaseButtonTitleScalarFieldEnum = {
@@ -136,6 +166,34 @@ export const WeekScalarFieldEnum = {
 } as const
 
 export type WeekScalarFieldEnum = (typeof WeekScalarFieldEnum)[keyof typeof WeekScalarFieldEnum]
+
+
+export const ClassSessionScalarFieldEnum = {
+  id: 'id',
+  templateId: 'templateId',
+  startsAt: 'startsAt',
+  capacity: 'capacity',
+  bookedCount: 'bookedCount'
+} as const
+
+export type ClassSessionScalarFieldEnum = (typeof ClassSessionScalarFieldEnum)[keyof typeof ClassSessionScalarFieldEnum]
+
+
+export const ScheduleTemplateScalarFieldEnum = {
+  id: 'id',
+  label: 'label',
+  classSlug: 'classSlug',
+  instructorSlug: 'instructorSlug',
+  weekday: 'weekday',
+  startTime: 'startTime',
+  durationMin: 'durationMin',
+  timezone: 'timezone',
+  effectiveFrom: 'effectiveFrom',
+  effectiveTo: 'effectiveTo',
+  capacity: 'capacity'
+} as const
+
+export type ScheduleTemplateScalarFieldEnum = (typeof ScheduleTemplateScalarFieldEnum)[keyof typeof ScheduleTemplateScalarFieldEnum]
 
 
 export const ScheduleEntryScalarFieldEnum = {

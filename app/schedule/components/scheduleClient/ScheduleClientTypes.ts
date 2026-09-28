@@ -1,5 +1,5 @@
-import type { ScheduleResponse } from "@/types/ScheduleItem";
+import type { BookableScheduleWeek } from "@/types/ScheduleItem";
 
 export type ScheduleClientProps = {
-    weeks: ScheduleResponse["weeks"];
+  weeks: BookableScheduleWeek[];
 };

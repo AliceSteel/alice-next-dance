@@ -10,84 +10,152 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql" 
+  provider = "postgresql"
   //url      = env("DATABASE_URL")
 }
-//product==class passes
+
+//product==class passes model
 model Product {
-  id     Int @id @default(autoincrement())
-  name   String
-  price String
-  terms  String[] @default([])
-  orderItems OrderItem[]
+  id           Int         @id @default(autoincrement())
+  name         String
+  price        String
+  terms        String[]    @default([])
+  orderItems   OrderItem[]
+  credits      Int? // null for unlimited
+  validityDays Int
 }
+
 model PassesTitle {
   title String @unique
 }
+
+//pass == personal users pass as item of product purchased
+model Pass {
+  id               String    @id @default(cuid())
+  clerkId          String
+  orderItemId      String
+  creditsRemaining Int? // null for unlimited
+  expiresAt        DateTime
+  bookings         Booking[]
+}
+
+model Booking {
+  id          String        @id @default(cuid())
+  clerkId     String
+  sessionId   String
+  passId      String
+  status      BookingStatus @default(CONFIRMED)
+  bookedAt    DateTime      @default(now())
+  cancelledAt DateTime?
+  session     ClassSession  @relation(fields: [sessionId], references: [id])
+  pass        Pass          @relation(fields: [passId], references: [id])
+
+  @@unique([clerkId, sessionId])
+}
+
 model PurchaseButtonTitle {
   title String @unique
 }
 
 model Class {
-  id          Int    @id @default(autoincrement())
-  slug        String @unique
-  title  String
-  imageUrl String
-  description String
-  text1 String
-  text2 String
+  id                Int                @id @default(autoincrement())
+  slug              String             @unique
+  title             String
+  imageUrl          String
+  description       String
+  text1             String
+  text2             String
+  scheduleTemplates ScheduleTemplate[]
 }
 
 model Instructor {
-  id          Int    @id @default(autoincrement())
-  slug        String @unique
-  name        String
-  image String
-  instagram String?
-  youTube String?
-  bioLines String[]
+  id                Int                @id @default(autoincrement())
+  slug              String             @unique
+  name              String
+  image             String
+  instagram         String?
+  youTube           String?
+  bioLines          String[]
+  scheduleTemplates ScheduleTemplate[]
 }
 
 model Week {
-  id        String   @id // e.g., "2025-W48"
-  label     String   // e.g., "Week of Nov 24"
-  startDate String   // e.g., "24-11-2025"
-  days      String[] @default(["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"])
+  id        String          @id // e.g., "2025-W48"
+  label     String // e.g., "Week of Nov 24"
+  startDate String // e.g., "24-11-2025"
+  days      String[]        @default(["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"])
   entries   ScheduleEntry[]
 }
 
+model ClassSession {
+  id          String           @id @default(cuid())
+  templateId  String
+  startsAt    DateTime         @db.Timestamptz(3)
+  capacity    Int              @default(20)
+  bookedCount Int              @default(0)
+  template    ScheduleTemplate @relation(fields: [templateId], references: [id])
+  bookings    Booking[]
+
+  @@unique([templateId, startsAt])
+}
+
+model ScheduleTemplate {
+  id             String    @id @default(cuid())
+  label          String
+  classSlug      String
+  instructorSlug String
+  weekday        Int // 0-6
+  startTime      String // local time, e.g. "11:00"
+  durationMin    Int
+  timezone       String    @default("Europe/Copenhagen")
+  effectiveFrom  DateTime  @db.Date
+  effectiveTo    DateTime? @db.Date
+  capacity       Int       @default(20)
+
+  danceClass Class          @relation(fields: [classSlug], references: [slug])
+  instructor Instructor     @relation(fields: [instructorSlug], references: [slug])
+  sessions   ClassSession[]
+
+  @@index([effectiveFrom, effectiveTo])
+}
+
 model ScheduleEntry {
-  id          Int    @id @default(autoincrement())
-  entryId     String @unique // e.g., "w1-mon-11-ballet-2"
-  weekId      String
-  day         String // e.g., "Mon"
-  timeSlot    String // e.g., "11:00-12:30"
-  classId     String // e.g., "ballet"
-  label       String // e.g., "Ballet 2"
-  teacher     String // e.g., "Sofia M."
-  
-  week        Week   @relation(fields: [weekId], references: [id], onDelete: Cascade)
+  id       Int    @id @default(autoincrement())
+  entryId  String @unique // e.g., "w1-mon-11-ballet-2"
+  weekId   String
+  day      String // e.g., "Mon"
+  timeSlot String // e.g., "11:00-12:30"
+  classId  String // e.g., "ballet"
+  label    String // e.g., "Ballet 2"
+  teacher  String // e.g., "Sofia M."
+
+  week Week @relation(fields: [weekId], references: [id], onDelete: Cascade)
 }
 
 model Order {
-  orderId       String @id @default(uuid())
-  clerkId  String
-  orderItems     OrderItem[]
-  qtyItemsInOrder Int @default(0)
-  orderTotalPrice Int @default(0)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  status String @default("pending") // e.g., "pending", "completed", "cancelled"
+  orderId         String      @id @default(uuid())
+  clerkId         String
+  orderItems      OrderItem[]
+  qtyItemsInOrder Int         @default(0)
+  orderTotalPrice Int         @default(0)
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  status          String      @default("pending") // e.g., "pending", "completed", "cancelled"
 }
 
 model OrderItem {
-  id        String @id @default(uuid())
-  product Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  id        String   @id @default(uuid())
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId Int
-  quantity  Int @default(1)
-  order    Order   @relation(fields: [orderId], references: [orderId], onDelete: Cascade)
-  orderId  String
-  price  String
+  quantity  Int      @default(1)
+  order     Order    @relation(fields: [orderId], references: [orderId], onDelete: Cascade)
+  orderId   String
+  price     String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+enum BookingStatus {
+  CONFIRMED
+  CANCELLED
 }

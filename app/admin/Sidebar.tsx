@@ -4,6 +4,7 @@ import Link from "next/link";
 
 export default function Sidebar() {
   const links = [
+    { name: 'Edit schedule', href: '/admin/schedule' },
     { name: "Create products", href: "/admin/create" },
     { name: "Edit products", href: "/admin/edit" },
     { name: "Sales", href: "/admin/sales" },

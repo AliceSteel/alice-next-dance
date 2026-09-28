@@ -1,11 +1,4 @@
-export type Day =
-  | "Mon"
-  | "Tue"
-  | "Wed"
-  | "Thu"
-  | "Fri"
-  | "Sat"
-  | "Sun";
+export type Day = "Mon" | "Tue" | "Wed" | "Thu" | "Fri" | "Sat" | "Sun";
 
 export type TimeSlot =
   | "09-10:30"
@@ -15,22 +8,42 @@ export type TimeSlot =
   | "17:00-18:30";
 
 export type ScheduleEntry = {
-  id: string;        // e.g. "mon-09-10:30-ballet-1"
+  id: string; // e.g. "mon-09-10:30-ballet-1"
   day: Day | string;
   timeSlot: TimeSlot;
-  classId: string;   // links to your classesData id, e.g. "ballet-1"
-  label?: string; 
-  teacher?: string;  // optional teacher name like "Sofia M."
+  classId: string; // links to your classesData id, e.g. "ballet-1"
+  label?: string;
+  teacher?: string; // optional teacher name like "Sofia M."
 };
 
 export type ScheduleWeek = {
-  id: string;         // e.g. "2025-W48"
-  label: string;      // e.g. "Week of Nov 24"
-  startDate: string;  // ISO date string, e.g. "2025-11-24"
-  days: string[];     // ["Mon","Tue",...]
+  id: string; // e.g. "2025-W48"
+  label: string; // e.g. "Week of Nov 24"
+  startDate: string; // ISO date string, e.g. "2025-11-24"
+  days: string[]; // ["Mon","Tue",...]
   entries: ScheduleEntry[];
 };
 
 export type ScheduleResponse = {
-    weeks: ScheduleWeek[]; // ordered, first is the one seen initially
-}
+  weeks: ScheduleWeek[]; // ordered, first is the one seen initially
+};
+
+export type BookableScheduleEntry = {
+  id: string; // ClassSession ID; use this later when booking
+  day: Day;
+  timeSlot: string;
+  classId: string;
+  label: string;
+  teacher: string;
+  startsAt: string;
+  capacity: number;
+  bookedCount: number;
+};
+
+export type BookableScheduleWeek = {
+  id: string;
+  label: string;
+  startDate: string; // Monday, YYYY-MM-DD
+  days: string[];
+  entries: BookableScheduleEntry[];
+};

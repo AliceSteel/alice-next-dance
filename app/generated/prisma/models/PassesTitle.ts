@@ -130,7 +130,7 @@ export type PassesTitleGroupByOutputType = {
   _max: PassesTitleMaxAggregateOutputType | null
 }
 
-type GetPassesTitleGroupByPayload<T extends PassesTitleGroupByArgs> = Prisma.PrismaPromise<
+export type GetPassesTitleGroupByPayload<T extends PassesTitleGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<PassesTitleGroupByOutputType, T['by']> &
       {
@@ -842,6 +842,11 @@ export type PassesTitleFindManyArgs<ExtArgs extends runtime.Types.Extensions.Int
    * Skip the first `n` PassesTitles.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of PassesTitles.
+   */
   distinct?: Prisma.PassesTitleScalarFieldEnum | Prisma.PassesTitleScalarFieldEnum[]
 }
 

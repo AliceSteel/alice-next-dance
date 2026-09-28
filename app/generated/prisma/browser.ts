@@ -28,6 +28,16 @@ export type Product = Prisma.ProductModel
  */
 export type PassesTitle = Prisma.PassesTitleModel
 /**
+ * Model Pass
+ * 
+ */
+export type Pass = Prisma.PassModel
+/**
+ * Model Booking
+ * 
+ */
+export type Booking = Prisma.BookingModel
+/**
  * Model PurchaseButtonTitle
  * 
  */
@@ -47,6 +57,16 @@ export type Instructor = Prisma.InstructorModel
  * 
  */
 export type Week = Prisma.WeekModel
+/**
+ * Model ClassSession
+ * 
+ */
+export type ClassSession = Prisma.ClassSessionModel
+/**
+ * Model ScheduleTemplate
+ * 
+ */
+export type ScheduleTemplate = Prisma.ScheduleTemplateModel
 /**
  * Model ScheduleEntry
  * 

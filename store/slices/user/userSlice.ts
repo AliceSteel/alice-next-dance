@@ -1,10 +1,13 @@
-import { createSlice, type PayloadAction, createSelector } from "@reduxjs/toolkit";
+import {
+  createSlice,
+  type PayloadAction,
+  createSelector,
+} from "@reduxjs/toolkit";
 import type { AuthState, BookingPackage, RootState } from "@/types/User";
 import { toast } from "react-toastify";
-import type { ScheduleEntry } from "@/types/ScheduleItem";
-
+import type { BookableScheduleEntry } from "@/types/ScheduleItem";
 type ConsumePayload = {
-  entry: ScheduleEntry;
+  entry: BookableScheduleEntry;
 };
 
 const userSlice = createSlice({
@@ -13,8 +16,22 @@ const userSlice = createSlice({
     user: null,
     token: null,
     status: "idle",
-    bookingPackages: [{ id: 'pkg-10-2025-01', numberOfCredits: 10, usedAt: [], expiresAt: "2026-12-31" }],
-    availablePackages: [{ id: 'pkg-10-2025-01', numberOfCredits: 10, usedAt: [], expiresAt: "2026-12-31" }],
+    bookingPackages: [
+      {
+        id: "pkg-10-2025-01",
+        numberOfCredits: 10,
+        usedAt: [],
+        expiresAt: "2026-12-31",
+      },
+    ],
+    availablePackages: [
+      {
+        id: "pkg-10-2025-01",
+        numberOfCredits: 10,
+        usedAt: [],
+        expiresAt: "2026-12-31",
+      },
+    ],
   } as AuthState,
 
   reducers: {
@@ -50,7 +67,7 @@ const userSlice = createSlice({
       // find first non-expired package with remaining credits
       const candidates = (state.availablePackages ?? []).filter(
         (p) =>
-          new Date(p.expiresAt) >= now && p.usedAt.length < p.numberOfCredits
+          new Date(p.expiresAt) >= now && p.usedAt.length < p.numberOfCredits,
       );
       if (candidates.length === 0) {
         toast.error("No available credits for this booking");
@@ -58,7 +75,7 @@ const userSlice = createSlice({
       }
       candidates.sort(
         (a, b) =>
-          new Date(a.expiresAt).getTime() - new Date(b.expiresAt).getTime()
+          new Date(a.expiresAt).getTime() - new Date(b.expiresAt).getTime(),
       );
       const creditPkg = candidates[0];
 
@@ -66,7 +83,9 @@ const userSlice = createSlice({
       creditPkg.usedAt.push(scheduleEntry); // mark one credit as used for this entry
 
       // mirror change in bookingPackages
-      const pkgIdx = state.bookingPackages.findIndex((p) => p.id === creditPkg.id);
+      const pkgIdx = state.bookingPackages.findIndex(
+        (p) => p.id === creditPkg.id,
+      );
       if (pkgIdx !== -1) {
         state.bookingPackages[pkgIdx].usedAt = creditPkg.usedAt;
       }
@@ -78,10 +97,12 @@ const userSlice = createSlice({
 
       if (fullyUsed) {
         state.availablePackages = (state.availablePackages ?? []).filter(
-          (p) => p.id !== creditPkg.id
+          (p) => p.id !== creditPkg.id,
         );
       }
-      toast.success(`Successfully booked ${scheduleEntry.label} with ${scheduleEntry.teacher}`);
+      toast.success(
+        `Successfully booked ${scheduleEntry.label} with ${scheduleEntry.teacher}`,
+      );
     },
   },
 });
@@ -97,21 +118,22 @@ export const selectBookingPackages = (state: RootState) => {
     .filter((p) => new Date(p.expiresAt) >= now)
     .reduce(
       (sum, p) => sum + Math.max(p.numberOfCredits - p.usedAt.length, 0),
-      0
+      0,
     );
-  }
+};
 
 export const selectAvailableCredits = (state: RootState) => {
   return state.auth.availablePackages;
-}
+};
 export const selectIsLoggedIn = (state: RootState) =>
   state.auth.status === "authenticated";
 
 export const collectBookingsForUser = createSelector(
   (state: RootState) => state.auth.bookingPackages,
   (bookingPackages) => {
-    return bookingPackages.flatMap(pkg => pkg.usedAt.map(e => e.id));
-  }
+    return bookingPackages.flatMap((pkg) => pkg.usedAt.map((e) => e.id));
+  },
 );
 
-export const isUserAdmin = (state: RootState) => state.auth.user?.isAdmin === true;
+export const isUserAdmin = (state: RootState) =>
+  state.auth.user?.isAdmin === true;

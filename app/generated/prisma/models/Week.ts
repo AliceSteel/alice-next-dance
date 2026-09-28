@@ -147,7 +147,7 @@ export type WeekGroupByOutputType = {
   _max: WeekMaxAggregateOutputType | null
 }
 
-type GetWeekGroupByPayload<T extends WeekGroupByArgs> = Prisma.PrismaPromise<
+export type GetWeekGroupByPayload<T extends WeekGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<WeekGroupByOutputType, T['by']> &
       {
@@ -1059,6 +1059,11 @@ export type WeekFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
    * Skip the first `n` Weeks.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of Weeks.
+   */
   distinct?: Prisma.WeekScalarFieldEnum | Prisma.WeekScalarFieldEnum[]
 }
 
