@@ -216,6 +216,7 @@ export type PassWhereInput = {
   orderItemId?: Prisma.StringFilter<"Pass"> | string
   creditsRemaining?: Prisma.IntNullableFilter<"Pass"> | number | null
   expiresAt?: Prisma.DateTimeFilter<"Pass"> | Date | string
+  orderItem?: Prisma.XOR<Prisma.OrderItemScalarRelationFilter, Prisma.OrderItemWhereInput>
   bookings?: Prisma.BookingListRelationFilter
 }
 
@@ -225,6 +226,7 @@ export type PassOrderByWithRelationInput = {
   orderItemId?: Prisma.SortOrder
   creditsRemaining?: Prisma.SortOrderInput | Prisma.SortOrder
   expiresAt?: Prisma.SortOrder
+  orderItem?: Prisma.OrderItemOrderByWithRelationInput
   bookings?: Prisma.BookingOrderByRelationAggregateInput
 }
 
@@ -237,6 +239,7 @@ export type PassWhereUniqueInput = Prisma.AtLeast<{
   orderItemId?: Prisma.StringFilter<"Pass"> | string
   creditsRemaining?: Prisma.IntNullableFilter<"Pass"> | number | null
   expiresAt?: Prisma.DateTimeFilter<"Pass"> | Date | string
+  orderItem?: Prisma.XOR<Prisma.OrderItemScalarRelationFilter, Prisma.OrderItemWhereInput>
   bookings?: Prisma.BookingListRelationFilter
 }, "id">
 
@@ -267,9 +270,9 @@ export type PassScalarWhereWithAggregatesInput = {
 export type PassCreateInput = {
   id?: string
   clerkId: string
-  orderItemId: string
   creditsRemaining?: number | null
   expiresAt: Date | string
+  orderItem: Prisma.OrderItemCreateNestedOneWithoutPassesInput
   bookings?: Prisma.BookingCreateNestedManyWithoutPassInput
 }
 
@@ -285,9 +288,9 @@ export type PassUncheckedCreateInput = {
 export type PassUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   clerkId?: Prisma.StringFieldUpdateOperationsInput | string
-  orderItemId?: Prisma.StringFieldUpdateOperationsInput | string
   creditsRemaining?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  orderItem?: Prisma.OrderItemUpdateOneRequiredWithoutPassesNestedInput
   bookings?: Prisma.BookingUpdateManyWithoutPassNestedInput
 }
 
@@ -311,7 +314,6 @@ export type PassCreateManyInput = {
 export type PassUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   clerkId?: Prisma.StringFieldUpdateOperationsInput | string
-  orderItemId?: Prisma.StringFieldUpdateOperationsInput | string
   creditsRemaining?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -361,6 +363,16 @@ export type PassScalarRelationFilter = {
   isNot?: Prisma.PassWhereInput
 }
 
+export type PassListRelationFilter = {
+  every?: Prisma.PassWhereInput
+  some?: Prisma.PassWhereInput
+  none?: Prisma.PassWhereInput
+}
+
+export type PassOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
+}
+
 export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
 }
@@ -379,12 +391,54 @@ export type PassUpdateOneRequiredWithoutBookingsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.PassUpdateToOneWithWhereWithoutBookingsInput, Prisma.PassUpdateWithoutBookingsInput>, Prisma.PassUncheckedUpdateWithoutBookingsInput>
 }
 
+export type PassCreateNestedManyWithoutOrderItemInput = {
+  create?: Prisma.XOR<Prisma.PassCreateWithoutOrderItemInput, Prisma.PassUncheckedCreateWithoutOrderItemInput> | Prisma.PassCreateWithoutOrderItemInput[] | Prisma.PassUncheckedCreateWithoutOrderItemInput[]
+  connectOrCreate?: Prisma.PassCreateOrConnectWithoutOrderItemInput | Prisma.PassCreateOrConnectWithoutOrderItemInput[]
+  createMany?: Prisma.PassCreateManyOrderItemInputEnvelope
+  connect?: Prisma.PassWhereUniqueInput | Prisma.PassWhereUniqueInput[]
+}
+
+export type PassUncheckedCreateNestedManyWithoutOrderItemInput = {
+  create?: Prisma.XOR<Prisma.PassCreateWithoutOrderItemInput, Prisma.PassUncheckedCreateWithoutOrderItemInput> | Prisma.PassCreateWithoutOrderItemInput[] | Prisma.PassUncheckedCreateWithoutOrderItemInput[]
+  connectOrCreate?: Prisma.PassCreateOrConnectWithoutOrderItemInput | Prisma.PassCreateOrConnectWithoutOrderItemInput[]
+  createMany?: Prisma.PassCreateManyOrderItemInputEnvelope
+  connect?: Prisma.PassWhereUniqueInput | Prisma.PassWhereUniqueInput[]
+}
+
+export type PassUpdateManyWithoutOrderItemNestedInput = {
+  create?: Prisma.XOR<Prisma.PassCreateWithoutOrderItemInput, Prisma.PassUncheckedCreateWithoutOrderItemInput> | Prisma.PassCreateWithoutOrderItemInput[] | Prisma.PassUncheckedCreateWithoutOrderItemInput[]
+  connectOrCreate?: Prisma.PassCreateOrConnectWithoutOrderItemInput | Prisma.PassCreateOrConnectWithoutOrderItemInput[]
+  upsert?: Prisma.PassUpsertWithWhereUniqueWithoutOrderItemInput | Prisma.PassUpsertWithWhereUniqueWithoutOrderItemInput[]
+  createMany?: Prisma.PassCreateManyOrderItemInputEnvelope
+  set?: Prisma.PassWhereUniqueInput | Prisma.PassWhereUniqueInput[]
+  disconnect?: Prisma.PassWhereUniqueInput | Prisma.PassWhereUniqueInput[]
+  delete?: Prisma.PassWhereUniqueInput | Prisma.PassWhereUniqueInput[]
+  connect?: Prisma.PassWhereUniqueInput | Prisma.PassWhereUniqueInput[]
+  update?: Prisma.PassUpdateWithWhereUniqueWithoutOrderItemInput | Prisma.PassUpdateWithWhereUniqueWithoutOrderItemInput[]
+  updateMany?: Prisma.PassUpdateManyWithWhereWithoutOrderItemInput | Prisma.PassUpdateManyWithWhereWithoutOrderItemInput[]
+  deleteMany?: Prisma.PassScalarWhereInput | Prisma.PassScalarWhereInput[]
+}
+
+export type PassUncheckedUpdateManyWithoutOrderItemNestedInput = {
+  create?: Prisma.XOR<Prisma.PassCreateWithoutOrderItemInput, Prisma.PassUncheckedCreateWithoutOrderItemInput> | Prisma.PassCreateWithoutOrderItemInput[] | Prisma.PassUncheckedCreateWithoutOrderItemInput[]
+  connectOrCreate?: Prisma.PassCreateOrConnectWithoutOrderItemInput | Prisma.PassCreateOrConnectWithoutOrderItemInput[]
+  upsert?: Prisma.PassUpsertWithWhereUniqueWithoutOrderItemInput | Prisma.PassUpsertWithWhereUniqueWithoutOrderItemInput[]
+  createMany?: Prisma.PassCreateManyOrderItemInputEnvelope
+  set?: Prisma.PassWhereUniqueInput | Prisma.PassWhereUniqueInput[]
+  disconnect?: Prisma.PassWhereUniqueInput | Prisma.PassWhereUniqueInput[]
+  delete?: Prisma.PassWhereUniqueInput | Prisma.PassWhereUniqueInput[]
+  connect?: Prisma.PassWhereUniqueInput | Prisma.PassWhereUniqueInput[]
+  update?: Prisma.PassUpdateWithWhereUniqueWithoutOrderItemInput | Prisma.PassUpdateWithWhereUniqueWithoutOrderItemInput[]
+  updateMany?: Prisma.PassUpdateManyWithWhereWithoutOrderItemInput | Prisma.PassUpdateManyWithWhereWithoutOrderItemInput[]
+  deleteMany?: Prisma.PassScalarWhereInput | Prisma.PassScalarWhereInput[]
+}
+
 export type PassCreateWithoutBookingsInput = {
   id?: string
   clerkId: string
-  orderItemId: string
   creditsRemaining?: number | null
   expiresAt: Date | string
+  orderItem: Prisma.OrderItemCreateNestedOneWithoutPassesInput
 }
 
 export type PassUncheckedCreateWithoutBookingsInput = {
@@ -414,15 +468,98 @@ export type PassUpdateToOneWithWhereWithoutBookingsInput = {
 export type PassUpdateWithoutBookingsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   clerkId?: Prisma.StringFieldUpdateOperationsInput | string
-  orderItemId?: Prisma.StringFieldUpdateOperationsInput | string
   creditsRemaining?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  orderItem?: Prisma.OrderItemUpdateOneRequiredWithoutPassesNestedInput
 }
 
 export type PassUncheckedUpdateWithoutBookingsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   clerkId?: Prisma.StringFieldUpdateOperationsInput | string
   orderItemId?: Prisma.StringFieldUpdateOperationsInput | string
+  creditsRemaining?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type PassCreateWithoutOrderItemInput = {
+  id?: string
+  clerkId: string
+  creditsRemaining?: number | null
+  expiresAt: Date | string
+  bookings?: Prisma.BookingCreateNestedManyWithoutPassInput
+}
+
+export type PassUncheckedCreateWithoutOrderItemInput = {
+  id?: string
+  clerkId: string
+  creditsRemaining?: number | null
+  expiresAt: Date | string
+  bookings?: Prisma.BookingUncheckedCreateNestedManyWithoutPassInput
+}
+
+export type PassCreateOrConnectWithoutOrderItemInput = {
+  where: Prisma.PassWhereUniqueInput
+  create: Prisma.XOR<Prisma.PassCreateWithoutOrderItemInput, Prisma.PassUncheckedCreateWithoutOrderItemInput>
+}
+
+export type PassCreateManyOrderItemInputEnvelope = {
+  data: Prisma.PassCreateManyOrderItemInput | Prisma.PassCreateManyOrderItemInput[]
+  skipDuplicates?: boolean
+}
+
+export type PassUpsertWithWhereUniqueWithoutOrderItemInput = {
+  where: Prisma.PassWhereUniqueInput
+  update: Prisma.XOR<Prisma.PassUpdateWithoutOrderItemInput, Prisma.PassUncheckedUpdateWithoutOrderItemInput>
+  create: Prisma.XOR<Prisma.PassCreateWithoutOrderItemInput, Prisma.PassUncheckedCreateWithoutOrderItemInput>
+}
+
+export type PassUpdateWithWhereUniqueWithoutOrderItemInput = {
+  where: Prisma.PassWhereUniqueInput
+  data: Prisma.XOR<Prisma.PassUpdateWithoutOrderItemInput, Prisma.PassUncheckedUpdateWithoutOrderItemInput>
+}
+
+export type PassUpdateManyWithWhereWithoutOrderItemInput = {
+  where: Prisma.PassScalarWhereInput
+  data: Prisma.XOR<Prisma.PassUpdateManyMutationInput, Prisma.PassUncheckedUpdateManyWithoutOrderItemInput>
+}
+
+export type PassScalarWhereInput = {
+  AND?: Prisma.PassScalarWhereInput | Prisma.PassScalarWhereInput[]
+  OR?: Prisma.PassScalarWhereInput[]
+  NOT?: Prisma.PassScalarWhereInput | Prisma.PassScalarWhereInput[]
+  id?: Prisma.StringFilter<"Pass"> | string
+  clerkId?: Prisma.StringFilter<"Pass"> | string
+  orderItemId?: Prisma.StringFilter<"Pass"> | string
+  creditsRemaining?: Prisma.IntNullableFilter<"Pass"> | number | null
+  expiresAt?: Prisma.DateTimeFilter<"Pass"> | Date | string
+}
+
+export type PassCreateManyOrderItemInput = {
+  id?: string
+  clerkId: string
+  creditsRemaining?: number | null
+  expiresAt: Date | string
+}
+
+export type PassUpdateWithoutOrderItemInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
+  creditsRemaining?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  bookings?: Prisma.BookingUpdateManyWithoutPassNestedInput
+}
+
+export type PassUncheckedUpdateWithoutOrderItemInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
+  creditsRemaining?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  bookings?: Prisma.BookingUncheckedUpdateManyWithoutPassNestedInput
+}
+
+export type PassUncheckedUpdateManyWithoutOrderItemInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
   creditsRemaining?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -464,6 +601,7 @@ export type PassSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   orderItemId?: boolean
   creditsRemaining?: boolean
   expiresAt?: boolean
+  orderItem?: boolean | Prisma.OrderItemDefaultArgs<ExtArgs>
   bookings?: boolean | Prisma.Pass$bookingsArgs<ExtArgs>
   _count?: boolean | Prisma.PassCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["pass"]>
@@ -474,6 +612,7 @@ export type PassSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   orderItemId?: boolean
   creditsRemaining?: boolean
   expiresAt?: boolean
+  orderItem?: boolean | Prisma.OrderItemDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["pass"]>
 
 export type PassSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -482,6 +621,7 @@ export type PassSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   orderItemId?: boolean
   creditsRemaining?: boolean
   expiresAt?: boolean
+  orderItem?: boolean | Prisma.OrderItemDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["pass"]>
 
 export type PassSelectScalar = {
@@ -494,15 +634,21 @@ export type PassSelectScalar = {
 
 export type PassOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "clerkId" | "orderItemId" | "creditsRemaining" | "expiresAt", ExtArgs["result"]["pass"]>
 export type PassInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  orderItem?: boolean | Prisma.OrderItemDefaultArgs<ExtArgs>
   bookings?: boolean | Prisma.Pass$bookingsArgs<ExtArgs>
   _count?: boolean | Prisma.PassCountOutputTypeDefaultArgs<ExtArgs>
 }
-export type PassIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
-export type PassIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type PassIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  orderItem?: boolean | Prisma.OrderItemDefaultArgs<ExtArgs>
+}
+export type PassIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  orderItem?: boolean | Prisma.OrderItemDefaultArgs<ExtArgs>
+}
 
 export type $PassPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Pass"
   objects: {
+    orderItem: Prisma.$OrderItemPayload<ExtArgs>
     bookings: Prisma.$BookingPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -905,6 +1051,7 @@ readonly fields: PassFieldRefs;
  */
 export interface Prisma__PassClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  orderItem<T extends Prisma.OrderItemDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OrderItemDefaultArgs<ExtArgs>>): Prisma.Prisma__OrderItemClient<runtime.Types.Result.GetResult<Prisma.$OrderItemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   bookings<T extends Prisma.Pass$bookingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Pass$bookingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BookingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1194,6 +1341,10 @@ export type PassCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
    */
   data: Prisma.PassCreateManyInput | Prisma.PassCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PassIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1264,6 +1415,10 @@ export type PassUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
    * Limit how many Passes to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PassIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

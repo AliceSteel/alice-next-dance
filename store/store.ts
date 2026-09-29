@@ -1,8 +1,8 @@
-import { configureStore, combineReducers} from '@reduxjs/toolkit';
-import userReducer from './slices/user/userSlice';
-import modalReducer from './slices/modal/modalSlice';
-import cartReducer from './slices/cart/cartSlice';
-import classesReducer from './slices/classes/classesSlice';
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
+import userReducer from "./slices/user/userSlice";
+import modalReducer from "./slices/modal/modalSlice";
+import cartReducer from "./slices/cart/cartSlice";
+import classesReducer from "./slices/classes/classesSlice";
 
 const rootReducer = combineReducers({
   auth: userReducer,
@@ -20,8 +20,8 @@ function getPreloadedAuth() {
       user,
       token: null,
       status: "authenticated",
-      bookingPackages: [{ id: 'pkg-10-2025-01', numberOfCredits: 10, usedAt: [], expiresAt: "2026-12-31" }],
-      availablePackages: [{ id: 'pkg-10-2025-01', numberOfCredits: 10, usedAt: [], expiresAt: "2026-12-31" }],
+      bookingPackages: [],
+      availablePackages: [],
     };
   } catch {
     return undefined;

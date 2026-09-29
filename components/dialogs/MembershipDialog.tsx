@@ -9,7 +9,7 @@ export default function MembershipDialog() {
 
   const handleGoToMembership = () => {
     const el = document.getElementById("membership-options");
-    console.log("Scrolling to membership options:", el);
+
     if (el) {
       el.scrollIntoView({ behavior: "smooth", block: "start" });
     }
@@ -17,8 +17,8 @@ export default function MembershipDialog() {
   };
 
   return (
-    <div className="space-y-4">
-      <p>
+    <div className="space-y-4 bg-white/50 rounded-lg p-2">
+      <p className="pr-8">
         You don&apos;t have any credits or membership left. Please purchase a
         membership:
       </p>

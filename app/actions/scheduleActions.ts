@@ -14,6 +14,47 @@ async function requireAdmin() {
 
   if (!isAdmin) throw new Error("Unauthorized");
 }
+export async function createBooking(sessionId: string) {
+  const { userId } = await auth();
+  if (!userId) throw new Error("Unauthorized");
+
+  return db.$transaction(async (tx) => {
+    const session = await tx.classSession.findUnique({
+      where: { id: sessionId },
+    });
+    if (!session) throw new Error("Class session not found");
+    if (session.bookedCount >= session.capacity) {
+      throw new Error("This class is fully booked");
+    }
+
+    const pass = await tx.pass.findFirst({
+      where: {
+        clerkId: userId,
+        expiresAt: { gte: new Date() },
+      },
+      orderBy: { expiresAt: "asc" },
+    });
+    if (!pass) throw new Error("No available credits for this booking");
+
+    const usedCount = await tx.booking.count({
+      where: { passId: pass.id, status: "CONFIRMED" },
+    });
+    if (pass.creditsRemaining !== null && usedCount >= pass.creditsRemaining) {
+      throw new Error("No available credits for this booking");
+    }
+
+    const booking = await tx.booking.create({
+      data: { clerkId: userId, sessionId, passId: pass.id },
+    });
+
+    await tx.classSession.update({
+      where: { id: sessionId },
+      data: { bookedCount: { increment: 1 } },
+    });
+
+    return booking;
+  });
+}
 
 export const saveScheduleTemplate: ActionFnType = async (
   _prevState,

@@ -33,6 +33,7 @@ model PassesTitle {
 model Pass {
   id               String    @id @default(cuid())
   clerkId          String
+  orderItem        OrderItem @relation(fields: [orderItemId], references: [id])
   orderItemId      String
   creditsRemaining Int? // null for unlimited
   expiresAt        DateTime
@@ -153,6 +154,7 @@ model OrderItem {
   price     String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  passes    Pass[]
 }
 
 enum BookingStatus {

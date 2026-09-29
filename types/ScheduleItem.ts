@@ -47,3 +47,8 @@ export type BookableScheduleWeek = {
   days: string[];
   entries: BookableScheduleEntry[];
 };
+
+export type ConsumePayload = {
+  entry: BookableScheduleEntry;
+  passId: string;
+};

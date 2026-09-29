@@ -3,7 +3,6 @@ import db from "@/app/actions/db";
 import { DateTime } from "luxon";
 import type { BookableScheduleWeek, Day } from "@/types/ScheduleItem";
 import { redirect } from "next/navigation";
-import type { ScheduleResponse, TimeSlot } from "@/types/ScheduleItem";
 import {
   zodProductSchema,
   zodInstructorSchema,
@@ -14,8 +13,6 @@ import { deleteImage, uploadImageToSupabase } from "@/app/actions/supabase";
 import type { ContentDataForEditPage } from "@/types/ContentDataForEditPage";
 
 import { revalidatePath } from "next/cache";
-import { currentUser } from "@clerk/nextjs/server";
-import { BasketItem } from "@/types/basketItemTypes";
 import { ActionFnType } from "@/types/actionFnType";
 
 /* LOAD PAGE CONTENT------------------------------------------------------------- */
@@ -387,94 +384,5 @@ export const editContent: ActionFnType = async (
       errorMessage:
         error instanceof Error ? error.message : "An unknown error occurred",
     };
-  }
-};
-
-/* ORDER ACTIONS---------------------------------------------------------- */
-export const createOrder = async (basketItems: BasketItem[], total: number) => {
-  const user = await currentUser();
-  let orderId: null | string = null;
-
-  if (!user) throw new Error("User not authenticated");
-  try {
-    const clerkId = user.id;
-
-    const order = await db.order.create({
-      data: {
-        clerkId,
-        orderTotalPrice: total,
-        qtyItemsInOrder: basketItems.reduce(
-          (sum, item) => sum + item.quantity,
-          0,
-        ),
-        status: "pending",
-        orderItems: {
-          create: basketItems.map((item: BasketItem) => ({
-            productId: item.id,
-            quantity: item.quantity,
-            price: item.price,
-          })),
-        },
-      },
-    });
-
-    orderId = order.orderId;
-    console.log("Order created from actions with ID:", orderId);
-  } catch (error) {
-    console.log("Error creating order:", error);
-    return {
-      errorMessage:
-        error instanceof Error ? error.message : "An unknown error occurred",
-    };
-  }
-  return orderId;
-};
-
-export const fetchUserOrders = async () => {
-  try {
-    const user = await currentUser();
-    if (!user) throw new Error("User not authenticated");
-
-    const orders = await db.order.findMany({
-      where: { clerkId: user?.id },
-      orderBy: { createdAt: "desc" },
-      include: { orderItems: { include: { product: true } } },
-    });
-    return orders;
-  } catch (error) {
-    console.log("Error fetching orders:", error);
-    throw new Error(
-      error instanceof Error ? error.message : "An unknown error occurred",
-    );
-  }
-};
-
-export const fetchAllOrders = async () => {
-  try {
-    const orders = await db.order.findMany({
-      orderBy: { createdAt: "desc" },
-      include: { orderItems: { include: { product: true } } },
-    });
-    return orders;
-  } catch (error) {
-    console.log("Error fetching all orders:", error);
-    throw new Error(
-      error instanceof Error ? error.message : "An unknown error occurred",
-    );
-  }
-};
-
-export const updateOrderStatus = async (orderId: string, newStatus: string) => {
-  try {
-    console.log(`Updating order ${orderId} to status: ${newStatus}`);
-    await db.order.update({
-      where: { orderId },
-      data: { status: newStatus },
-    });
-  } catch (error) {
-    console.log("Error updating order status:", error);
-    throw new Error(
-      error instanceof Error ? error.message : "An unknown error occurred",
-    );
   }
 };

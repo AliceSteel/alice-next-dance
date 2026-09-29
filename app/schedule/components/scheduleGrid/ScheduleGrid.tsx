@@ -1,6 +1,7 @@
 import type { ScheduleGridProps } from "./ScheduleGridProps.js";
 import { Lineicons } from "@lineiconshq/react-lineicons";
 import { ChevronLeftOutlined } from "@lineiconshq/free-icons";
+import { DateTime } from "luxon";
 
 export default function ScheduleGrid({
   days,
@@ -36,35 +37,42 @@ export default function ScheduleGrid({
           )}
         </div>
         {/* WEEK DAYS:  */}
-        {days.map((day) => (
-          <div
-            key={day}
-            className="font-semibold text-white border border-gray-600 bg-white/10 text-sm p-2 flex flex-col items-center justify-center relative"
-          >
-            <span>{day}</span>
-            <span>{currentWeek.startDate}</span>
-            {/* NEXT WEEK Button: */}
-            {day === "Sun" && weekIndex < weeks.length - 1 && (
-              <button
-                type="button"
-                className="absolute right-1 top-[calc(50%-1.5rem)] h-10 w-6  text-blue-500 hover:scale-105 transition-all duration-300 cursor-pointer"
-                title="Next Week"
-                onClick={() =>
-                  setWeekIndex(
-                    (prevIndex) =>
-                      prevIndex < weeks.length - 1 ? prevIndex + 1 : prevIndex, // <-- increment
-                  )
-                }
-              >
-                <Lineicons
-                  icon={ChevronLeftOutlined}
-                  size={40}
-                  className="rotate-180"
-                />
-              </button>
-            )}
-          </div>
-        ))}
+        {days.map((day, index) => {
+          const weeksDate = DateTime.fromISO(currentWeek.startDate).plus({
+            days: index,
+          });
+          return (
+            <div
+              key={day}
+              className="font-semibold text-white border border-gray-600 bg-white/10 text-sm p-2 flex flex-col items-center justify-center relative"
+            >
+              <span>{day}</span>
+              <span>{weeksDate.toFormat("dd LLL yyyy")}</span>
+              {/* NEXT WEEK Button: */}
+              {day === "Sun" && weekIndex < weeks.length - 1 && (
+                <button
+                  type="button"
+                  className="absolute right-1 top-[calc(50%-1.5rem)] h-10 w-6  text-blue-500 hover:scale-105 transition-all duration-300 cursor-pointer"
+                  title="Next Week"
+                  onClick={() =>
+                    setWeekIndex(
+                      (prevIndex) =>
+                        prevIndex < weeks.length - 1
+                          ? prevIndex + 1
+                          : prevIndex, // <-- increment
+                    )
+                  }
+                >
+                  <Lineicons
+                    icon={ChevronLeftOutlined}
+                    size={40}
+                    className="rotate-180"
+                  />
+                </button>
+              )}
+            </div>
+          );
+        })}
 
         {/* 5 rows of time slots x 7 days */}
         {timeSlots.map((slot: string) => (

@@ -1,4 +1,4 @@
-import { fetchAllOrders } from "@/app/actions/actions";
+import { fetchAllOrders } from "@/app/actions/orderActions";
 
 import Orders from "@/components/orders/Orders";
 

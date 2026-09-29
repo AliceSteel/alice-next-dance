@@ -4,7 +4,7 @@ import ClassFilters from "@/components/classFilters/ClassFilters";
 import { useSelector, useDispatch } from "react-redux";
 import { selectCategories } from "@/store/slices/classes/classesSlice";
 import Button from "@/components/formElements/Btn";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useTransition } from "react";
 import type {
   BookableScheduleEntry,
   BookableScheduleWeek,
@@ -20,15 +20,24 @@ import {
 } from "@/store/slices/user/userSlice";
 import type { ScheduleClientProps } from "./ScheduleClientTypes";
 import { toast } from "react-toastify";
+import { createBooking } from "@/app/actions/scheduleActions";
+import { setBookingPackages } from "@/store/slices/user/userSlice";
 
-function ScheduleClient({ weeks }: ScheduleClientProps) {
+function ScheduleClient({ weeks, bookingPackages }: ScheduleClientProps) {
   const isLoggedIn = useSelector(selectIsLoggedIn);
+
   const classCategories: Category[] = useSelector(selectCategories);
 
   const availableCredits = useSelector(selectAvailableCredits);
   const alreadyBookedEntries = useSelector(collectBookingsForUser);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setBookingPackages(bookingPackages));
+  }, [dispatch, bookingPackages]);
+
+  const [isBooking, startBookingTransition] = useTransition();
 
   function getFilteredCategory(search: string): string | number {
     const params = new URLSearchParams(search);
@@ -114,7 +123,7 @@ function ScheduleClient({ weeks }: ScheduleClientProps) {
   const currentWeek: BookableScheduleWeek = weeks[weekIndex] ?? weeks[0];
 
   const getEntryFor = (day: string, slot: string) =>
-    currentWeek.entries.find((e) => e.day === day && e.timeSlot === slot);
+    currentWeek?.entries.find((e) => e.day === day && e.timeSlot === slot);
 
   const handleEntryClick = (entry: BookableScheduleEntry) => {
     // 1. not logged in → go login, then membership
@@ -129,9 +138,21 @@ function ScheduleClient({ weeks }: ScheduleClientProps) {
       dispatch(openModal("membership"));
       return;
     }
-    dispatch(consumeBookingCredit({ entry }));
-    // toDO3. dispatch booking to store and BE
-    //dispatch(bookClass({ entryId: entry.id, weekId: week.id }));
+
+    // 3. dispatch booking to store and BE
+
+    startBookingTransition(async () => {
+      try {
+        const booking = await createBooking(entry.id);
+        dispatch(consumeBookingCredit({ entry, passId: booking.passId }));
+      } catch (err) {
+        toast.error(
+          err instanceof Error
+            ? err.message
+            : "Booking failed, please try again",
+        );
+      }
+    });
   };
 
   return (
@@ -139,7 +160,7 @@ function ScheduleClient({ weeks }: ScheduleClientProps) {
       <section className="page-container flex flex-col items-center md:flex-row gap-10 py-20 min-h-screen relative">
         <div className="w-full md:w-1/5 flex flex-col items-start gap-8 ">
           <h2 className="text-2xl uppercase">
-            Our Schedule for {currentWeek.label}
+            Our Schedule for {currentWeek.label ?? "this week"}
           </h2>
           <ul
             className="list-none flex flex-row flex-wrap md:flex-col w-full gap-1 mb-auto"

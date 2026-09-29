@@ -21,7 +21,7 @@ export default function Modal({ children }: { children?: React.ReactNode }) {
   return (
     <div className="fixed z-20 inset-0 bg-black/70 backdrop-blur-xs flex items-center justify-center">
       <div
-        className="relative bg-[#272727] text-black rounded-3xl w-5/6 max-w-fit
+        className="relative text-black rounded-3xl w-5/6 max-w-fit
         transform-gpu opacity-0 shadow-lg shadow-blue-500/60
         motion-safe:animate-[modal-drop-bounce_700ms_ease-out_forwards]
         motion-reduce:opacity-100 motion-reduce:animate-none"
@@ -31,7 +31,7 @@ export default function Modal({ children }: { children?: React.ReactNode }) {
           onClick={onClose}
           className="absolute top-2 right-2 z-20 hover:cursor-pointer"
         >
-          <Lineicons icon={XmarkOutlined} size={20} className="text-white/50" />
+          <Lineicons icon={XmarkOutlined} size={20} />
         </button>
         {children}
       </div>

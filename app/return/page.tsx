@@ -1,7 +1,10 @@
 import { redirect } from "next/navigation";
 
 import { stripe } from "../../lib/stripe";
-import { updateOrderStatus } from "../actions/actions";
+import {
+  updateOrderStatus,
+  createPassesFromOrder,
+} from "@/app/actions/orderActions";
 
 export default async function Return({
   searchParams,
@@ -25,6 +28,7 @@ export default async function Return({
     const orderId = session.metadata?.orderId;
     if (orderId) {
       await updateOrderStatus(orderId, "complete");
+      await createPassesFromOrder(orderId);
     }
     redirect("/account?success=ordercreated");
   }
