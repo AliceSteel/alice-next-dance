@@ -55,7 +55,7 @@ const userSlice = createSlice({
       }
 
       const scheduleEntry = action.payload.entry;
-      creditPkg.usedAt.push(scheduleEntry); // mark one credit as used for this entry
+      creditPkg.usedAt.push(scheduleEntry.id); // mark one credit as used for this entry
 
       // mirror change in bookingPackages
       const pkgIdx = state.bookingPackages.findIndex(
@@ -106,7 +106,7 @@ export const selectIsLoggedIn = (state: RootState) =>
 export const collectBookingsForUser = createSelector(
   (state: RootState) => state.auth.bookingPackages,
   (bookingPackages) => {
-    return bookingPackages.flatMap((pkg) => pkg.usedAt.map((e) => e.id));
+    return bookingPackages.flatMap((pkg) => pkg.usedAt);
   },
 );
 
