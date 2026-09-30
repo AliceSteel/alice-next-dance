@@ -1,5 +1,3 @@
-import type { BookableScheduleEntry } from "./ScheduleItem";
-
 export type User = {
   id: string;
   email: string;
@@ -17,7 +15,7 @@ export type AuthState = {
 export type BookingPackage = {
   id: string; // e.g. "pkg-10-2025-01"
   numberOfCredits: number; // 5 | 10 | 20
-  usedAt: BookableScheduleEntry[]; // how many already used
+  usedAt: string[]; // sessionID for booking
   expiresAt: string; // ISO date string "2025-12-31"
 };
 

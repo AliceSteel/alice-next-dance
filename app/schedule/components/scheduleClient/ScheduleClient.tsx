@@ -37,7 +37,7 @@ function ScheduleClient({ weeks, bookingPackages }: ScheduleClientProps) {
     dispatch(setBookingPackages(bookingPackages));
   }, [dispatch, bookingPackages]);
 
-  const [isBooking, startBookingTransition] = useTransition();
+  const [, startBookingTransition] = useTransition();
 
   function getFilteredCategory(search: string): string | number {
     const params = new URLSearchParams(search);

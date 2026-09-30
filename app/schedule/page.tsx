@@ -16,11 +16,11 @@ export default async function SchedulePage() {
 
   const weeks = await fetchSchedule();
   const passes = await fetchUserPasses(); // [] if not logged in
-  console.log("User passes fetched server-side:", passes);
+
   const bookingPackages = passes.map((pass) => ({
     id: pass.id,
     numberOfCredits: pass.creditsRemaining ?? Infinity,
-    usedAt: pass.bookings.map((b) => ({ id: b.sessionId }) as any), // adapt to BookableScheduleEntry if needed
+    usedAt: pass.bookings.map((booking) => booking.sessionId),
     expiresAt: pass.expiresAt.toISOString(),
   }));
 

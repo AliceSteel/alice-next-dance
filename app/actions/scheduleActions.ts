@@ -171,7 +171,7 @@ export const saveScheduleTemplate: ActionFnType = async (
   }
 };
 
-export const publishSchedule: ActionFnType = async (_prevState, _formData) => {
+export const publishSchedule: ActionFnType = async () => {
   try {
     await requireAdmin();
 
