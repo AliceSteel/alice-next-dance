@@ -29,13 +29,10 @@ export default async function EditPage({
   });
 
   return (
-    <section className="page-container py-8 flex flex-col gap-10">
+    <section className="py-8 sm:py-16 flex flex-col gap-10">
       {successMessage && <SuccessToast message={successMessage} />}
       {sections.map(({ key, label }) => (
-        <div
-          key={key}
-          className="flex flex-col gap-2  max-w-[700px] w-full mx-auto"
-        >
+        <div key={key} className="flex flex-col gap-2 max-w-4xl w-full mx-auto">
           <h1 className="text-xl text-center">Edit Content for: {label}</h1>
           <EditPageTable
             content={content[key as keyof ContentDataForEditPage]}

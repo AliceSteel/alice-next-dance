@@ -52,7 +52,7 @@ export default function ScheduleEditor({
   const [editingId, setEditingId] = useState<string | null>(null);
 
   return (
-    <section className="page-container py-8 flex flex-col gap-8 max-w-6xl">
+    <section className="py-8 flex flex-col gap-8">
       <header className="flex flex-col gap-2">
         <h1 className="text-2xl">Edit Schedule</h1>
         <p className="text-gray-400">

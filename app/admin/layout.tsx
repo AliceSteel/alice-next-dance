@@ -8,7 +8,7 @@ export default function AdminLayout({
   return (
     <div className="page-container flex flex-col md:flex-row min-h-screen">
       <Sidebar />
-      <div className="p-8 w-full">{children}</div>
+      <div className="page-container-sm">{children}</div>
     </div>
   );
 }

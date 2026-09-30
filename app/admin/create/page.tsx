@@ -7,8 +7,8 @@ import ImageInput from "@/components/formElements/ImageInput";
 
 export default function CreatePage() {
   return (
-    <section className="min-h-screen max-w-[600px] mx-auto w-full flex flex-col items-start gap-5 pt-20">
-      <h2>Create content for passes products: </h2>
+    <section className="min-h-screen max-w-4xl mx-auto w-full flex flex-col items-start gap-5 pt-20">
+      <h2>Create content for PASSES: </h2>
 
       <FormContainer action={createProduct} border={true}>
         <FormInput name="name" type="text" placeholder="enter name" />
@@ -33,7 +33,7 @@ export default function CreatePage() {
         <SubmitBtn label="Create" />
       </FormContainer>
 
-      <h2>Create content for instructors: </h2>
+      <h2>Create content for TEACHEARS: </h2>
 
       <FormContainer action={createInstructor} border={true}>
         <FormInput name="name" type="text" placeholder="enter name" />

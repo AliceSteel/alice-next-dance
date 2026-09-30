@@ -15,10 +15,9 @@ export default async function AccountPage({
   console.log("success message: ", successMessage);
 
   const passes = await fetchUserPasses(); // [] if not logged in
-  console.log("User passes fetched server-side:", passes);
 
   return (
-    <div className="page-container pt-24">
+    <div className="page-container-sm pt-24">
       <h1 className="text-4xl mb-8">My Account</h1>
 
       {successMessage && <SuccessToast message={successMessage} />}
