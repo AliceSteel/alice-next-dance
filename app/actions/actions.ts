@@ -117,11 +117,11 @@ export const fetchSchedule = async (): Promise<BookableScheduleWeek[]> => {
     });
   }
 
-  return [...weeks.values()];
+  return Array.from(weeks.values());
 };
 /* CREATE PAGE ACTIONS------------------------------------------------------------- */
 export const createProduct: ActionFnType = async (
-  prevState,
+  _prevState,
   formData: FormData,
 ): Promise<{ errorMessage?: string; successMessage?: string }> => {
   try {
@@ -155,7 +155,7 @@ export const createProduct: ActionFnType = async (
 };
 
 export const createInstructor: ActionFnType = async (
-  prevState,
+  _prevState,
   formData: FormData,
 ): Promise<{ errorMessage?: string; successMessage?: string }> => {
   try {
