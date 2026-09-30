@@ -30,7 +30,7 @@ export async function createBooking(sessionId: string) {
     const pass = await tx.pass.findFirst({
       where: {
         clerkId: userId,
-        expiresAt: { gte: new Date() },
+        expiresAt: { gte: session.startsAt },
       },
       orderBy: { expiresAt: "asc" },
     });
