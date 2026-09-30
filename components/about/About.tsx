@@ -63,7 +63,6 @@ export default function About() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {/* TEXT SECTION */}
         <div className="flex flex-col md:flex-row md:gap-8">
-          <h4>About</h4>
           <Image
             src={backgroundImage}
             loading="lazy"

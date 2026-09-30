@@ -2,6 +2,8 @@ import { fetchUserOrders, fetchUserPasses } from "@/app/actions/orderActions";
 import SuccessToast from "../admin/edit/components/SuccessToast";
 import Orders from "@/components/orders/Orders";
 import { DateTime } from "luxon";
+import SectionTitle from "@/components/sectionTitle/SectionTitle";
+import BookingsClientList from "./components/BookingsClientList";
 
 export default async function AccountPage({
   searchParams,
@@ -12,36 +14,63 @@ export default async function AccountPage({
   const { success } = await searchParams;
   const successMessage =
     success === "ordercreated" ? "Order placed successfully!" : null;
-  console.log("success message: ", successMessage);
 
   const passes = await fetchUserPasses(); // [] if not logged in
+  const now = DateTime.now().toMillis();
 
+  const activePasses = passes.filter((pass) => pass.expiresAt.getTime() >= now);
+  const bookingCards = passes.flatMap((pass) =>
+    pass.bookings
+      .filter((booking) => {
+        const { session } = booking;
+        return (
+          DateTime.fromJSDate(session.startsAt, {
+            zone: session.template.timezone,
+          }).toMillis() >= now
+        );
+      })
+      .map((booking) => {
+        const { session } = booking;
+        const start = DateTime.fromJSDate(session.startsAt, {
+          zone: session.template.timezone,
+        });
+        const end = start.plus({ minutes: session.template.durationMin });
+
+        return {
+          id: booking.id,
+          date: start.toFormat("dd-MM-yyyy"),
+          label: session.template.label,
+          title: session.template.danceClass.title,
+          instructor: session.template.instructor.name,
+          timeSlot: `${start.toFormat("HH:mm")}-${end.toFormat("HH:mm")}`,
+        };
+      }),
+  );
   return (
     <div className="page-container-sm pt-24">
-      <h1 className="text-4xl mb-8">My Account</h1>
-
       {successMessage && <SuccessToast message={successMessage} />}
+      <SectionTitle
+        title="My Account"
+        subtitle="Manage bookings and memberships"
+      />
+      <section className="mt-8">
+        <h2 className="mb-4 text-2xl uppercase">Upcoming Classes</h2>
+        {bookingCards.length > 0 ? (
+          <BookingsClientList bookings={bookingCards} />
+        ) : (
+          <p>You have no bookings yet.</p>
+        )}
+      </section>
 
-      {orders.length > 0 ? (
-        <>
-          <h2 className="text-2xl mb-4">My Orders</h2>
-          <Orders orders={orders} />
-        </>
-      ) : (
-        <p>You have no orders yet.</p>
-      )}
-      {passes.length > 0 ? (
-        <>
-          <h2 className="text-2xl mb-4">My Memberships</h2>
-          <ul className="flex flex-col gap-6">
-            {passes.map((pass) => {
-              const totalCredits = pass.creditsRemaining;
-              const usedCredits = pass.bookings.length;
+      <section className="mt-8">
+        <h2 className="mb-4 text-2xl">My Memberships</h2>
+        {activePasses.length > 0 ? (
+          <ul className="flex flex-col gap-4">
+            {activePasses.map((pass) => {
               const remaining =
-                totalCredits === null
+                pass.creditsRemaining === null
                   ? "Unlimited"
-                  : Math.max(totalCredits - usedCredits, 0);
-
+                  : Math.max(pass.creditsRemaining - pass.bookings.length, 0);
               return (
                 <li key={pass.id} className="border-b border-gray-700/50 pb-4">
                   <p className="font-semibold">{pass.orderItem.product.name}</p>
@@ -49,32 +78,22 @@ export default async function AccountPage({
                     {remaining} classes remaining · valid until{" "}
                     {DateTime.fromJSDate(pass.expiresAt).toFormat("dd-MM-yyyy")}
                   </p>
-
-                  {pass.bookings.length > 0 && (
-                    <ul className="mt-2 flex flex-col gap-1 text-sm">
-                      {pass.bookings.map((booking) => {
-                        const { session } = booking;
-                        const start = DateTime.fromJSDate(session.startsAt, {
-                          zone: session.template.timezone,
-                        });
-                        return (
-                          <li key={booking.id}>
-                            {session.template.danceClass.title} —{" "}
-                            {start.toFormat("dd-MM-yyyy HH:mm")} with{" "}
-                            {session.template.instructor.name} ({booking.status}
-                            )
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  )}
                 </li>
               );
             })}
           </ul>
-        </>
+        ) : (
+          <p>You have no active memberships.</p>
+        )}
+      </section>
+
+      {orders.length > 0 ? (
+        <section className="mt-8">
+          <h2 className="mb-4 text-2xl">My Orders</h2>
+          <Orders orders={orders} />
+        </section>
       ) : (
-        <p>You have no passes yet.</p>
+        <p className="mt-8">You have no orders yet.</p>
       )}
     </div>
   );
