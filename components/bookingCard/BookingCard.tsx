@@ -35,14 +35,24 @@ export default function BookingCard({
     <div
       ref={cardRef}
       className={`relative flex flex-col justify-start gap-4 rounded-sm p-4 transition-all duration-500 ease-in-out ${
-        isOpen ? "w-full delay-0" : "w-2/3 md:w-[49.2%] delay-500"
+        isOpen ? "w-full delay-0" : "w-full md:w-[49.2%] delay-500"
       } ${
         isLeftColumn ? "mr-auto" : "ml-auto last:ml-0"
       } ${index === 0 ? "border-sky-400 border-2" : "border border-gray-100"}`}
     >
       <div className="flex items-start justify-start gap-4">
         <div className="w-32 h-20 bg-gray-200 flex items-center justify-center">
-          picture
+          {booking.picUrl && (
+            <img
+              src={
+                typeof booking.picUrl === "string"
+                  ? booking.picUrl
+                  : booking.picUrl.src
+              }
+              alt={booking.title}
+              className="w-full h-full object-cover"
+            />
+          )}
         </div>
         <div>
           <h4>{booking.label}</h4>
@@ -61,7 +71,7 @@ export default function BookingCard({
 
       <button
         type="button"
-        className="flex items-center justify-center gap-2 uppercase text-xs text-nowrap p-2 absolute right-4 bottom-4  bg-sky-400 text-black rounded-sm"
+        className="w-min self-end flex items-center justify-center gap-2 uppercase text-xs text-nowrap p-2 relavive right-4 bottom-4  bg-sky-400 text-black rounded-sm"
         aria-label={isOpen ? "Close booking details" : "Open booking details"}
         onClick={() => onToggleOpen(index)}
       >

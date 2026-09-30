@@ -1,3 +1,5 @@
+import { StaticImageData } from "next/image";
+
 export type BookingCardProps = {
   booking: Booking;
   index?: number;
@@ -14,5 +16,5 @@ type Booking = {
   title: string;
   instructor: string;
   timeSlot: string;
-  picUrl: string;
+  picUrl: string | StaticImageData;
 };

@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import BookingCard from "@/components/bookingCard/BookingCard";
+import { selectClasses } from "@/store/slices/classes/classesSlice";
+import { useSelector } from "react-redux";
 
 type BookingCardData = {
   id: string;
@@ -18,10 +20,18 @@ export default function ClientBookingsList({
   bookings: BookingCardData[];
 }) {
   const [openBookingId, setOpenBookingId] = useState<string | null>(null);
+  const classes = useSelector(selectClasses);
+  const bookingsWithImages = bookings.map((booking) => {
+    const classImage = classes.find((cls) => cls.title === booking.title);
+    return {
+      ...booking,
+      picUrl: classImage?.imageUrl || "",
+    };
+  });
 
   return (
     <div className="flex w-full flex-wrap items-start justify-start gap-[1vw]">
-      {bookings.map((booking, index) => (
+      {bookingsWithImages.map((booking, index) => (
         <BookingCard
           key={booking.id}
           booking={booking}
