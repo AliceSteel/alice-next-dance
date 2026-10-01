@@ -39,7 +39,7 @@ export default function Class({ params }: { params: { classId: string } }) {
         </div>
       </section>
       {instructor && (
-        <section className="page-container py-8">
+        <section className="page-container py-8" id="teachers">
           <h4 className="mb-8">Instructors:</h4>
           <div className="flex flex-col lg:flex-row gap-8 relative">
             <div className="flex-1 sticky top-20 h-fit flex flex-col gap-4">

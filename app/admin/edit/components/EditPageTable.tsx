@@ -3,7 +3,7 @@
 import FormContainer from "@/components/formElements/FormContainer";
 import { SubmitBtn } from "@/components/formElements/SubmitBtn";
 import { type ContentDataForEditPage } from "@/types/ContentDataForEditPage";
-import { deleteRecord, editContent } from "@/app/actions/actions";
+import { archiveRecord, editContent } from "@/app/actions/actions";
 import { Lineicons } from "@lineiconshq/react-lineicons";
 import { PenToSquareOutlined } from "@lineiconshq/free-icons";
 import { useState } from "react";
@@ -51,18 +51,22 @@ export default function EditPageTable({
                   >
                     <Lineicons icon={PenToSquareOutlined} />
                   </button>
-                  <FormContainer action={deleteRecord}>
+                  <FormContainer action={archiveRecord}>
                     <input type="hidden" name="id" value={id} />
                     <input
                       type="hidden"
                       name="contentTitle"
                       value={contentTitle}
                     />
-                    <SubmitBtn labelType="icon" actionType="delete" />
+                    <SubmitBtn
+                      labelType="icon"
+                      actionType="delete"
+                      label="Archive"
+                    />
                   </FormContainer>
                 </div>
               </div>
-              {/* edit table is open on edit button click */}
+              {/* edit table is open on edit button click: shows the form for editing the record */}
               <div
                 className={`overflow-hidden transition-all duration-300 ${
                   isOpen ? "max-h-[2000px] opacity-100" : "max-h-0 opacity-0"

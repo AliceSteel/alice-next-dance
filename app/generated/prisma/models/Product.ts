@@ -44,6 +44,7 @@ export type ProductMinAggregateOutputType = {
   price: string | null
   credits: number | null
   validityDays: number | null
+  isActive: boolean | null
 }
 
 export type ProductMaxAggregateOutputType = {
@@ -52,6 +53,7 @@ export type ProductMaxAggregateOutputType = {
   price: string | null
   credits: number | null
   validityDays: number | null
+  isActive: boolean | null
 }
 
 export type ProductCountAggregateOutputType = {
@@ -61,6 +63,7 @@ export type ProductCountAggregateOutputType = {
   terms: number
   credits: number
   validityDays: number
+  isActive: number
   _all: number
 }
 
@@ -83,6 +86,7 @@ export type ProductMinAggregateInputType = {
   price?: true
   credits?: true
   validityDays?: true
+  isActive?: true
 }
 
 export type ProductMaxAggregateInputType = {
@@ -91,6 +95,7 @@ export type ProductMaxAggregateInputType = {
   price?: true
   credits?: true
   validityDays?: true
+  isActive?: true
 }
 
 export type ProductCountAggregateInputType = {
@@ -100,6 +105,7 @@ export type ProductCountAggregateInputType = {
   terms?: true
   credits?: true
   validityDays?: true
+  isActive?: true
   _all?: true
 }
 
@@ -196,6 +202,7 @@ export type ProductGroupByOutputType = {
   terms: string[]
   credits: number | null
   validityDays: number
+  isActive: boolean | null
   _count: ProductCountAggregateOutputType | null
   _avg: ProductAvgAggregateOutputType | null
   _sum: ProductSumAggregateOutputType | null
@@ -228,6 +235,7 @@ export type ProductWhereInput = {
   terms?: Prisma.StringNullableListFilter<"Product">
   credits?: Prisma.IntNullableFilter<"Product"> | number | null
   validityDays?: Prisma.IntFilter<"Product"> | number
+  isActive?: Prisma.BoolNullableFilter<"Product"> | boolean | null
   orderItems?: Prisma.OrderItemListRelationFilter
 }
 
@@ -238,6 +246,7 @@ export type ProductOrderByWithRelationInput = {
   terms?: Prisma.SortOrder
   credits?: Prisma.SortOrderInput | Prisma.SortOrder
   validityDays?: Prisma.SortOrder
+  isActive?: Prisma.SortOrderInput | Prisma.SortOrder
   orderItems?: Prisma.OrderItemOrderByRelationAggregateInput
 }
 
@@ -251,6 +260,7 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   terms?: Prisma.StringNullableListFilter<"Product">
   credits?: Prisma.IntNullableFilter<"Product"> | number | null
   validityDays?: Prisma.IntFilter<"Product"> | number
+  isActive?: Prisma.BoolNullableFilter<"Product"> | boolean | null
   orderItems?: Prisma.OrderItemListRelationFilter
 }, "id">
 
@@ -261,6 +271,7 @@ export type ProductOrderByWithAggregationInput = {
   terms?: Prisma.SortOrder
   credits?: Prisma.SortOrderInput | Prisma.SortOrder
   validityDays?: Prisma.SortOrder
+  isActive?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.ProductCountOrderByAggregateInput
   _avg?: Prisma.ProductAvgOrderByAggregateInput
   _max?: Prisma.ProductMaxOrderByAggregateInput
@@ -278,6 +289,7 @@ export type ProductScalarWhereWithAggregatesInput = {
   terms?: Prisma.StringNullableListFilter<"Product">
   credits?: Prisma.IntNullableWithAggregatesFilter<"Product"> | number | null
   validityDays?: Prisma.IntWithAggregatesFilter<"Product"> | number
+  isActive?: Prisma.BoolNullableWithAggregatesFilter<"Product"> | boolean | null
 }
 
 export type ProductCreateInput = {
@@ -286,6 +298,7 @@ export type ProductCreateInput = {
   terms?: Prisma.ProductCreatetermsInput | string[]
   credits?: number | null
   validityDays: number
+  isActive?: boolean | null
   orderItems?: Prisma.OrderItemCreateNestedManyWithoutProductInput
 }
 
@@ -296,6 +309,7 @@ export type ProductUncheckedCreateInput = {
   terms?: Prisma.ProductCreatetermsInput | string[]
   credits?: number | null
   validityDays: number
+  isActive?: boolean | null
   orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutProductInput
 }
 
@@ -305,6 +319,7 @@ export type ProductUpdateInput = {
   terms?: Prisma.ProductUpdatetermsInput | string[]
   credits?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   orderItems?: Prisma.OrderItemUpdateManyWithoutProductNestedInput
 }
 
@@ -315,6 +330,7 @@ export type ProductUncheckedUpdateInput = {
   terms?: Prisma.ProductUpdatetermsInput | string[]
   credits?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutProductNestedInput
 }
 
@@ -325,6 +341,7 @@ export type ProductCreateManyInput = {
   terms?: Prisma.ProductCreatetermsInput | string[]
   credits?: number | null
   validityDays: number
+  isActive?: boolean | null
 }
 
 export type ProductUpdateManyMutationInput = {
@@ -333,6 +350,7 @@ export type ProductUpdateManyMutationInput = {
   terms?: Prisma.ProductUpdatetermsInput | string[]
   credits?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
 }
 
 export type ProductUncheckedUpdateManyInput = {
@@ -342,6 +360,7 @@ export type ProductUncheckedUpdateManyInput = {
   terms?: Prisma.ProductUpdatetermsInput | string[]
   credits?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
 }
 
 export type StringNullableListFilter<$PrismaModel = never> = {
@@ -359,6 +378,7 @@ export type ProductCountOrderByAggregateInput = {
   terms?: Prisma.SortOrder
   credits?: Prisma.SortOrder
   validityDays?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
 }
 
 export type ProductAvgOrderByAggregateInput = {
@@ -373,6 +393,7 @@ export type ProductMaxOrderByAggregateInput = {
   price?: Prisma.SortOrder
   credits?: Prisma.SortOrder
   validityDays?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
 }
 
 export type ProductMinOrderByAggregateInput = {
@@ -381,6 +402,7 @@ export type ProductMinOrderByAggregateInput = {
   price?: Prisma.SortOrder
   credits?: Prisma.SortOrder
   validityDays?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
 }
 
 export type ProductSumOrderByAggregateInput = {
@@ -423,6 +445,10 @@ export type IntFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type NullableBoolFieldUpdateOperationsInput = {
+  set?: boolean | null
+}
+
 export type ProductCreateNestedOneWithoutOrderItemsInput = {
   create?: Prisma.XOR<Prisma.ProductCreateWithoutOrderItemsInput, Prisma.ProductUncheckedCreateWithoutOrderItemsInput>
   connectOrCreate?: Prisma.ProductCreateOrConnectWithoutOrderItemsInput
@@ -443,6 +469,7 @@ export type ProductCreateWithoutOrderItemsInput = {
   terms?: Prisma.ProductCreatetermsInput | string[]
   credits?: number | null
   validityDays: number
+  isActive?: boolean | null
 }
 
 export type ProductUncheckedCreateWithoutOrderItemsInput = {
@@ -452,6 +479,7 @@ export type ProductUncheckedCreateWithoutOrderItemsInput = {
   terms?: Prisma.ProductCreatetermsInput | string[]
   credits?: number | null
   validityDays: number
+  isActive?: boolean | null
 }
 
 export type ProductCreateOrConnectWithoutOrderItemsInput = {
@@ -476,6 +504,7 @@ export type ProductUpdateWithoutOrderItemsInput = {
   terms?: Prisma.ProductUpdatetermsInput | string[]
   credits?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
 }
 
 export type ProductUncheckedUpdateWithoutOrderItemsInput = {
@@ -485,6 +514,7 @@ export type ProductUncheckedUpdateWithoutOrderItemsInput = {
   terms?: Prisma.ProductUpdatetermsInput | string[]
   credits?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
 }
 
 
@@ -525,6 +555,7 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   terms?: boolean
   credits?: boolean
   validityDays?: boolean
+  isActive?: boolean
   orderItems?: boolean | Prisma.Product$orderItemsArgs<ExtArgs>
   _count?: boolean | Prisma.ProductCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["product"]>
@@ -536,6 +567,7 @@ export type ProductSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   terms?: boolean
   credits?: boolean
   validityDays?: boolean
+  isActive?: boolean
 }, ExtArgs["result"]["product"]>
 
 export type ProductSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -545,6 +577,7 @@ export type ProductSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   terms?: boolean
   credits?: boolean
   validityDays?: boolean
+  isActive?: boolean
 }, ExtArgs["result"]["product"]>
 
 export type ProductSelectScalar = {
@@ -554,9 +587,10 @@ export type ProductSelectScalar = {
   terms?: boolean
   credits?: boolean
   validityDays?: boolean
+  isActive?: boolean
 }
 
-export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "price" | "terms" | "credits" | "validityDays", ExtArgs["result"]["product"]>
+export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "price" | "terms" | "credits" | "validityDays" | "isActive", ExtArgs["result"]["product"]>
 export type ProductInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   orderItems?: boolean | Prisma.Product$orderItemsArgs<ExtArgs>
   _count?: boolean | Prisma.ProductCountOutputTypeDefaultArgs<ExtArgs>
@@ -576,6 +610,7 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     terms: string[]
     credits: number | null
     validityDays: number
+    isActive: boolean | null
   }, ExtArgs["result"]["product"]>
   composites: {}
 }
@@ -1006,6 +1041,7 @@ export interface ProductFieldRefs {
   readonly terms: Prisma.FieldRef<"Product", 'String[]'>
   readonly credits: Prisma.FieldRef<"Product", 'Int'>
   readonly validityDays: Prisma.FieldRef<"Product", 'Int'>
+  readonly isActive: Prisma.FieldRef<"Product", 'Boolean'>
 }
     
 

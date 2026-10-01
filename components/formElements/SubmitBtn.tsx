@@ -26,6 +26,7 @@ export function SubmitBtn({
   return (
     <button
       type="submit"
+      title={label ?? ""}
       disabled={pending || externalLoading}
       className={`${labelType === "text" ? styles.submitBtn : "hover:scale-110"} mx-auto disabled:bg-gray-400/10 disabled:pointer-events-none min-w-10 min-h-10 rounded-lg overflow-hidden p-3 flex justify-center uppercase text-white text-nowrap`}
     >

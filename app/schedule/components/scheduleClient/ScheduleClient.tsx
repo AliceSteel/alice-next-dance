@@ -4,6 +4,7 @@ import ClassFilters from "@/components/classFilters/ClassFilters";
 import { useSelector, useDispatch } from "react-redux";
 import { selectCategories } from "@/store/slices/classes/classesSlice";
 import Button from "@/components/formElements/Btn";
+import Link from "next/link";
 import { useState, useEffect, useMemo, useTransition } from "react";
 import type {
   BookableScheduleEntry,
@@ -145,6 +146,14 @@ function ScheduleClient({ weeks, bookingPackages }: ScheduleClientProps) {
       try {
         const booking = await createBooking(entry.id);
         dispatch(consumeBookingCredit({ entry, passId: booking.passId }));
+        toast.success(
+          <div className="flex flex-col">
+            Successfully booked {entry.label}.
+            <Link href="/account" className="underline">
+              Check your account page for upcoming bookings.
+            </Link>
+          </div>,
+        );
       } catch (err) {
         toast.error(
           err instanceof Error

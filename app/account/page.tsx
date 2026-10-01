@@ -42,6 +42,7 @@ export default async function AccountPage({
           label: session.template.label,
           title: session.template.danceClass.title,
           instructor: session.template.instructor.name,
+          instructorSlug: session.template.instructor.slug,
           timeSlot: `${start.toFormat("HH:mm")}-${end.toFormat("HH:mm")}`,
         };
       }),

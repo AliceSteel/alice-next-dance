@@ -23,6 +23,7 @@ model Product {
   orderItems   OrderItem[]
   credits      Int? // null for unlimited
   validityDays Int
+  isActive     Boolean?    @default(true)
 }
 
 model PassesTitle {
@@ -67,6 +68,7 @@ model Class {
   text1             String
   text2             String
   scheduleTemplates ScheduleTemplate[]
+  isActive          Boolean            @default(true)
 }
 
 model Instructor {
@@ -78,6 +80,7 @@ model Instructor {
   youTube           String?
   bioLines          String[]
   scheduleTemplates ScheduleTemplate[]
+  isActive          Boolean            @default(true)
 }
 
 model Week {

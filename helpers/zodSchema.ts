@@ -1,30 +1,32 @@
 import { z } from "zod";
 
 export const zodProductSchema = z.object({
-  name: z
-    .string()
-    .min(2, {
-      message: "Name is required and should be at least 2 characters long",
-    }),
+  name: z.string().min(2, {
+    message: "Name is required and should be at least 2 characters long",
+  }),
   price: z.string(),
   terms: z
     .array(z.string())
     .min(1, { message: "At least one term is required" }),
   validityDays: z.coerce.number().int().positive(),
+  credits: z.preprocess(
+    (value) =>
+      value === "" || value === "null" || value == null ? null : Number(value),
+    z.number().int().positive().nullable(),
+  ),
+  isActive: z.preprocess(
+    (value) => (value === "true" ? true : value === "false" ? false : value),
+    z.boolean().nullable(),
+  ),
 });
 
 export const zodInstructorSchema = z.object({
-  name: z
-    .string()
-    .min(2, {
-      message: "Name is required and should be at least 2 characters long",
-    }),
-  slug: z
-    .string()
-    .min(2, {
-      message:
-        "Dance Style is required and should be at least 2 characters long",
-    }),
+  name: z.string().min(2, {
+    message: "Name is required and should be at least 2 characters long",
+  }),
+  slug: z.string().min(2, {
+    message: "Dance Style is required and should be at least 2 characters long",
+  }),
   instagram: z.string().optional(),
   youTube: z.string().optional(),
   bioLines: z

@@ -1,7 +1,7 @@
 import ScheduleClient from "./components/scheduleClient/ScheduleClient";
 import PriceList from "./components/priceList/PriceList";
 import {
-  fetchProducts,
+  fetchActiveProducts,
   fetchPassesTitleRecord,
   fetchBtnTitleRecord,
   fetchSchedule,
@@ -10,7 +10,7 @@ import { fetchUserPasses } from "@/app/actions/orderActions";
 import { Suspense } from "react";
 
 export default async function SchedulePage() {
-  const products = await fetchProducts();
+  const products = await fetchActiveProducts();
   const passesTitle = await fetchPassesTitleRecord();
   const btnTitle = await fetchBtnTitleRecord();
 

@@ -3,4 +3,5 @@ export type Pass = {
   name: string;
   price: string;
   terms?: string[];
+  isActive?: boolean | null;
 };

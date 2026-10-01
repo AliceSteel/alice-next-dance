@@ -16,8 +16,11 @@ import { revalidatePath } from "next/cache";
 import { ActionFnType } from "@/types/actionFnType";
 
 /* LOAD PAGE CONTENT------------------------------------------------------------- */
-export const fetchProducts = () => {
-  return db.product.findMany({ orderBy: { price: "asc" } });
+export const fetchActiveProducts = () => {
+  return db.product.findMany({
+    where: { isActive: true },
+    orderBy: { price: "asc" },
+  });
 };
 
 export const fetchPassesTitleRecord = async () => {
@@ -216,8 +219,8 @@ export const fetchAdminContentToEdit: () => Promise<ContentDataForEditPage> =
     } as ContentDataForEditPage;
   };
 
-export const deleteRecord: ActionFnType = async (
-  prevState,
+export const archiveRecord: ActionFnType = async (
+  _prevState,
   formData: FormData,
 ) => {
   const productId = Number(formData.get("id"));
@@ -227,33 +230,39 @@ export const deleteRecord: ActionFnType = async (
   try {
     switch (contentTable) {
       case "products":
-        await db.product.delete({ where: { id: productId } });
+        await db.product.update({
+          where: { id: productId },
+          data: { isActive: false },
+        });
         break;
       case "instructors":
-        const instructorRecord = await db.instructor.delete({
+        const instructorRecord = await db.instructor.update({
           where: { id: productId },
+          data: { isActive: false },
         });
         imageRecord = instructorRecord?.image ?? "";
         break;
       case "classes":
-        const classRecord = await db.class.delete({ where: { id: productId } });
+        const classRecord = await db.class.update({
+          where: { id: productId },
+          data: { isActive: false },
+        });
         imageRecord = classRecord?.imageUrl ?? "";
         break;
       default:
         return { errorMessage: `Unknown content type: ${contentTable}` };
     }
 
-    if (imageRecord) await deleteImage(imageRecord);
-    //revalidatePath("/admin/edit"); - alternative to redirecting
-    //return { successMessage: "Record deleted successfully!" };
+    //if (imageRecord) await deleteImage(imageRecord);
   } catch (error) {
-    console.log("Error deleting product:", error);
+    console.log("Error archiving product:", error);
     return {
       errorMessage:
         error instanceof Error ? error.message : "An unknown error occurred",
     };
   }
-  redirect("/admin/edit?success=recorddeleted");
+  revalidatePath("/admin/edit?success=recorddeactivated");
+  return { successMessage: "Record archived successfully!" };
 };
 
 async function replaceImage(
@@ -269,7 +278,7 @@ async function replaceImage(
 }
 
 export const editContent: ActionFnType = async (
-  prevState,
+  _prevState,
   formData: FormData,
 ) => {
   const contentTitle = formData.get("contentTitle") as string;
@@ -277,9 +286,8 @@ export const editContent: ActionFnType = async (
   try {
     switch (contentTitle) {
       case "products": {
-        const { name, price, terms } = Object.fromEntries(
-          formData.entries(),
-        ) as Record<string, string>;
+        const { name, price, terms, validityDays, credits, isActive } =
+          Object.fromEntries(formData.entries()) as Record<string, string>;
         const termsArr = String(terms)
           .split("\n")
           .map((t: string) => t.trim())
@@ -287,6 +295,9 @@ export const editContent: ActionFnType = async (
         const validated = zodProductSchema.safeParse({
           name,
           price,
+          validityDays,
+          credits,
+          isActive,
           terms: termsArr,
         });
 

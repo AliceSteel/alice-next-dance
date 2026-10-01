@@ -4,15 +4,7 @@ import { useState } from "react";
 import BookingCard from "@/components/bookingCard/BookingCard";
 import { selectClasses } from "@/store/slices/classes/classesSlice";
 import { useSelector } from "react-redux";
-
-type BookingCardData = {
-  id: string;
-  date: string;
-  label: string;
-  title: string;
-  instructor: string;
-  timeSlot: string;
-};
+import type { BookingCardData } from "@/types/BookingCardData";
 
 export default function ClientBookingsList({
   bookings,

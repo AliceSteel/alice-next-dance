@@ -2,6 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import type { BookingCardProps } from "./BookingCardTypes";
 import { Lineicons } from "@lineiconshq/react-lineicons";
 import { ArrowRightOutlined } from "@lineiconshq/free-icons";
+import Link from "next/link";
+import FormContainer from "@/components/formElements/FormContainer";
+import { SubmitBtn } from "@/components/formElements/SubmitBtn";
+import { cancelBooking } from "@/app/actions/scheduleActions";
 
 export default function BookingCard({
   booking,
@@ -40,6 +44,11 @@ export default function BookingCard({
         isLeftColumn ? "mr-auto" : "ml-auto last:ml-0"
       } ${index === 0 ? "border-sky-400 border-2" : "border border-gray-100"}`}
     >
+      {index === 0 && (
+        <span className="uppercase text-white px-2 py-1 text-xs">
+          Next Class
+        </span>
+      )}
       <div className="flex items-start justify-start gap-4">
         <div className="w-32 h-20 bg-gray-200 flex items-center justify-center">
           {booking.picUrl && (
@@ -63,15 +72,25 @@ export default function BookingCard({
       </div>
 
       {isOpen && (
-        <div>
-          {booking.instructor} read more about the instructor
-          <p>Reschedule and cancel buttons go here</p>
+        <div className="flex flex-col items-start gap-4">
+          <p>With {booking.instructor}</p>
+          <Link
+            href={`/classes/${booking.instructorSlug}#teachers`}
+            className="underline"
+          >
+            Read more about the instructor
+          </Link>
+
+          <FormContainer action={cancelBooking}>
+            <input type="hidden" name="bookingId" value={String(booking.id)} />
+            <SubmitBtn label="Cancel booking" actionType="delete" />
+          </FormContainer>
         </div>
       )}
 
       <button
         type="button"
-        className="w-min self-end flex items-center justify-center gap-2 uppercase text-xs text-nowrap p-2 relavive right-4 bottom-4  bg-sky-400 text-black rounded-sm"
+        className="w-min self-end flex items-center justify-center gap-2 uppercase text-xs text-nowrap p-2 absolute right-4 bottom-4  bg-sky-400 text-black rounded-sm"
         aria-label={isOpen ? "Close booking details" : "Open booking details"}
         onClick={() => onToggleOpen(index)}
       >

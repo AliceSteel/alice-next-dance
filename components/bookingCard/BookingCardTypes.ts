@@ -1,20 +1,10 @@
-import { StaticImageData } from "next/image";
+import type { BookingCardData } from "@/types/BookingCardData";
 
 export type BookingCardProps = {
-  booking: Booking;
+  booking: BookingCardData;
   index?: number;
   isOpen?: boolean;
   currentCategory?: string;
   onToggleOpen: (index: number) => void;
   onLeftColumnChange?: (isLeftColumn: boolean) => void;
-};
-
-type Booking = {
-  id: string | number;
-  date: string;
-  label: string;
-  title: string;
-  instructor: string;
-  timeSlot: string;
-  picUrl: string | StaticImageData;
 };

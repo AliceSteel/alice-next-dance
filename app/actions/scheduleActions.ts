@@ -6,7 +6,8 @@ import db from "@/app/actions/db";
 import type { ActionFnType } from "@/types/actionFnType";
 import { generateSessionsForNextEightWeeks } from "./scheduleGenerator";
 
-async function requireAdmin() {
+//Deactivated admin check for showcase purposes:
+/* async function requireAdmin() {
   const { sessionClaims } = await auth();
   const isAdmin =
     (sessionClaims?.metadata as { isAdmin?: boolean } | undefined)?.isAdmin ===
@@ -14,6 +15,7 @@ async function requireAdmin() {
 
   if (!isAdmin) throw new Error("Unauthorized");
 }
+ */
 export async function createBooking(sessionId: string) {
   const { userId } = await auth();
   if (!userId) throw new Error("Unauthorized");
@@ -51,17 +53,72 @@ export async function createBooking(sessionId: string) {
       where: { id: sessionId },
       data: { bookedCount: { increment: 1 } },
     });
-
+    revalidatePath("/account");
+    revalidatePath("/schedule");
     return booking;
   });
 }
 
+export const cancelBooking: ActionFnType = async (_prevState, formData) => {
+  const bookingId = String(formData.get("bookingId") ?? "").trim();
+  if (!bookingId) return { errorMessage: "Booking ID is required." };
+
+  const { userId } = await auth();
+  if (!userId) return { errorMessage: "Unauthorized." };
+  try {
+    await db.$transaction(async (tx) => {
+      const booking = await tx.booking.findFirst({
+        where: {
+          id: bookingId,
+          clerkId: userId,
+          status: "CONFIRMED",
+        },
+        include: { session: true },
+      });
+
+      if (!booking) throw new Error("Booking not found or already cancelled");
+      if (booking.session.startsAt <= new Date()) {
+        throw new Error("This class can no longer be cancelled");
+      }
+
+      const result = await tx.booking.updateMany({
+        where: {
+          id: booking.id,
+          clerkId: userId,
+          status: "CONFIRMED",
+        },
+        data: {
+          status: "CANCELLED",
+          cancelledAt: new Date(),
+        },
+      });
+
+      if (result.count !== 1) {
+        throw new Error("Booking was already cancelled");
+      }
+
+      await tx.classSession.update({
+        where: { id: booking.sessionId },
+        data: { bookedCount: { decrement: 1 } },
+      });
+    });
+
+    revalidatePath("/account");
+    revalidatePath("/schedule");
+    return { successMessage: "Booking cancelled." };
+  } catch (error) {
+    return {
+      errorMessage:
+        error instanceof Error ? error.message : "Could not cancel booking.",
+    };
+  }
+};
 export const saveScheduleTemplate: ActionFnType = async (
   _prevState,
   formData,
 ) => {
   try {
-    await requireAdmin();
+    //await requireAdmin();
 
     const id = String(formData.get("id") ?? "").trim();
     const classSlug = String(formData.get("classSlug") ?? "").trim();
@@ -173,7 +230,7 @@ export const saveScheduleTemplate: ActionFnType = async (
 
 export const publishSchedule: ActionFnType = async () => {
   try {
-    await requireAdmin();
+    //await requireAdmin();
 
     const created = await generateSessionsForNextEightWeeks();
 

@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
 import { openModal } from "@/store/slices/modal/modalSlice";
 import type { RootState } from "@/store/store";
+import { toast } from "react-toastify";
 
 import type { NavbarProps } from "./NavBarTypes";
 import Modal from "@/components/Modal";
@@ -28,7 +29,9 @@ function NavBar({ title }: NavbarProps) {
   const navRef = useRef<HTMLElement | null>(null);
   const userName = useSelector((state: RootState) => state.auth.user?.name);
   const isLoggedIn = useSelector(selectIsLoggedIn);
-  const isAdmin = useSelector(isUserAdmin);
+  //const isAdmin = useSelector(isUserAdmin);
+  const isAdmin = true; //remove
+
   const { type } = useSelector((state: RootState) => state.modal);
   const totalQtyItems = useSelector(
     (state: RootState) => state.cart.totalQtyItems,
@@ -75,9 +78,10 @@ function NavBar({ title }: NavbarProps) {
             {
               id: "signout",
               title: "Sign out",
-              onClick: () => {
-                void signOut();
+              onClick: async () => {
                 dispatch(clearUser());
+                await signOut({ redirectUrl: "/" });
+                toast.success("Logged out successfully");
               },
             },
           ]

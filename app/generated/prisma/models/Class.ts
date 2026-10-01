@@ -42,6 +42,7 @@ export type ClassMinAggregateOutputType = {
   description: string | null
   text1: string | null
   text2: string | null
+  isActive: boolean | null
 }
 
 export type ClassMaxAggregateOutputType = {
@@ -52,6 +53,7 @@ export type ClassMaxAggregateOutputType = {
   description: string | null
   text1: string | null
   text2: string | null
+  isActive: boolean | null
 }
 
 export type ClassCountAggregateOutputType = {
@@ -62,6 +64,7 @@ export type ClassCountAggregateOutputType = {
   description: number
   text1: number
   text2: number
+  isActive: number
   _all: number
 }
 
@@ -82,6 +85,7 @@ export type ClassMinAggregateInputType = {
   description?: true
   text1?: true
   text2?: true
+  isActive?: true
 }
 
 export type ClassMaxAggregateInputType = {
@@ -92,6 +96,7 @@ export type ClassMaxAggregateInputType = {
   description?: true
   text1?: true
   text2?: true
+  isActive?: true
 }
 
 export type ClassCountAggregateInputType = {
@@ -102,6 +107,7 @@ export type ClassCountAggregateInputType = {
   description?: true
   text1?: true
   text2?: true
+  isActive?: true
   _all?: true
 }
 
@@ -199,6 +205,7 @@ export type ClassGroupByOutputType = {
   description: string
   text1: string
   text2: string
+  isActive: boolean
   _count: ClassCountAggregateOutputType | null
   _avg: ClassAvgAggregateOutputType | null
   _sum: ClassSumAggregateOutputType | null
@@ -232,6 +239,7 @@ export type ClassWhereInput = {
   description?: Prisma.StringFilter<"Class"> | string
   text1?: Prisma.StringFilter<"Class"> | string
   text2?: Prisma.StringFilter<"Class"> | string
+  isActive?: Prisma.BoolFilter<"Class"> | boolean
   scheduleTemplates?: Prisma.ScheduleTemplateListRelationFilter
 }
 
@@ -243,6 +251,7 @@ export type ClassOrderByWithRelationInput = {
   description?: Prisma.SortOrder
   text1?: Prisma.SortOrder
   text2?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   scheduleTemplates?: Prisma.ScheduleTemplateOrderByRelationAggregateInput
 }
 
@@ -257,6 +266,7 @@ export type ClassWhereUniqueInput = Prisma.AtLeast<{
   description?: Prisma.StringFilter<"Class"> | string
   text1?: Prisma.StringFilter<"Class"> | string
   text2?: Prisma.StringFilter<"Class"> | string
+  isActive?: Prisma.BoolFilter<"Class"> | boolean
   scheduleTemplates?: Prisma.ScheduleTemplateListRelationFilter
 }, "id" | "slug">
 
@@ -268,6 +278,7 @@ export type ClassOrderByWithAggregationInput = {
   description?: Prisma.SortOrder
   text1?: Prisma.SortOrder
   text2?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   _count?: Prisma.ClassCountOrderByAggregateInput
   _avg?: Prisma.ClassAvgOrderByAggregateInput
   _max?: Prisma.ClassMaxOrderByAggregateInput
@@ -286,6 +297,7 @@ export type ClassScalarWhereWithAggregatesInput = {
   description?: Prisma.StringWithAggregatesFilter<"Class"> | string
   text1?: Prisma.StringWithAggregatesFilter<"Class"> | string
   text2?: Prisma.StringWithAggregatesFilter<"Class"> | string
+  isActive?: Prisma.BoolWithAggregatesFilter<"Class"> | boolean
 }
 
 export type ClassCreateInput = {
@@ -295,6 +307,7 @@ export type ClassCreateInput = {
   description: string
   text1: string
   text2: string
+  isActive?: boolean
   scheduleTemplates?: Prisma.ScheduleTemplateCreateNestedManyWithoutDanceClassInput
 }
 
@@ -306,6 +319,7 @@ export type ClassUncheckedCreateInput = {
   description: string
   text1: string
   text2: string
+  isActive?: boolean
   scheduleTemplates?: Prisma.ScheduleTemplateUncheckedCreateNestedManyWithoutDanceClassInput
 }
 
@@ -316,6 +330,7 @@ export type ClassUpdateInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   text1?: Prisma.StringFieldUpdateOperationsInput | string
   text2?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   scheduleTemplates?: Prisma.ScheduleTemplateUpdateManyWithoutDanceClassNestedInput
 }
 
@@ -327,6 +342,7 @@ export type ClassUncheckedUpdateInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   text1?: Prisma.StringFieldUpdateOperationsInput | string
   text2?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   scheduleTemplates?: Prisma.ScheduleTemplateUncheckedUpdateManyWithoutDanceClassNestedInput
 }
 
@@ -338,6 +354,7 @@ export type ClassCreateManyInput = {
   description: string
   text1: string
   text2: string
+  isActive?: boolean
 }
 
 export type ClassUpdateManyMutationInput = {
@@ -347,6 +364,7 @@ export type ClassUpdateManyMutationInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   text1?: Prisma.StringFieldUpdateOperationsInput | string
   text2?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type ClassUncheckedUpdateManyInput = {
@@ -357,6 +375,7 @@ export type ClassUncheckedUpdateManyInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   text1?: Prisma.StringFieldUpdateOperationsInput | string
   text2?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type ClassCountOrderByAggregateInput = {
@@ -367,6 +386,7 @@ export type ClassCountOrderByAggregateInput = {
   description?: Prisma.SortOrder
   text1?: Prisma.SortOrder
   text2?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
 }
 
 export type ClassAvgOrderByAggregateInput = {
@@ -381,6 +401,7 @@ export type ClassMaxOrderByAggregateInput = {
   description?: Prisma.SortOrder
   text1?: Prisma.SortOrder
   text2?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
 }
 
 export type ClassMinOrderByAggregateInput = {
@@ -391,6 +412,7 @@ export type ClassMinOrderByAggregateInput = {
   description?: Prisma.SortOrder
   text1?: Prisma.SortOrder
   text2?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
 }
 
 export type ClassSumOrderByAggregateInput = {
@@ -400,6 +422,10 @@ export type ClassSumOrderByAggregateInput = {
 export type ClassScalarRelationFilter = {
   is?: Prisma.ClassWhereInput
   isNot?: Prisma.ClassWhereInput
+}
+
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
 }
 
 export type ClassCreateNestedOneWithoutScheduleTemplatesInput = {
@@ -423,6 +449,7 @@ export type ClassCreateWithoutScheduleTemplatesInput = {
   description: string
   text1: string
   text2: string
+  isActive?: boolean
 }
 
 export type ClassUncheckedCreateWithoutScheduleTemplatesInput = {
@@ -433,6 +460,7 @@ export type ClassUncheckedCreateWithoutScheduleTemplatesInput = {
   description: string
   text1: string
   text2: string
+  isActive?: boolean
 }
 
 export type ClassCreateOrConnectWithoutScheduleTemplatesInput = {
@@ -458,6 +486,7 @@ export type ClassUpdateWithoutScheduleTemplatesInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   text1?: Prisma.StringFieldUpdateOperationsInput | string
   text2?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type ClassUncheckedUpdateWithoutScheduleTemplatesInput = {
@@ -468,6 +497,7 @@ export type ClassUncheckedUpdateWithoutScheduleTemplatesInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   text1?: Prisma.StringFieldUpdateOperationsInput | string
   text2?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 
@@ -509,6 +539,7 @@ export type ClassSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   description?: boolean
   text1?: boolean
   text2?: boolean
+  isActive?: boolean
   scheduleTemplates?: boolean | Prisma.Class$scheduleTemplatesArgs<ExtArgs>
   _count?: boolean | Prisma.ClassCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["class"]>
@@ -521,6 +552,7 @@ export type ClassSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   description?: boolean
   text1?: boolean
   text2?: boolean
+  isActive?: boolean
 }, ExtArgs["result"]["class"]>
 
 export type ClassSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -531,6 +563,7 @@ export type ClassSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   description?: boolean
   text1?: boolean
   text2?: boolean
+  isActive?: boolean
 }, ExtArgs["result"]["class"]>
 
 export type ClassSelectScalar = {
@@ -541,9 +574,10 @@ export type ClassSelectScalar = {
   description?: boolean
   text1?: boolean
   text2?: boolean
+  isActive?: boolean
 }
 
-export type ClassOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "slug" | "title" | "imageUrl" | "description" | "text1" | "text2", ExtArgs["result"]["class"]>
+export type ClassOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "slug" | "title" | "imageUrl" | "description" | "text1" | "text2" | "isActive", ExtArgs["result"]["class"]>
 export type ClassInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   scheduleTemplates?: boolean | Prisma.Class$scheduleTemplatesArgs<ExtArgs>
   _count?: boolean | Prisma.ClassCountOutputTypeDefaultArgs<ExtArgs>
@@ -564,6 +598,7 @@ export type $ClassPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     description: string
     text1: string
     text2: string
+    isActive: boolean
   }, ExtArgs["result"]["class"]>
   composites: {}
 }
@@ -995,6 +1030,7 @@ export interface ClassFieldRefs {
   readonly description: Prisma.FieldRef<"Class", 'String'>
   readonly text1: Prisma.FieldRef<"Class", 'String'>
   readonly text2: Prisma.FieldRef<"Class", 'String'>
+  readonly isActive: Prisma.FieldRef<"Class", 'Boolean'>
 }
     
 

@@ -88,7 +88,8 @@ export const ProductScalarFieldEnum = {
   price: 'price',
   terms: 'terms',
   credits: 'credits',
-  validityDays: 'validityDays'
+  validityDays: 'validityDays',
+  isActive: 'isActive'
 } as const
 
 export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum]
@@ -139,7 +140,8 @@ export const ClassScalarFieldEnum = {
   imageUrl: 'imageUrl',
   description: 'description',
   text1: 'text1',
-  text2: 'text2'
+  text2: 'text2',
+  isActive: 'isActive'
 } as const
 
 export type ClassScalarFieldEnum = (typeof ClassScalarFieldEnum)[keyof typeof ClassScalarFieldEnum]
@@ -152,7 +154,8 @@ export const InstructorScalarFieldEnum = {
   image: 'image',
   instagram: 'instagram',
   youTube: 'youTube',
-  bioLines: 'bioLines'
+  bioLines: 'bioLines',
+  isActive: 'isActive'
 } as const
 
 export type InstructorScalarFieldEnum = (typeof InstructorScalarFieldEnum)[keyof typeof InstructorScalarFieldEnum]

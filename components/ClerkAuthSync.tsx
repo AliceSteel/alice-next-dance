@@ -3,7 +3,7 @@
 import { useUser } from "@clerk/nextjs";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { setUser } from "@/store/slices/user/userSlice";
+import { setUser, clearUser } from "@/store/slices/user/userSlice";
 import { addToCart } from "@/store/slices/cart/cartSlice";
 
 export default function ClerkAuthSync() {
@@ -12,6 +12,11 @@ export default function ClerkAuthSync() {
 
   useEffect(() => {
     if (!isLoaded) return;
+
+    if (!isSignedIn || !user) {
+      dispatch(clearUser());
+      return;
+    }
 
     if (isSignedIn && user) {
       dispatch(

@@ -41,6 +41,7 @@ export type InstructorMinAggregateOutputType = {
   image: string | null
   instagram: string | null
   youTube: string | null
+  isActive: boolean | null
 }
 
 export type InstructorMaxAggregateOutputType = {
@@ -50,6 +51,7 @@ export type InstructorMaxAggregateOutputType = {
   image: string | null
   instagram: string | null
   youTube: string | null
+  isActive: boolean | null
 }
 
 export type InstructorCountAggregateOutputType = {
@@ -60,6 +62,7 @@ export type InstructorCountAggregateOutputType = {
   instagram: number
   youTube: number
   bioLines: number
+  isActive: number
   _all: number
 }
 
@@ -79,6 +82,7 @@ export type InstructorMinAggregateInputType = {
   image?: true
   instagram?: true
   youTube?: true
+  isActive?: true
 }
 
 export type InstructorMaxAggregateInputType = {
@@ -88,6 +92,7 @@ export type InstructorMaxAggregateInputType = {
   image?: true
   instagram?: true
   youTube?: true
+  isActive?: true
 }
 
 export type InstructorCountAggregateInputType = {
@@ -98,6 +103,7 @@ export type InstructorCountAggregateInputType = {
   instagram?: true
   youTube?: true
   bioLines?: true
+  isActive?: true
   _all?: true
 }
 
@@ -195,6 +201,7 @@ export type InstructorGroupByOutputType = {
   instagram: string | null
   youTube: string | null
   bioLines: string[]
+  isActive: boolean
   _count: InstructorCountAggregateOutputType | null
   _avg: InstructorAvgAggregateOutputType | null
   _sum: InstructorSumAggregateOutputType | null
@@ -228,6 +235,7 @@ export type InstructorWhereInput = {
   instagram?: Prisma.StringNullableFilter<"Instructor"> | string | null
   youTube?: Prisma.StringNullableFilter<"Instructor"> | string | null
   bioLines?: Prisma.StringNullableListFilter<"Instructor">
+  isActive?: Prisma.BoolFilter<"Instructor"> | boolean
   scheduleTemplates?: Prisma.ScheduleTemplateListRelationFilter
 }
 
@@ -239,6 +247,7 @@ export type InstructorOrderByWithRelationInput = {
   instagram?: Prisma.SortOrderInput | Prisma.SortOrder
   youTube?: Prisma.SortOrderInput | Prisma.SortOrder
   bioLines?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   scheduleTemplates?: Prisma.ScheduleTemplateOrderByRelationAggregateInput
 }
 
@@ -253,6 +262,7 @@ export type InstructorWhereUniqueInput = Prisma.AtLeast<{
   instagram?: Prisma.StringNullableFilter<"Instructor"> | string | null
   youTube?: Prisma.StringNullableFilter<"Instructor"> | string | null
   bioLines?: Prisma.StringNullableListFilter<"Instructor">
+  isActive?: Prisma.BoolFilter<"Instructor"> | boolean
   scheduleTemplates?: Prisma.ScheduleTemplateListRelationFilter
 }, "id" | "slug">
 
@@ -264,6 +274,7 @@ export type InstructorOrderByWithAggregationInput = {
   instagram?: Prisma.SortOrderInput | Prisma.SortOrder
   youTube?: Prisma.SortOrderInput | Prisma.SortOrder
   bioLines?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   _count?: Prisma.InstructorCountOrderByAggregateInput
   _avg?: Prisma.InstructorAvgOrderByAggregateInput
   _max?: Prisma.InstructorMaxOrderByAggregateInput
@@ -282,6 +293,7 @@ export type InstructorScalarWhereWithAggregatesInput = {
   instagram?: Prisma.StringNullableWithAggregatesFilter<"Instructor"> | string | null
   youTube?: Prisma.StringNullableWithAggregatesFilter<"Instructor"> | string | null
   bioLines?: Prisma.StringNullableListFilter<"Instructor">
+  isActive?: Prisma.BoolWithAggregatesFilter<"Instructor"> | boolean
 }
 
 export type InstructorCreateInput = {
@@ -291,6 +303,7 @@ export type InstructorCreateInput = {
   instagram?: string | null
   youTube?: string | null
   bioLines?: Prisma.InstructorCreatebioLinesInput | string[]
+  isActive?: boolean
   scheduleTemplates?: Prisma.ScheduleTemplateCreateNestedManyWithoutInstructorInput
 }
 
@@ -302,6 +315,7 @@ export type InstructorUncheckedCreateInput = {
   instagram?: string | null
   youTube?: string | null
   bioLines?: Prisma.InstructorCreatebioLinesInput | string[]
+  isActive?: boolean
   scheduleTemplates?: Prisma.ScheduleTemplateUncheckedCreateNestedManyWithoutInstructorInput
 }
 
@@ -312,6 +326,7 @@ export type InstructorUpdateInput = {
   instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   youTube?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bioLines?: Prisma.InstructorUpdatebioLinesInput | string[]
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   scheduleTemplates?: Prisma.ScheduleTemplateUpdateManyWithoutInstructorNestedInput
 }
 
@@ -323,6 +338,7 @@ export type InstructorUncheckedUpdateInput = {
   instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   youTube?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bioLines?: Prisma.InstructorUpdatebioLinesInput | string[]
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   scheduleTemplates?: Prisma.ScheduleTemplateUncheckedUpdateManyWithoutInstructorNestedInput
 }
 
@@ -334,6 +350,7 @@ export type InstructorCreateManyInput = {
   instagram?: string | null
   youTube?: string | null
   bioLines?: Prisma.InstructorCreatebioLinesInput | string[]
+  isActive?: boolean
 }
 
 export type InstructorUpdateManyMutationInput = {
@@ -343,6 +360,7 @@ export type InstructorUpdateManyMutationInput = {
   instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   youTube?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bioLines?: Prisma.InstructorUpdatebioLinesInput | string[]
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type InstructorUncheckedUpdateManyInput = {
@@ -353,6 +371,7 @@ export type InstructorUncheckedUpdateManyInput = {
   instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   youTube?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bioLines?: Prisma.InstructorUpdatebioLinesInput | string[]
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type InstructorCountOrderByAggregateInput = {
@@ -363,6 +382,7 @@ export type InstructorCountOrderByAggregateInput = {
   instagram?: Prisma.SortOrder
   youTube?: Prisma.SortOrder
   bioLines?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
 }
 
 export type InstructorAvgOrderByAggregateInput = {
@@ -376,6 +396,7 @@ export type InstructorMaxOrderByAggregateInput = {
   image?: Prisma.SortOrder
   instagram?: Prisma.SortOrder
   youTube?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
 }
 
 export type InstructorMinOrderByAggregateInput = {
@@ -385,6 +406,7 @@ export type InstructorMinOrderByAggregateInput = {
   image?: Prisma.SortOrder
   instagram?: Prisma.SortOrder
   youTube?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
 }
 
 export type InstructorSumOrderByAggregateInput = {
@@ -430,6 +452,7 @@ export type InstructorCreateWithoutScheduleTemplatesInput = {
   instagram?: string | null
   youTube?: string | null
   bioLines?: Prisma.InstructorCreatebioLinesInput | string[]
+  isActive?: boolean
 }
 
 export type InstructorUncheckedCreateWithoutScheduleTemplatesInput = {
@@ -440,6 +463,7 @@ export type InstructorUncheckedCreateWithoutScheduleTemplatesInput = {
   instagram?: string | null
   youTube?: string | null
   bioLines?: Prisma.InstructorCreatebioLinesInput | string[]
+  isActive?: boolean
 }
 
 export type InstructorCreateOrConnectWithoutScheduleTemplatesInput = {
@@ -465,6 +489,7 @@ export type InstructorUpdateWithoutScheduleTemplatesInput = {
   instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   youTube?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bioLines?: Prisma.InstructorUpdatebioLinesInput | string[]
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type InstructorUncheckedUpdateWithoutScheduleTemplatesInput = {
@@ -475,6 +500,7 @@ export type InstructorUncheckedUpdateWithoutScheduleTemplatesInput = {
   instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   youTube?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bioLines?: Prisma.InstructorUpdatebioLinesInput | string[]
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 
@@ -516,6 +542,7 @@ export type InstructorSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   instagram?: boolean
   youTube?: boolean
   bioLines?: boolean
+  isActive?: boolean
   scheduleTemplates?: boolean | Prisma.Instructor$scheduleTemplatesArgs<ExtArgs>
   _count?: boolean | Prisma.InstructorCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["instructor"]>
@@ -528,6 +555,7 @@ export type InstructorSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   instagram?: boolean
   youTube?: boolean
   bioLines?: boolean
+  isActive?: boolean
 }, ExtArgs["result"]["instructor"]>
 
 export type InstructorSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -538,6 +566,7 @@ export type InstructorSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   instagram?: boolean
   youTube?: boolean
   bioLines?: boolean
+  isActive?: boolean
 }, ExtArgs["result"]["instructor"]>
 
 export type InstructorSelectScalar = {
@@ -548,9 +577,10 @@ export type InstructorSelectScalar = {
   instagram?: boolean
   youTube?: boolean
   bioLines?: boolean
+  isActive?: boolean
 }
 
-export type InstructorOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "slug" | "name" | "image" | "instagram" | "youTube" | "bioLines", ExtArgs["result"]["instructor"]>
+export type InstructorOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "slug" | "name" | "image" | "instagram" | "youTube" | "bioLines" | "isActive", ExtArgs["result"]["instructor"]>
 export type InstructorInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   scheduleTemplates?: boolean | Prisma.Instructor$scheduleTemplatesArgs<ExtArgs>
   _count?: boolean | Prisma.InstructorCountOutputTypeDefaultArgs<ExtArgs>
@@ -571,6 +601,7 @@ export type $InstructorPayload<ExtArgs extends runtime.Types.Extensions.Internal
     instagram: string | null
     youTube: string | null
     bioLines: string[]
+    isActive: boolean
   }, ExtArgs["result"]["instructor"]>
   composites: {}
 }
@@ -1002,6 +1033,7 @@ export interface InstructorFieldRefs {
   readonly instagram: Prisma.FieldRef<"Instructor", 'String'>
   readonly youTube: Prisma.FieldRef<"Instructor", 'String'>
   readonly bioLines: Prisma.FieldRef<"Instructor", 'String[]'>
+  readonly isActive: Prisma.FieldRef<"Instructor", 'Boolean'>
 }
     
 

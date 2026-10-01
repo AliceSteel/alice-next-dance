@@ -29,7 +29,6 @@ const userSlice = createSlice({
       state.status = "idle";
       state.bookingPackages = [];
       localStorage.removeItem("user");
-      toast.success("Logged out successfully");
     },
 
     setBookingPackages: (state, action: PayloadAction<BookingPackage[]>) => {
@@ -75,9 +74,6 @@ const userSlice = createSlice({
           (p) => p.id !== creditPkg.id,
         );
       }
-      toast.success(
-        `Successfully booked ${scheduleEntry.label} with ${scheduleEntry.teacher}`,
-      );
     },
   },
 });

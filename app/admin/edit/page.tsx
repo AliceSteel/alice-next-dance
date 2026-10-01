@@ -13,7 +13,7 @@ export default async function EditPage({
   const successMessages: Record<string, string> = {
     productcreated: "Product created successfully!",
     instructorcreated: "Instructor created successfully!",
-    recorddeleted: "Record deleted successfully!",
+    recorddeactivated: "Record archived successfully!",
   };
   const successMessage = success ? successMessages[success] : null;
 
