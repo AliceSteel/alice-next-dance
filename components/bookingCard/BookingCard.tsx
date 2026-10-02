@@ -39,26 +39,22 @@ export default function BookingCard({
   return (
     <div
       ref={cardRef}
-      className={`relative flex flex-col justify-start gap-4 rounded-sm p-4 transition-all duration-500 ease-in-out ${
+      className={`relative flex flex-col justify-start gap-4 rounded-sm p-4 transition-all duration-500 ease-in-out backdrop-blur-md bg-black/40 ${
         isOpen ? "w-full delay-0" : "w-full md:w-[49.2%] delay-500"
       } ${
         isLeftColumn ? "mr-auto" : "ml-auto last:ml-0"
       } ${index === 0 ? "border-sky-400 border-2" : "border border-gray-100"}`}
     >
-      {index === 0 && (
-        <span className="uppercase text-white px-2 py-1 text-xs">
-          Next Class
-        </span>
-      )}
       <div className="flex items-start justify-start gap-4">
-        <div className="w-32 h-20 bg-gray-200 flex items-center justify-center">
+        <div className="w-32 h-20 bg-gray-200 flex items-center justify-center overflow-hidden">
           {booking.picUrl && (
             <Image
               src={booking.picUrl}
               alt={booking.title}
-              fill
+              width={32}
+              height={20}
               sizes="128px"
-              className="object-cover"
+              className="object-cover w-full"
             />
           )}
         </div>

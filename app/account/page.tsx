@@ -4,21 +4,26 @@ import Orders from "@/components/orders/Orders";
 import { DateTime } from "luxon";
 import SectionTitle from "@/components/sectionTitle/SectionTitle";
 import BookingsClientList from "./components/BookingsClientList";
+import Image from "next/image";
+import AnimatedRings from "@/components/animatedRings/AnimatedRings";
 
 export default async function AccountPage({
   searchParams,
 }: {
   searchParams: { success?: string };
 }) {
+  const pageBgImage = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images-bucket/account-bg.png`;
   const orders = await fetchUserOrders();
   const { success } = await searchParams;
   const successMessage =
-    success === "ordercreated" ? "Order placed successfully!" : null;
+    success === "ordercreated" ? "Your purchase was successful!" : null;
 
   const passes = await fetchUserPasses(); // [] if not logged in
   const now = DateTime.now().toMillis();
 
   const activePasses = passes.filter((pass) => pass.expiresAt.getTime() >= now);
+  console.log(activePasses);
+
   const bookingCards = passes.flatMap((pass) =>
     pass.bookings
       .filter((booking) => {
@@ -48,54 +53,87 @@ export default async function AccountPage({
       }),
   );
   return (
-    <div className="page-container-sm pt-24">
-      {successMessage && <SuccessToast message={successMessage} />}
-      <SectionTitle
-        title="My Account"
-        subtitle="Manage bookings and memberships"
+    <div className="relative isolate min-h-screen overflow-hidden">
+      <Image
+        src={pageBgImage}
+        alt="Account background"
+        fill
+        className="object-cover -inset-1"
       />
-      <section className="mt-8">
-        <h2 className="mb-4 text-2xl uppercase">Upcoming Classes</h2>
-        {bookingCards.length > 0 ? (
-          <BookingsClientList bookings={bookingCards} />
-        ) : (
-          <p>You have no bookings yet.</p>
-        )}
-      </section>
 
-      <section className="mt-8">
-        <h2 className="mb-4 text-2xl">My Memberships</h2>
-        {activePasses.length > 0 ? (
-          <ul className="flex flex-col gap-4">
-            {activePasses.map((pass) => {
-              const remaining =
-                pass.creditsRemaining === null
-                  ? "Unlimited"
-                  : Math.max(pass.creditsRemaining - pass.bookings.length, 0);
-              return (
-                <li key={pass.id} className="border-b border-gray-700/50 pb-4">
-                  <p className="font-semibold">{pass.orderItem.product.name}</p>
-                  <p className="text-sm text-gray-400">
-                    {remaining} classes remaining · valid until{" "}
-                    {DateTime.fromJSDate(pass.expiresAt).toFormat("dd-MM-yyyy")}
-                  </p>
-                </li>
-              );
-            })}
-          </ul>
-        ) : (
-          <p>You have no active memberships.</p>
-        )}
-      </section>
+      <div className="page-container-sm relative z-10 pt-24">
+        {successMessage && <SuccessToast message={successMessage} />}
 
-      {orders.length > 0 ? (
+        <SectionTitle
+          title="My Account."
+          subtitle="Manage bookings and memberships"
+        />
+        {/* MEMBERSHIPS SECTION */}
         <section className="mt-8">
-          <h2 className="mb-4 text-2xl">My Orders</h2>
-          <Orders orders={orders} />
+          <h2 className="mb-4 text-2xl">My Memberships</h2>
+          {activePasses.length > 0 ? (
+            <ul className="flex flex-wrap gap-4">
+              {activePasses.map((pass) => {
+                const remaining =
+                  pass.creditsRemaining === null
+                    ? "Unlimited"
+                    : Math.max(pass.creditsRemaining - pass.bookings.length, 0);
+
+                const ringValue =
+                  remaining === "Unlimited"
+                    ? "Unlimited"
+                    : `${remaining}/${pass.bookings.length}`;
+                return (
+                  <li
+                    key={pass.id}
+                    className="flex-1 border border-gray-400 rounded-md p-4 flex gap-2 text-sm text-gray-400 max-w-96 lg:max-w-1/3"
+                  >
+                    <div className="flex flex-col items-start gap-2">
+                      <h5 className="text-sm uppercase">active membership </h5>
+                      <p className="text-lg text-white font-semibold">
+                        {pass.orderItem.product.name}
+                      </p>
+                      <p className="">{remaining} classes left</p>
+                      <p className="mt-auto">
+                        Valid until{" "}
+                        {DateTime.fromJSDate(pass.expiresAt).toFormat(
+                          "dd-MM-yyyy",
+                        )}
+                      </p>
+                    </div>
+                    <div className="flex flex-col justify-between items-end gap-2 w-1/2 shrink-0 ">
+                      <span>icon</span>{" "}
+                      <div className="w-full max-w-36 p-3">
+                        <AnimatedRings stats={[{ label: ringValue }]} />
+                      </div>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          ) : (
+            <p>You have no active memberships.</p>
+          )}
         </section>
-      ) : (
-        <p className="mt-8">You have no orders yet.</p>
-      )}
+        {/* UPCOMING CLASSES SECTION */}
+        <section className="mt-8">
+          <h2 className="mb-4 text-2xl uppercase">Upcoming Classes</h2>
+          {bookingCards.length > 0 ? (
+            <BookingsClientList bookings={bookingCards} />
+          ) : (
+            <p>You have no bookings yet.</p>
+          )}
+        </section>
+
+        {orders.length > 0 ? (
+          <section className="mt-8">
+            <h2 className="mb-4 text-2xl">My Orders</h2>
+            <Orders orders={orders} />
+          </section>
+        ) : (
+          <p className="mt-8">You have no orders yet.</p>
+        )}
+      </div>
     </div>
   );
 }

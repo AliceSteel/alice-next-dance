@@ -22,20 +22,22 @@ export default function ClientBookingsList({
   });
 
   return (
-    <div className="flex w-full flex-wrap items-start justify-start gap-[1vw]">
-      {bookingsWithImages.map((booking, index) => (
-        <BookingCard
-          key={booking.id}
-          booking={booking}
-          index={index}
-          isOpen={openBookingId === booking.id}
-          onToggleOpen={() =>
-            setOpenBookingId((current) =>
-              current === booking.id ? null : booking.id,
-            )
-          }
-        />
-      ))}
+    <div>
+      <div className="flex w-full flex-wrap items-start justify-start gap-[1vw]">
+        {bookingsWithImages.map((booking, index) => (
+          <BookingCard
+            key={booking.id}
+            booking={booking}
+            index={index}
+            isOpen={openBookingId === booking.id}
+            onToggleOpen={() =>
+              setOpenBookingId((current) =>
+                current === booking.id ? null : booking.id,
+              )
+            }
+          />
+        ))}
+      </div>
     </div>
   );
 }
