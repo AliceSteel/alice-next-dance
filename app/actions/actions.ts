@@ -235,13 +235,13 @@ export const archiveRecord: ActionFnType = async (
         });
         break;
       case "instructors":
-        const instructorRecord = await db.instructor.update({
+        await db.instructor.update({
           where: { id: productId },
           data: { isActive: false },
         });
         break;
       case "classes":
-        const classRecord = await db.class.update({
+        await db.class.update({
           where: { id: productId },
           data: { isActive: false },
         });

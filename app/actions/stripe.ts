@@ -4,7 +4,7 @@ import { headers } from "next/headers";
 import { currentUser } from "@clerk/nextjs/server";
 import { stripe } from "../../lib/stripe";
 import db from "@/app/actions/db";
-import { BasketItem } from "@/types/basketItemTypes";
+//import { BasketItem } from "@/types/basketItemTypes";
 
 export async function createHostedCheckoutUrl(orderId: string) {
   const user = await currentUser();
