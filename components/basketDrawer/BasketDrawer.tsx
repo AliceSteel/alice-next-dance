@@ -10,6 +10,8 @@ import { XmarkOutlined } from "@lineiconshq/free-icons";
 import useMounted from "@/app/composables/useMounted";
 import { createOrder } from "@/app/actions/orderActions";
 import { useRouter } from "next/navigation";
+import { createHostedCheckoutUrl } from "@/app/actions/stripe";
+import { toast } from "react-toastify";
 
 export default function BasketDrawer() {
   const mounted = useMounted();
@@ -36,7 +38,7 @@ export default function BasketDrawer() {
     dispatch(closeBasketDrawer());
   };
 
-  const redirectToCheckout = async () => {
+  /*  const redirectToCheckout = async () => {
     setButtonPending(true);
     const orderId = await createOrder(cartItems, cartTotal);
 
@@ -47,6 +49,31 @@ export default function BasketDrawer() {
       router.push(`/checkout?orderId=${orderId}`);
     }
     setButtonPending(false);
+  }; */
+
+  const redirectToCheckout = async () => {
+    setButtonPending(true);
+
+    try {
+      const orderId = await createOrder(cartItems, cartTotal);
+
+      if (typeof orderId !== "string") {
+        toast.error(orderId?.errorMessage ?? "Could not create your order.");
+        return;
+      }
+
+      const checkoutUrl = await createHostedCheckoutUrl(orderId);
+
+      dispatch(clearCart({ showToast: false }));
+      onClose();
+      window.location.assign(checkoutUrl);
+    } catch (error) {
+      toast.error(
+        error instanceof Error ? error.message : "Could not start checkout.",
+      );
+    } finally {
+      setButtonPending(false);
+    }
   };
   return (
     <>

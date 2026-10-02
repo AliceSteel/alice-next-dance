@@ -33,7 +33,6 @@ export const createOrder = async (basketItems: BasketItem[], total: number) => {
     });
 
     orderId = order.orderId;
-    console.log("Order created from actions with ID:", orderId);
   } catch (error) {
     console.log("Error creating order:", error);
     return {
