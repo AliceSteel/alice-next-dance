@@ -19,7 +19,9 @@ import { clearUser } from "@/store/slices/user/userSlice";
 import { useClerk } from "@clerk/nextjs";
 import MobileNavbar from "./components/MobileNavbar";
 import { navlinksLeft, navlinksRight, adminLinks } from "./navlinksData";
-import { selectIsLoggedIn, isUserAdmin } from "@/store/slices/user/userSlice";
+import {
+  selectIsLoggedIn /* isUserAdmin */,
+} from "@/store/slices/user/userSlice";
 import useMounted from "@/app/composables/useMounted";
 
 function NavBar({ title }: NavbarProps) {

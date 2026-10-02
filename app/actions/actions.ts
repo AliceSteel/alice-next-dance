@@ -225,7 +225,6 @@ export const archiveRecord: ActionFnType = async (
 ) => {
   const productId = Number(formData.get("id"));
   const contentTable = formData.get("contentTitle");
-  let imageRecord = "";
 
   try {
     switch (contentTable) {
@@ -240,20 +239,16 @@ export const archiveRecord: ActionFnType = async (
           where: { id: productId },
           data: { isActive: false },
         });
-        imageRecord = instructorRecord?.image ?? "";
         break;
       case "classes":
         const classRecord = await db.class.update({
           where: { id: productId },
           data: { isActive: false },
         });
-        imageRecord = classRecord?.imageUrl ?? "";
         break;
       default:
         return { errorMessage: `Unknown content type: ${contentTable}` };
     }
-
-    //if (imageRecord) await deleteImage(imageRecord);
   } catch (error) {
     console.log("Error archiving product:", error);
     return {
@@ -271,8 +266,10 @@ async function replaceImage(
   oldImageUrl: string | null,
 ): Promise<string | undefined> {
   const imageFile = formData.get(fieldName);
+
   if (!(imageFile instanceof File) || imageFile.size === 0) return undefined;
   const validatedImage = validateWithZod(zodImageSchema, { image: imageFile });
+
   if (oldImageUrl) await deleteImage(oldImageUrl);
   return uploadImageToSupabase(validatedImage.image);
 }

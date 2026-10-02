@@ -6,6 +6,7 @@ import Link from "next/link";
 import FormContainer from "@/components/formElements/FormContainer";
 import { SubmitBtn } from "@/components/formElements/SubmitBtn";
 import { cancelBooking } from "@/app/actions/scheduleActions";
+import Image from "next/image";
 
 export default function BookingCard({
   booking,
@@ -52,14 +53,12 @@ export default function BookingCard({
       <div className="flex items-start justify-start gap-4">
         <div className="w-32 h-20 bg-gray-200 flex items-center justify-center">
           {booking.picUrl && (
-            <img
-              src={
-                typeof booking.picUrl === "string"
-                  ? booking.picUrl
-                  : booking.picUrl.src
-              }
+            <Image
+              src={booking.picUrl}
               alt={booking.title}
-              className="w-full h-full object-cover"
+              fill
+              sizes="128px"
+              className="object-cover"
             />
           )}
         </div>
