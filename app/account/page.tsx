@@ -143,14 +143,6 @@ export default async function AccountPage({
           pastBookings={pastBookings}
           memberships={purchasedMemberships}
         />
-        {/*  {orders.length > 0 ? (
-          <section className="mt-8">
-            <h2 className="mb-4 text-2xl">My Orders</h2>
-            <Orders orders={orders} />
-          </section>
-        ) : (
-          <p className="mt-8">You have no orders yet.</p>
-        )} */}
       </div>
     </div>
   );
