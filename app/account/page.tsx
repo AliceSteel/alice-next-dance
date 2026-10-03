@@ -1,6 +1,5 @@
 import { fetchUserOrders, fetchUserPasses } from "@/app/actions/orderActions";
 import SuccessToast from "../admin/edit/components/SuccessToast";
-import Orders from "@/components/orders/Orders";
 import { DateTime } from "luxon";
 import SectionTitle from "@/components/sectionTitle/SectionTitle";
 import BookingsClientList from "./components/BookingsClientList";
