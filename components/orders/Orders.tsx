@@ -1,4 +1,4 @@
-import type { Order } from "./OrdersType";
+import type { Order } from "../../types/OrdersType";
 
 export default function Orders({ orders }: { orders: Order[] }) {
   return (

@@ -6,6 +6,9 @@ import SectionTitle from "@/components/sectionTitle/SectionTitle";
 import BookingsClientList from "./components/BookingsClientList";
 import Image from "next/image";
 import AnimatedRings from "@/components/animatedRings/AnimatedRings";
+import { Lineicons } from "@lineiconshq/react-lineicons";
+import { CreditCardMultipleSolid } from "@lineiconshq/free-icons";
+import HistoryTable from "./components/HistoryTable";
 
 export default async function AccountPage({
   searchParams,
@@ -14,6 +17,13 @@ export default async function AccountPage({
 }) {
   const pageBgImage = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images-bucket/account-bg.png`;
   const orders = await fetchUserOrders();
+  const purchasedMemberships = orders.flatMap((order) =>
+    order.orderItems.map((item) => ({
+      ...item,
+      purchasedAt: order.createdAt,
+      status: order.status,
+    })),
+  );
   const { success } = await searchParams;
   const successMessage =
     success === "ordercreated" ? "Your purchase was successful!" : null;
@@ -22,36 +32,37 @@ export default async function AccountPage({
   const now = DateTime.now().toMillis();
 
   const activePasses = passes.filter((pass) => pass.expiresAt.getTime() >= now);
-  console.log(activePasses);
 
-  const bookingCards = passes.flatMap((pass) =>
-    pass.bookings
-      .filter((booking) => {
-        const { session } = booking;
-        return (
-          DateTime.fromJSDate(session.startsAt, {
-            zone: session.template.timezone,
-          }).toMillis() >= now
-        );
-      })
-      .map((booking) => {
-        const { session } = booking;
-        const start = DateTime.fromJSDate(session.startsAt, {
-          zone: session.template.timezone,
-        });
-        const end = start.plus({ minutes: session.template.durationMin });
+  const allBookings = passes.flatMap((pass) =>
+    pass.bookings.map((booking) => {
+      const { session } = booking;
+      const start = DateTime.fromJSDate(session.startsAt, {
+        zone: session.template.timezone,
+      });
+      const end = start.plus({ minutes: session.template.durationMin });
 
-        return {
-          id: booking.id,
-          date: start.toFormat("dd-MM-yyyy"),
-          label: session.template.label,
-          title: session.template.danceClass.title,
-          instructor: session.template.instructor.name,
-          instructorSlug: session.template.instructor.slug,
-          timeSlot: `${start.toFormat("HH:mm")}-${end.toFormat("HH:mm")}`,
-        };
-      }),
+      return {
+        id: booking.id,
+        startsAtMs: start.toMillis(),
+        date: start.toFormat("dd-MM-yyyy"),
+        label: session.template.label,
+        title: session.template.danceClass.title,
+        instructor: session.template.instructor.name,
+        instructorSlug: session.template.instructor.slug,
+        timeSlot: `${start.toFormat("HH:mm")}-${end.toFormat("HH:mm")}`,
+        status: booking.status,
+      };
+    }),
   );
+  //For UPCOMING BOOKINGS cards:
+  const bookingCards = allBookings
+    .filter((b) => b.startsAtMs >= now)
+    .sort((a, b) => a.startsAtMs - b.startsAtMs);
+
+  //for PAST BOOKINGS table:
+  const pastBookings = allBookings
+    .filter((b) => b.startsAtMs < now)
+    .sort((a, b) => b.startsAtMs - a.startsAtMs);
   return (
     <div className="relative isolate min-h-screen overflow-hidden">
       <Image
@@ -102,7 +113,10 @@ export default async function AccountPage({
                       </p>
                     </div>
                     <div className="flex flex-col justify-between items-end gap-2 w-1/2 shrink-0 ">
-                      <span>icon</span>{" "}
+                      <Lineicons
+                        icon={CreditCardMultipleSolid}
+                        className="text-gray-400"
+                      />
                       <div className="w-full max-w-36 p-3">
                         <AnimatedRings stats={[{ label: ringValue }]} />
                       </div>
@@ -124,15 +138,19 @@ export default async function AccountPage({
             <p>You have no bookings yet.</p>
           )}
         </section>
-
-        {orders.length > 0 ? (
+        {/* History of Bookings, and membership purchaces */}
+        <HistoryTable
+          pastBookings={pastBookings}
+          memberships={purchasedMemberships}
+        />
+        {/*  {orders.length > 0 ? (
           <section className="mt-8">
             <h2 className="mb-4 text-2xl">My Orders</h2>
             <Orders orders={orders} />
           </section>
         ) : (
           <p className="mt-8">You have no orders yet.</p>
-        )}
+        )} */}
       </div>
     </div>
   );

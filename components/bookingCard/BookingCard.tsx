@@ -43,7 +43,7 @@ export default function BookingCard({
         isOpen ? "w-full delay-0" : "w-full md:w-[49.2%] delay-500"
       } ${
         isLeftColumn ? "mr-auto" : "ml-auto last:ml-0"
-      } ${index === 0 ? "border-sky-400 border-2" : "border border-gray-100"}`}
+      } ${index === 0 ? "border-sky-400 border-2" : "border border-gray-400"}`}
     >
       <div className="flex items-start justify-start gap-4">
         <div className="w-32 h-20 bg-gray-200 flex items-center justify-center overflow-hidden">
@@ -64,6 +64,7 @@ export default function BookingCard({
           <p>{booking.date}</p>
           <p>{booking.timeSlot}</p>
         </div>
+        <div className="w-1/3"></div>
       </div>
 
       {isOpen && (
@@ -85,11 +86,13 @@ export default function BookingCard({
 
       <button
         type="button"
-        className="w-min self-end flex items-center justify-center gap-2 uppercase text-xs text-nowrap p-2 absolute right-4 bottom-4  bg-sky-400 text-black rounded-sm"
+        className="w-min self-end flex items-center justify-center gap-1 uppercase text-xs text-nowrap p-2 absolute right-4 bottom-4  bg-sky-400 text-black rounded-sm"
         aria-label={isOpen ? "Close booking details" : "Open booking details"}
         onClick={() => onToggleOpen(index)}
       >
-        <span>{isOpen ? "close" : "view"}</span>
+        <span className="hidden sm:inline-block">
+          {isOpen ? "close" : "view"}
+        </span>
         <span> details</span>
         <Lineicons
           icon={ArrowRightOutlined}

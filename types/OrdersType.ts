@@ -1,4 +1,4 @@
-type OrderItem = {
+export type OrderItem = {
   id: string;
   productId: number;
   orderId: string;

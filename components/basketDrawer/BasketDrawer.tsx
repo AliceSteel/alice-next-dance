@@ -15,7 +15,6 @@ import { toast } from "react-toastify";
 
 export default function BasketDrawer() {
   const mounted = useMounted();
-  //const router = useRouter();
 
   const dispatch = useDispatch();
   const isBasketOpen = useSelector((s: RootState) => s.cart.isBasketOpen);
@@ -29,6 +28,9 @@ export default function BasketDrawer() {
   useEffect(() => {
     if (isBasketOpen) {
       document.body.style.overflow = "hidden";
+      toast.info(
+        "use dummy card for checkout: nr: 4242 4242 4242 4242, any future date, any CVC",
+      );
     } else {
       document.body.style.overflow = "auto";
     }
@@ -37,19 +39,6 @@ export default function BasketDrawer() {
   const onClose = () => {
     dispatch(closeBasketDrawer());
   };
-
-  /*  const redirectToCheckout = async () => {
-    setButtonPending(true);
-    const orderId = await createOrder(cartItems, cartTotal);
-
-    if (orderId) {
-      sessionStorage.setItem("pendingOrderItems", JSON.stringify(cartItems)); // save for checkout
-      dispatch(clearCart({ showToast: false }));
-      onClose();
-      router.push(`/checkout?orderId=${orderId}`);
-    }
-    setButtonPending(false);
-  }; */
 
   const redirectToCheckout = async () => {
     setButtonPending(true);
