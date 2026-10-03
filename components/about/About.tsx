@@ -3,13 +3,11 @@ import Image from "next/image";
 import AnimatedRings from "@/components/animatedRings/AnimatedRings";
 import backgroundImage from "@/public/images/ballet-blurred.jpg";
 import { aboutUsContent } from "@/data/aboutUsData";
-import { useEffect, useRef, useState } from "react";
 import SectionTitle from "@/components/sectionTitle/SectionTitle";
 import ClassesSlider from "@/components/classesList/ClassesSlider";
 import renderHighlighted from "@/helpers/renderHighlightedText";
 import { useSelector } from "react-redux";
 import { selectClasses } from "@/store/slices/classes/classesSlice";
-import styles from "./about.module.css";
 
 export default function About() {
   const classes = useSelector(selectClasses);
