@@ -15,8 +15,8 @@ export default function ImageInput({
         className="p-2 px-3 rounded-lg bg-white/15 placeholder:text-white/30 text-white focus-visible:outline-sky-800 focus-visible:outline-2 m-1"
       />
       {placeholder && (
-        <span className="text-xs text-gray-400 ml-1">
-          Current: <span className="text-gray-300">{placeholder}</span>
+        <span className="text-xs text-textGray ml-1">
+          Current: <span className="text-textGray">{placeholder}</span>
         </span>
       )}
     </div>

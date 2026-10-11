@@ -20,8 +20,8 @@ export default function LoginForm() {
             socialButtonsButton:
               "bg-white/20 text-black border border-gray-300 hover:bg-gray-100",
             footer: "!bg-[#272727] border-0", // footer background
-            footerText: "text-gray-400", // “Don’t have an account?” text
-            footerActionText: "text-sky-400 underline", // “Sign up” link
+            footerText: "text-textGray", // “Don’t have an account?” text
+            footerActionText: "text-textLightBlue underline", // “Sign up” link
           },
         }}
         routing="virtual"

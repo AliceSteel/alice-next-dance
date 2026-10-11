@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 import type { NavbarProps } from "./NavBarTypes";
 import Modal from "@/components/Modal";
 import LoginForm from "@/components/loginForm/LoginForm";
-import Sidemenu from "@/components/sidemenu/Sidemenu";
+import Sidemenu from "@/components/navbar/components/sidemenu/Sidemenu";
 import BasketDrawer from "@/components/basketDrawer/BasketDrawer";
 
 import MembershipDialog from "@/components/dialogs/MembershipDialog";

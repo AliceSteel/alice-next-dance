@@ -50,7 +50,7 @@ export const Sidemenu = ({
               <button
                 type="button"
                 onClick={item.onClick}
-                className="transition-colors text-gray-300 hover:text-white"
+                className="transition-colors text-textGray hover:text-white"
               >
                 {item.title}
               </button>
@@ -66,7 +66,7 @@ export const Sidemenu = ({
             {isHash ? (
               <Link
                 href={item.link?.startsWith("/") ? item.link : `/${item.link}`}
-                className="transition-colors text-gray-300 hover:text-white"
+                className="transition-colors text-textGray hover:text-white"
               >
                 {item.title}
               </Link>
@@ -76,7 +76,7 @@ export const Sidemenu = ({
                 className={`transition-colors ${
                   isActive
                     ? "text-[#007DFF] hover:cursor-default"
-                    : "text-gray-300 hover:text-white"
+                    : "text-textGray hover:text-white"
                 }`}
               >
                 {item.title}

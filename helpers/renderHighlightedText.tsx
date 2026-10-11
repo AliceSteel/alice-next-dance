@@ -5,7 +5,7 @@ export default function renderHighlighted(text: string) {
   return parts.map((part, index) => {
     if (index % 2 === 1) {
       return (
-        <span key={index} className="text-sky-400">
+        <span key={index} className="text-textLightBlue">
           {part}
         </span>
       );

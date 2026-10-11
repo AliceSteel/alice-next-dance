@@ -94,7 +94,7 @@ export default function EditPageTable({
                     .filter(([key]) => key !== "id" && key !== "slug")
                     .map(([key, value]) => (
                       <div key={key} className="flex gap-3 py-1 w-full">
-                        <span className="text-gray-400 capitalize w-20">
+                        <span className="text-textGray capitalize w-20">
                           {key}:
                         </span>
                         {key === "image" || key === "imageUrl" ? (

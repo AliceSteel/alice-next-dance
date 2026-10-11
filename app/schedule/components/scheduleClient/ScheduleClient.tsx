@@ -114,7 +114,7 @@ function ScheduleClient({ weeks, bookingPackages }: ScheduleClientProps) {
     return (
       <section className="page-container py-20">
         <h1 className="text-2xl">Schedule</h1>
-        <p className="mt-4 text-gray-400">
+        <p className="mt-4 text-textGray">
           No classes are scheduled yet. Please check back soon.
         </p>
       </section>

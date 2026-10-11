@@ -28,7 +28,7 @@ export default function HistoryTable({
   const [tab, setTab] = useState<Tab>("bookings");
 
   return (
-    <section className="mt-8 rounded-md border border-gray-400/50 bg-black/40">
+    <section className="mt-8 rounded-md border border-gray-400/50 bg-black/30 backdrop-blur-sm">
       <div role="tablist" className="flex border-b border-gray-400/50">
         {TABS.map(({ id, label }) => (
           <button
@@ -39,8 +39,8 @@ export default function HistoryTable({
             onClick={() => setTab(id)}
             className={`px-6 py-4 text-sm uppercase transition-colors ${
               tab === id
-                ? "border-b-2 border-sky-400 text-sky-400"
-                : "text-gray-300 hover:text-white"
+                ? "border-b-2 border-sky-400 text-textLightBlue"
+                : "text-textGray hover:text-white"
             }`}
           >
             {label}
@@ -53,7 +53,7 @@ export default function HistoryTable({
         {tab === "bookings" ? (
           pastBookings.length > 0 ? (
             <table className="w-full text-left text-sm">
-              <thead className="text-xs uppercase text-gray-400">
+              <thead className="text-xs uppercase text-textGray">
                 <tr>
                   <th className="py-2 font-normal">Date</th>
                   <th className="py-2 font-normal">Class</th>
@@ -90,12 +90,12 @@ export default function HistoryTable({
               </tbody>
             </table>
           ) : (
-            <p className="py-4 text-gray-400">No past bookings yet.</p>
+            <p className="py-4 text-textGray">No past bookings yet.</p>
           )
         ) : memberships.length > 0 ? (
           /* Membership purchase history */
           <table className="w-full text-left text-sm">
-            <thead className="text-xs uppercase text-gray-400">
+            <thead className="text-xs uppercase text-textGray">
               <tr>
                 <th className="py-2 font-normal">Date</th>
                 <th className="py-2 font-normal">Membership</th>
@@ -121,7 +121,7 @@ export default function HistoryTable({
             </tbody>
           </table>
         ) : (
-          <p className="py-4 text-gray-400">No purchases yet.</p>
+          <p className="py-4 text-textGray">No purchases yet.</p>
         )}
       </div>
     </section>

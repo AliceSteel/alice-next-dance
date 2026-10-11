@@ -1,6 +1,6 @@
 "use client";
 
-import Sidemenu from "@/components/sidemenu/Sidemenu";
+import Sidemenu from "@/components/navbar/components/sidemenu/Sidemenu";
 import { Lineicons } from "@lineiconshq/react-lineicons";
 import { MenuHamburger1Outlined } from "@lineiconshq/free-icons";
 import type { MobileNavbarProps } from "./MobileNavBarProps";

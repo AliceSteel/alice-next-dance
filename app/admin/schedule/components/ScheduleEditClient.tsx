@@ -55,7 +55,7 @@ export default function ScheduleEditor({
     <section className="py-8 flex flex-col gap-8">
       <header className="flex flex-col gap-2">
         <h1 className="text-2xl">Edit Schedule</h1>
-        <p className="text-gray-400">
+        <p className="text-textGray">
           Edit recurring timetable entries, then publish the next eight weeks.
         </p>
       </header>
@@ -77,7 +77,7 @@ export default function ScheduleEditor({
                     {classes.find((item) => item.slug === template.classSlug)
                       ?.title ?? template.classSlug}
                   </p>
-                  <p className="text-sm text-gray-400">
+                  <p className="text-sm text-textGray">
                     {weekdays[template.weekday]} at {template.startTime}
                     {" · "}
                     {instructors.find(
@@ -107,7 +107,7 @@ export default function ScheduleEditor({
               >
                 <input type="hidden" name="id" value={template.id} />
 
-                <label className="flex flex-col gap-1 text-sm text-gray-300">
+                <label className="flex flex-col gap-1 text-sm text-textGray">
                   Class
                   <select
                     name="classSlug"
@@ -127,7 +127,7 @@ export default function ScheduleEditor({
                   </select>
                 </label>
 
-                <label className="flex flex-col gap-1 text-sm text-gray-300">
+                <label className="flex flex-col gap-1 text-sm text-textGray">
                   Instructor
                   <select
                     name="instructorSlug"
@@ -148,7 +148,7 @@ export default function ScheduleEditor({
                 </label>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <label className="flex flex-col gap-1 text-sm text-gray-300">
+                  <label className="flex flex-col gap-1 text-sm text-textGray">
                     Weekday
                     <select
                       name="weekday"
@@ -163,7 +163,7 @@ export default function ScheduleEditor({
                     </select>
                   </label>
 
-                  <label className="flex flex-col gap-1 text-sm text-gray-300">
+                  <label className="flex flex-col gap-1 text-sm text-textGray">
                     Start time
                     <input
                       name="startTime"
@@ -174,7 +174,7 @@ export default function ScheduleEditor({
                     />
                   </label>
 
-                  <label className="flex flex-col gap-1 text-sm text-gray-300">
+                  <label className="flex flex-col gap-1 text-sm text-textGray">
                     Duration (minutes)
                     <input
                       name="durationMin"
@@ -186,7 +186,7 @@ export default function ScheduleEditor({
                     />
                   </label>
 
-                  <label className="flex flex-col gap-1 text-sm text-gray-300">
+                  <label className="flex flex-col gap-1 text-sm text-textGray">
                     Capacity
                     <input
                       name="capacity"
@@ -199,7 +199,7 @@ export default function ScheduleEditor({
                     />
                   </label>
 
-                  <label className="flex flex-col gap-1 text-sm text-gray-300">
+                  <label className="flex flex-col gap-1 text-sm text-textGray">
                     Effective from
                     <input
                       name="effectiveFrom"
@@ -210,7 +210,7 @@ export default function ScheduleEditor({
                     />
                   </label>
 
-                  <label className="flex flex-col gap-1 text-sm text-gray-300">
+                  <label className="flex flex-col gap-1 text-sm text-textGray">
                     Effective until
                     <input
                       name="effectiveTo"
@@ -223,7 +223,7 @@ export default function ScheduleEditor({
 
                 <div>
                   <h2 className="font-semibold">Publish schedule</h2>
-                  <p className="text-sm text-gray-400">
+                  <p className="text-sm text-textGray">
                     Create any missing class sessions for the next eight weeks.
                   </p>
                 </div>
@@ -240,7 +240,7 @@ export default function ScheduleEditor({
       >
         <div>
           <h2 className="font-semibold">Publish schedule</h2>
-          <p className="text-sm text-gray-400">
+          <p className="text-sm text-textGray">
             Generate any missing sessions for the next eight weeks.
           </p>
         </div>

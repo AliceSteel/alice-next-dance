@@ -45,7 +45,7 @@ export default function Class({ params }: { params: { classId: string } }) {
             <div className="flex-1 sticky top-20 h-fit flex flex-col gap-4">
               {" "}
               <ul className="list-none flex flex-col gap-0 leading-[105%]">
-                <li className="uppercase text-sky-400 text-3xl mb-2 flex justify-end gap-1">
+                <li className="uppercase text-textLightBlue text-3xl mb-2 flex justify-end gap-1">
                   <span className="mr-auto">{name}</span>
                   {socialLinks.map(({ href, icon, key }) => (
                     <a

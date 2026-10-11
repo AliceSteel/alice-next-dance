@@ -98,7 +98,7 @@ const PriceList = ({
                     {" "}
                     {pass.terms &&
                       pass.terms.map((term, i) => (
-                        <p key={i} className="text-gray-300">
+                        <p key={i} className="text-textGray">
                           {term}
                         </p>
                       ))}

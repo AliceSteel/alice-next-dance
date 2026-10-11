@@ -40,10 +40,12 @@ export default function BookingCard({
     <div
       ref={cardRef}
       className={`relative flex flex-col justify-start gap-4 rounded-sm p-4 transition-all duration-500 ease-in-out backdrop-blur-md bg-black/40 ${
-        isOpen ? "w-full delay-0" : "w-full md:w-[49.2%] delay-500"
+        isOpen
+          ? "w-full min-h-56 delay-0"
+          : "w-full md:w-[49.2%] delay-500 min-h-32"
       } ${
         isLeftColumn ? "mr-auto" : "ml-auto last:ml-0"
-      } ${index === 0 ? "border-sky-400 border-2" : "border border-gray-400"}`}
+      } ${index === 0 ? "border-textLightBlue border-2" : "border border-gray-400"}`}
     >
       <div className="flex items-start justify-start gap-4">
         <div className="w-32 h-20 bg-gray-200 flex items-center justify-center overflow-hidden">
@@ -67,26 +69,30 @@ export default function BookingCard({
         <div className="w-1/3"></div>
       </div>
 
-      {isOpen && (
-        <div className="flex flex-col items-start gap-4">
-          <p>With {booking.instructor}</p>
-          <Link
-            href={`/classes/${booking.instructorSlug}#teachers`}
-            className="underline"
-          >
-            Read more about the instructor
-          </Link>
-
-          <FormContainer action={cancelBooking}>
-            <input type="hidden" name="bookingId" value={String(booking.id)} />
-            <SubmitBtn label="Cancel booking" actionType="delete" />
-          </FormContainer>
-        </div>
-      )}
+      <div
+        aria-hidden={!isOpen}
+        inert={!isOpen}
+        className={`flex flex-col gap-4 overflow-hidden transition-[max-height,opacity] duration-500 ease-in-out ${
+          isOpen ? "max-h-64 opacity-100" : "max-h-0 opacity-0"
+        }`}
+      >
+        {" "}
+        <p>With {booking.instructor}</p>
+        <Link
+          href={`/classes/${booking.instructorSlug}#teachers`}
+          className="underline"
+        >
+          Read more about the instructor
+        </Link>
+        <FormContainer action={cancelBooking}>
+          <input type="hidden" name="bookingId" value={String(booking.id)} />
+          <SubmitBtn label="Cancel booking" actionType="delete" />
+        </FormContainer>
+      </div>
 
       <button
         type="button"
-        className="w-min self-end flex items-center justify-center gap-1 uppercase text-xs text-nowrap p-2 absolute right-4 bottom-4  bg-sky-400 text-black rounded-sm"
+        className="w-min h-12 self-end flex items-center justify-center gap-1 uppercase text-xs text-nowrap p-2 absolute right-4 bottom-4  bg-sky-400 text-black rounded-sm"
         aria-label={isOpen ? "Close booking details" : "Open booking details"}
         onClick={() => onToggleOpen(index)}
       >

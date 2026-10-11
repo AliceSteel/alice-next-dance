@@ -24,7 +24,7 @@ export default function ScheduleGrid({
           {weekIndex > 0 && (
             <button
               type="button"
-              className="h-16 w-6 text-blue-500 hover:scale-105 transition-all duration-300 cursor-pointer mr-2"
+              className="h-16 w-6 text-textBlue hover:scale-105 transition-all duration-300 cursor-pointer mr-2"
               title="Previous Week"
               onClick={() =>
                 setWeekIndex((prevIndex: number) =>
@@ -52,7 +52,7 @@ export default function ScheduleGrid({
               {day === "Sun" && weekIndex < weeks.length - 1 && (
                 <button
                   type="button"
-                  className="absolute right-1 top-[calc(50%-1.5rem)] h-10 w-6  text-blue-500 hover:scale-105 transition-all duration-300 cursor-pointer"
+                  className="absolute right-1 top-[calc(50%-1.5rem)] h-10 w-6  text-textBlue hover:scale-105 transition-all duration-300 cursor-pointer"
                   title="Next Week"
                   onClick={() =>
                     setWeekIndex(
@@ -118,14 +118,14 @@ export default function ScheduleGrid({
                       {entry.teacher && (
                         <>
                           <br />
-                          <span className="normal-case text-[0.7rem] text-gray-300">
+                          <span className="normal-case text-[0.7rem] text-textGray">
                             {entry.teacher}
                           </span>
                         </>
                       )}
                       {/* show "booked" indicator if already booked */}
                       {isBooked ? (
-                        <span className=" text-blue-500">(Booked)</span>
+                        <span className=" text-textBlue">(Booked)</span>
                       ) : (
                         <span className="underline">Book</span>
                       )}

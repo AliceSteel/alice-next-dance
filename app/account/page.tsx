@@ -96,7 +96,7 @@ export default async function AccountPage({
                 return (
                   <li
                     key={pass.id}
-                    className="flex-1 border border-gray-400 rounded-md p-4 flex gap-2 text-sm text-gray-400 max-w-96 lg:max-w-1/3"
+                    className="flex-1 border border-gray-400 rounded-md p-4 flex gap-2 text-sm text-textGray max-w-96 lg:max-w-1/3 backdrop-blur-sm bg-black/30"
                   >
                     <div className="flex flex-col items-start gap-2">
                       <h5 className="text-sm uppercase">active membership </h5>
@@ -114,7 +114,7 @@ export default async function AccountPage({
                     <div className="flex flex-col justify-between items-end gap-2 w-1/2 shrink-0 ">
                       <Lineicons
                         icon={CreditCardMultipleSolid}
-                        className="text-gray-400"
+                        className="text-textGray"
                       />
                       <div className="w-full max-w-36 p-3">
                         <AnimatedRings stats={[{ label: ringValue }]} />

@@ -9,8 +9,13 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-          general: ['var(--font-onest)', 'system-ui', 'sans-serif'],
-          special: ['var(--font-biorhyme)', 'system-ui', 'serif'],
+        general: ["var(--font-onest)", "system-ui", "sans-serif"],
+        special: ["var(--font-biorhyme)", "system-ui", "serif"],
+      },
+      colors: {
+        textBlue: "#3b82f6",
+        textLightBlue: "#38bdf8",
+        textGray: "#9ca3af",
       },
     },
   },

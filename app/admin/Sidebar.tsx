@@ -4,12 +4,13 @@ import Link from "next/link";
 
 export default function Sidebar() {
   const links = [
-    { name: 'Edit schedule', href: '/admin/schedule' },
+    { name: "Edit schedule", href: "/admin/schedule" },
     { name: "Create products", href: "/admin/create" },
     { name: "Edit products", href: "/admin/edit" },
     { name: "Sales", href: "/admin/sales" },
   ];
   const pathname = usePathname();
+
   return (
     <aside className="w-full md:w-64 text-white flex flex-row md:flex-col pt-16 md:pt-32 gap-4">
       {links.map((link) => (
@@ -17,7 +18,9 @@ export default function Sidebar() {
           key={link.href}
           href={link.href}
           className={`${
-            pathname === link.href ? "text-blue-500" : "underline"
+            pathname === link.href
+              ? "text-textBlue"
+              : "underline-offset-2 underline decoration-gray-400"
           } py-3 pr-4`}
         >
           {link.name}

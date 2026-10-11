@@ -88,7 +88,7 @@ export default function ContactForm() {
       ></textarea>
 
       {result?.error && <p className="text-red-500">{result.error}</p>}
-      {result?.ok && <p className="text-blue-600">Message successfully sent</p>}
+      {result?.ok && <p className="text-textBlue">Message successfully sent</p>}
 
       <SubmitBtn labelType="text" label="Send" externalLoading={isSubmitting} />
     </form>
